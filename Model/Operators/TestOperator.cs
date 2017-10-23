@@ -11,6 +11,7 @@ namespace Model.Operators
 {
     class TestOperator : IOperator
     {
+        // Задаёт собственное значение яркости каждому пикселю
         public Color[,] Transform(Color[,] src)
         {
             Color[,] dst = new Color[src.GetLength(0), src.GetLength(1)];

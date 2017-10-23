@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BordersFilters
+namespace BordersFilters.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для ChoseAlgorithmView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ChoseAlgorithmView : UserControl
     {
-        public MainWindow()
+        public ChoseAlgorithmView()
         {
             InitializeComponent();
         }

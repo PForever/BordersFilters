@@ -9,6 +9,6 @@ namespace Model.Abstract
 {
     interface IOperator
     {
-        Color[,] Transform(Color[,] src);
+        byte[,] Transform(byte[,] src);
     } 
 }

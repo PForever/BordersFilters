@@ -47,6 +47,7 @@
     <Compile Include="Model.cs" />
     <Compile Include="OperatorsHelper\Convolution.cs" />
     <Compile Include="OperatorsHelper\Formats.cs" />
+    <Compile Include="Operators\MatrixOperator.cs" />
     <Compile Include="Operators\TestOperator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

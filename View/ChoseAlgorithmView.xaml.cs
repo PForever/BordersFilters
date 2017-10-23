@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 
 namespace BordersFilters.View
 {
-	/// <summary>
-	/// Логика взаимодействия для ChoseAlgorithmView.xaml
-	/// </summary>
-	public partial class ChoseAlgorithmView : UserControl
-	{
-		public ChoseAlgorithmView()
-		{
-			InitializeComponent();
-		}
-	}
+    /// <summary>
+    /// Логика взаимодействия для ChoseAlgorithmView.xaml
+    /// </summary>
+    public partial class ChoseAlgorithmView : UserControl
+    {
+        public ChoseAlgorithmView()
+        {
+            InitializeComponent();
+        }
+    }
 }

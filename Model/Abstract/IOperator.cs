@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-<<<<<<< HEAD
 namespace Model.Abstract {
 	interface IOperator {
 		String GetName();
@@ -14,12 +13,4 @@ namespace Model.Abstract {
 
 		byte[,] Transform(Color[,] src);
 	}
-=======
-namespace Model.Abstract
-{
-    interface IOperator
-    {
-        byte[,] Transform(byte[,] src);
-    } 
->>>>>>> pforever/master
 }

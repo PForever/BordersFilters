@@ -8,6 +8,7 @@ namespace Model.OperatorsHelper
 {
     public static class Formats
     {
+        // Получение расширения переданного файла
         public static string Extension(this string name)
         {
             int i;

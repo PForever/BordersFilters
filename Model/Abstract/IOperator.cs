@@ -7,10 +7,6 @@ using System.Threading.Tasks;
 
 namespace Model.Abstract {
 	interface IOperator {
-		String GetName();
-
 		byte[,] Transform(byte[,] src);
-
-		byte[,] Transform(Color[,] src);
 	}
 }

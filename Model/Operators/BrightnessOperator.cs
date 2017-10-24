@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Model.Abstract;
+using Model.OperatorsHelper;
 
 namespace Model.Operators {
 	/*
@@ -14,16 +15,17 @@ namespace Model.Operators {
 	 */
 	
 	class BrightnessOperator : IOperator {
-		public string GetName() {
-			return "Преобразование в яркость.";
-		}
 
 		public byte[,] Transform(byte[,] src) {
-			return (byte[,]) src.Clone();
-		}
-
-		public byte[,] Transform(Color[,] src) {
-			return Transform(BasicFunctions.GetGrayArray(src));
+			//return (byte[,]) src.Clone();
+		    for (int i = 0; i < src.GetLength(0); i++)
+		    {
+		        for (int j = 0; j < src.GetLength(1); j++)
+		        {
+		            src[i, j] = (byte)~src[i, j];
+		        }
+		    }
+		    return src;
 		}
 	}
 }

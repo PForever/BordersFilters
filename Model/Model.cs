@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Model.Abstract;
 using Model.Operators;
+using Model.OperatorsHelper;
 using Color = System.Drawing.Color;
 
 namespace Model
@@ -91,7 +92,7 @@ namespace Model
 				default:
 					break;
 			}
-			Bitmap bm = SetBitMapColorMatrix(BasicFunctions.GetColorArray(oper?.Transform(srcMatrix)) ?? srcMatrix);
+			Bitmap bm = SetBitMapColorMatrix((oper?.Transform(srcMatrix.GetGrayArray())).GetColorArray(srcMatrix) ?? srcMatrix);
 			Destination = GetBitmapSource(bm);
 		}
 		#region Bitmap

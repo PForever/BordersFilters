@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -24,7 +25,7 @@ namespace ViewModel {
 
 		#region Path
 		public static readonly DependencyProperty PathValueProperty = DependencyProperty.Register(
-			nameof(PathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(default(string)));
+			nameof(PathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(Directory.GetCurrentDirectory() +  @"\..\..\Resours\wallhaven-452501.jpg"));
 
 		public string PathValue {
 			get {

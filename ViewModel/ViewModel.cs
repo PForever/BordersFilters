@@ -19,7 +19,7 @@ namespace ViewModel
 		//public static ChoseAlgorithmViewModel ChoseAlgorithmView { get; set; }
 		#endregion
 
-		private Initialization _model;
+		private readonly Initialization _model;
 		public Command Start
 		{
 			get { return (Command)GetValue(StartProperty); }

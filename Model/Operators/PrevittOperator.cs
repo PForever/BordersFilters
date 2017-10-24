@@ -6,26 +6,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Model.Abstract;
+using Model.OperatorsHelper;
 
 namespace Model.Operators {
 	class PrevittOperator : IOperator {
-		static int[,] 
-			oper_x = { { 1, 1, 1 }, { 0, 0, 0 }, { -1, -1, -1 } },
-			oper_y = BasicFunctions.Transponse(oper_x);
+		static readonly int[,] 
+			OperX = { { 1, 1, 1 }, { 0, 0, 0 }, { -1, -1, -1 } },
+			OperY = BasicFunctions.Transponse(OperX);
 
 		public string GetName() {
 			return "Оператор Превитта";
 		}
 
-		//
 		public byte[,] Transform(byte[,] src) {
-			var operatorsApplyer = new OperatorsHelper.OperatorsApplyer(src, oper_x, oper_y);
+			var operatorsApplyer = new src.OperatorsApplyer(OperX, OperY);
 			operatorsApplyer.Apply();
 			return operatorsApplyer.GetResult();
 		}
 
-		public byte[,] Transform(byte[,] src, int reapply_count) {
-			for (int i = 0; i < reapply_count; i++) {
+		public byte[,] Transform(byte[,] src, int reapplyCount) {
+			for (int i = 0; i < reapplyCount; i++) {
 				src = Transform(src);
 			}
 			return src;

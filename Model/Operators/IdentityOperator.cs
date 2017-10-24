@@ -10,22 +10,22 @@ using Model.OperatorsHelper;
 
 namespace Model.Operators {
 	class IdentityOperator : IOperator {
-		static int[,] matrix = { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+		static readonly int[,] Matrix = { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
 
 		public string GetName() {
 			return "Тождественный оператор";
 		}
 
 		// Служит для тестов, не должен изменить ничего в картинке.
-		public byte[,] Transform(byte[,] src) {
+		private byte[,] Transform(byte[,] src) {
 			// byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
-			var operatorsApplyer = new OperatorsApplyer(src, matrix);
+			var operatorsApplyer = new OperatorsApplyer(src, Matrix);
 			operatorsApplyer.Apply();
 			return operatorsApplyer.GetResult();
 		}
 
-		public byte[,] Transform(byte[,] src, int reapply_count) {
-			for (int i = 0; i < reapply_count; i++) {
+		public byte[,] Transform(byte[,] src, int reapplyCount) {
+			for (int i = 0; i < reapplyCount; i++) {
 				src = Transform(src);
 			}
 			return src;

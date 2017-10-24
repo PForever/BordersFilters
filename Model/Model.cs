@@ -93,10 +93,10 @@ namespace Model
 					break;
 			}
 			byte threshold = 90;
-			int reapply_count = 1;
-			var result = oper.Transform(BasicFunctions.GetGrayArray(srcMatrix), reapply_count);
+			int reapplyCount = 1;
+			var result = oper?.Transform(srcMatrix.GetGrayArray(), reapplyCount);
 			//result = BasicFunctions.Threshold(result, threshold);
-			Bitmap bm = SetBitMapColorMatrix(BasicFunctions.GetColorArray(result) ?? srcMatrix);
+			Bitmap bm = SetBitMapColorMatrix(result.GetColorArray() ?? srcMatrix);
 			Destination = GetBitmapSource(bm);
 		}
 		#region Bitmap

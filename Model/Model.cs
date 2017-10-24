@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Model.Abstract;
 using Model.Operators;
+using Model.OperatorsHelper;
 using Color = System.Drawing.Color;
 
 namespace Model

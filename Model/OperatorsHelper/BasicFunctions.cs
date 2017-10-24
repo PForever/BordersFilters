@@ -18,12 +18,11 @@ namespace Model {
 			byte[,] dst = new byte[width + 1, height + 1];
 			for (int i = width; i >= 0; --i) {
 				for (int j = height; j >= 0; --j) {
-					dst[i, j] = (byte)~(byte)(src[i, j].GetBrightness() * 255);
+					dst[i, j] = (byte)(src[i, j].GetBrightness() * 255);
 				}
 			}
 			return dst;
 		}
-
 
 		// Получает двумерный массив Color из переданного массива байтов
 		public static Color[,] GetColorArray(byte[,] src) {
@@ -36,6 +35,29 @@ namespace Model {
 				}
 			}
 			return dst;
+		}
+
+		// Транспонирует переданную матрицу
+		public static int[,] Transponse(int[,] src) {
+			int width = src.GetLength(0);
+			int height = src.GetLength(1);
+			int[,] res = new int[height, width];
+			for (int i = 0; i < width; i++)
+				for (int j = 0; j < height; j++) 
+					res[i, j] = src[j, i];
+			return res;
+		}
+
+		public static byte[,] Threshold(byte[,] src, byte threshold) {
+			int width = src.GetLength(0),
+				height = src.GetLength(1);
+			byte[,] result = new byte[width, height];
+			for (int i = 0; i < width; i++) {
+				for (int j = 0; j < height; j++) {
+					result[i, j] = (byte) (src[i, j] < threshold ? 0 : 255);
+				}
+			}
+			return result;
 		}
 	}
 }

@@ -9,7 +9,7 @@ using Model.Abstract;
 
 namespace Model.Operators {
 	class IdentityOperator : IOperator {
-		static byte[,] matrix = { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+		static int[,] matrix = { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
 
 		public string GetName() {
 			return "Тождественный оператор";
@@ -23,8 +23,11 @@ namespace Model.Operators {
 			return operatorsApplyer.GetResult();
 		}
 
-		public byte[,] Transform(Color[,] src) {
-			return Transform(BasicFunctions.GetGrayArray(src));
+		public byte[,] Transform(byte[,] src, int reapply_count) {
+			for (int i = 0; i < reapply_count; i++) {
+				src = Transform(src);
+			}
+			return src;
 		}
 	}
 }

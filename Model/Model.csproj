@@ -51,6 +51,7 @@
     <Compile Include="OperatorsHelper\OperatorsApplyer.cs" />
     <Compile Include="Operators\IdentityOperator.cs" />
     <Compile Include="Operators\BrightnessOperator.cs" />
+    <Compile Include="Operators\PrevittOperator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

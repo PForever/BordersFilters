@@ -11,6 +11,6 @@ namespace Model.Abstract {
 
 		byte[,] Transform(byte[,] src);
 
-		byte[,] Transform(Color[,] src);
+		byte[,] Transform(byte[,] src, int reapply_count);
 	}
 }

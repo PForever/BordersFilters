@@ -83,7 +83,7 @@ namespace Model
 
 					break;
 				case OperatorsEnum.PruittOperator:
-
+					oper = new PrevittOperator();
 					break;
 				case OperatorsEnum.RobertsOperator:
 
@@ -91,7 +91,11 @@ namespace Model
 				default:
 					break;
 			}
-			Bitmap bm = SetBitMapColorMatrix(BasicFunctions.GetColorArray(oper?.Transform(srcMatrix)) ?? srcMatrix);
+			byte threshold = 90;
+			int reapply_count = 1;
+			var result = oper.Transform(BasicFunctions.GetGrayArray(srcMatrix), reapply_count);
+			//result = BasicFunctions.Threshold(result, threshold);
+			Bitmap bm = SetBitMapColorMatrix(BasicFunctions.GetColorArray(result) ?? srcMatrix);
 			Destination = GetBitmapSource(bm);
 		}
 		#region Bitmap

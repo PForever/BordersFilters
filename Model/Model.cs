@@ -27,7 +27,6 @@ namespace Model
 
 	public class Initialization
 	{
-		#region Property
 
 		private BitmapSource _destination;
 
@@ -36,8 +35,10 @@ namespace Model
 		public OperatorsEnum Operator { get; set; }
 		public string Extantion { get; set; }
 		public Bitmap Source { get; set; }
+        public bool RGBOperator { get; set; }
+        public int ReapplyCount { get; set; }
 
-		public BitmapSource Destination
+        public BitmapSource Destination
 		{
 			get { return _destination; }
 			set
@@ -53,8 +54,6 @@ namespace Model
 			add { _destinationChanged += value; }
 			remove { _destinationChanged -= value; }
 		}
-
-		#endregion
 
 		#endregion
 
@@ -75,26 +74,21 @@ namespace Model
 					oper = new IdentityOperator();
 					break;
 				case OperatorsEnum.KannyOperator:
-
 					break;
 				case OperatorsEnum.SobelOperator:
-
 					break;
 				case OperatorsEnum.LaplasOperator:
-
 					break;
 				case OperatorsEnum.PruittOperator:
 					oper = new PrevittOperator();
 					break;
 				case OperatorsEnum.RobertsOperator:
-
 					break;
 				default:
 					break;
 			}
 			byte threshold = 90;
-			int reapplyCount = 1;
-			var result = oper?.Transform(srcMatrix.GetGrayArray(), reapplyCount);
+			var result = oper?.Transform(srcMatrix.GetGrayArray(), ReapplyCount);
 			//result = BasicFunctions.Threshold(result, threshold);
 			Bitmap bm = SetBitMapColorMatrix(result.GetColorArray() ?? srcMatrix);
 			Destination = GetBitmapSource(bm);

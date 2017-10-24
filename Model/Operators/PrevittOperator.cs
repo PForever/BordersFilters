@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 using Model.Abstract;
 using Model.OperatorsHelper;
 
@@ -19,7 +12,7 @@ namespace Model.Operators {
 		}
 
 		public byte[,] Transform(byte[,] src) {
-			var operatorsApplyer = new src.OperatorsApplyer(OperX, OperY);
+			var operatorsApplyer = new OperatorsApplyer(src, OperX, OperY);
 			operatorsApplyer.Apply();
 			return operatorsApplyer.GetResult();
 		}

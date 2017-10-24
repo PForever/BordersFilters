@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Windows.Media.Media3D;
 
 namespace Model.OperatorsHelper {
 	/**

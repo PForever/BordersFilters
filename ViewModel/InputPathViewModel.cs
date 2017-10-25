@@ -35,7 +35,8 @@ namespace ViewModel {
 
 		#region Path
 		public static readonly DependencyProperty PathValueProperty = DependencyProperty.Register(
-			nameof(PathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(Directory.GetCurrentDirectory() +  @"\..\..\Resours\wallhaven-452501.jpg"));
+			nameof(PathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(Directory.GetCurrentDirectory() +
+				@"\..\..\Resours\Shapes.png"));
 
 		public string PathValue {
 			get {

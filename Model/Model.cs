@@ -20,8 +20,8 @@ namespace Model
 
 {
 	public enum OperatorsEnum {
-		BrightnessOperator = 0, IdentityOperator,
-		KannyOperator, SobelOperator, LaplasOperator, PruittOperator, RobertsOperator
+		BrightnessOperator = 0, InvertionOperator, IdentityOperator,
+		GaussOperator, KannyOperator, SobelOperator, LaplasOperator, PruittOperator, RobertsOperator
 		// Operator0 = 0, Operator1, Operator2, Operator3, Operator4
 	}
 
@@ -62,16 +62,23 @@ namespace Model
 
         public void Start()
 		{
-			Source = new Bitmap(Path);
+			try {
+				Source = new Bitmap(Path);
+			} catch (Exception e) {
+				Path = @"E:\GitRepos\BordersFilters\BordersFilters\bin\Debug\..\..\Resours\Shrek.png";
+			}
+
 			var srcMatrix = GetBitMapColorMatrix(Source);
 			//byte[] pixels = BitmapSourceToArray(Source);
 			IOperator oper = null;
 			switch (Operator)
 			{
 				case OperatorsEnum.BrightnessOperator:
-                    //oper = new BrightnessOperator();
-                    oper = new GaussOperator();
+                    oper = new BrightnessOperator();
                     break;
+				case OperatorsEnum.InvertionOperator:
+					oper = new InvertionOperator();
+					break;
 				case OperatorsEnum.IdentityOperator:
 					oper = new IdentityOperator();
 					break;
@@ -85,6 +92,9 @@ namespace Model
 					oper = new PrevittOperator();
 					break;
 				case OperatorsEnum.RobertsOperator:
+					break;
+				case OperatorsEnum.GaussOperator:
+					oper = new GaussOperator();
 					break;
 				default:
 					break;

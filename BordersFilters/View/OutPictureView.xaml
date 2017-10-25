@@ -11,6 +11,6 @@
         <viewModel:OutPictureViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <Image Source="{Binding OutImageSourse, UpdateSourceTrigger=PropertyChanged}"></Image>
+        <Image Source="{Binding OutImageSource, UpdateSourceTrigger=PropertyChanged}"></Image>
     </Grid>
 </UserControl>

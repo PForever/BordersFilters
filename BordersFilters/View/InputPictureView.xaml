@@ -11,6 +11,6 @@
         <viewModel:InputPictureViewModel/>
     </UserControl.DataContext>
     <Grid>
-        <Image Source="{Binding InputImageSourse}"></Image>
+        <Image Source="{Binding InputImageSource}"></Image>
     </Grid>
 </UserControl>

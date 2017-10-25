@@ -50,6 +50,7 @@
     <Compile Include="OperatorsHelper\Formats.cs" />
     <Compile Include="OperatorsHelper\BasicMatrixFunctions.cs" />
     <Compile Include="OperatorsHelper\OperatorsApplyer.cs" />
+    <Compile Include="Operators\InvertionOperator.cs" />
     <Compile Include="Operators\GaussOperator.cs" />
     <Compile Include="Operators\IdentityOperator.cs" />
     <Compile Include="Operators\BrightnessOperator.cs" />

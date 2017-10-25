@@ -28,13 +28,13 @@ namespace ViewModel
         #region Image
 
         public static readonly DependencyProperty InputImageSourseProperty = DependencyProperty.Register(
-	        nameof(InputImageSourse), typeof(BitmapSource), typeof(InputPictureViewModel), new PropertyMetadata(default(BitmapSource)));
-	    private BitmapSource InputImageSourse
+	        nameof(InputImageSource), typeof(BitmapSource), typeof(InputPictureViewModel), new PropertyMetadata(default(BitmapSource)));
+	    private BitmapSource InputImageSource
 	    {
 	        get { return (BitmapSource)GetValue(InputImageSourseProperty); }
 	        set { SetValue(InputImageSourseProperty, value); }
 	    }
-	    public BitmapSource GetImage() => InputImageSourse;
+	    public BitmapSource GetImage() => InputImageSource;
 	    public void SetImage(string path) => ChooseImage?.Invoke(path);
 	    private event Action<string> ChooseImage;
 
@@ -53,23 +53,23 @@ namespace ViewModel
 						{
 							case "jpg":
 							case "jpeg":
-								InputImageSourse = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSource = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							case "png":
-								InputImageSourse = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSource = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							case "bmp":
-								InputImageSourse = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSource = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							case "tiff":
-								InputImageSourse = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSource = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							case "gif":
-								InputImageSourse = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSource = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							default:

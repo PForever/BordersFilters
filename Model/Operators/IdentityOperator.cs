@@ -7,10 +7,11 @@ namespace Model.Operators {
 
 		// Служит для тестов, не должен изменить ничего в картинке.
 		private byte[,] Transform(byte[,] src) {
-			// byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
-			var operatorsApplyer = new OperatorsApplyer(src, Matrix);
-			operatorsApplyer.Apply();
-			return operatorsApplyer.GetResult();
+			byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
+			//var operatorsApplyer = new OperatorsApplyer(src, Matrix);
+			//operatorsApplyer.Apply();
+			//return operatorsApplyer.GetResult();
+			return dst.ForEach((i, j) => dst[i, j] = src.Process(i, j, Matrix));
 		}
 
 		public byte[,] Transform(byte[,] src, int reapplyCount) {

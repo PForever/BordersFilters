@@ -61,7 +61,7 @@ namespace ViewModel
 				    model.ReapplyCount = ChoseAlgorithmView.ReapplyCount;
                     //new Task(() => _model.Start()).Start();
                     model.Start();
-				    OutPictureView.OutImageSourse = model.Destination;
+				    OutPictureView.OutImageSource = model.Destination;
 				}
 			});
 		}

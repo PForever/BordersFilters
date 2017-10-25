@@ -20,16 +20,16 @@ namespace ViewModel
         private static event Action<OutPictureViewModel> _initializeViewModel;
         #endregion
 
-        #region OutImageSourse
+        #region OutImageSource
 
-        public static readonly DependencyProperty OutImageSourseProperty = DependencyProperty.Register(
-            nameof(OutImageSourse), typeof(BitmapSource), typeof(OutPictureViewModel),
+        public static readonly DependencyProperty OutImageSourceProperty = DependencyProperty.Register(
+            nameof(OutImageSource), typeof(BitmapSource), typeof(OutPictureViewModel),
             new PropertyMetadata(default(BitmapSource)));
 
-        public BitmapSource OutImageSourse
+        public BitmapSource OutImageSource
         {
-            get { return (BitmapSource) GetValue(OutImageSourseProperty); }
-            set { SetValue(OutImageSourseProperty, value); }
+            get { return (BitmapSource) GetValue(OutImageSourceProperty); }
+            set { SetValue(OutImageSourceProperty, value); }
         }
 
         #endregion

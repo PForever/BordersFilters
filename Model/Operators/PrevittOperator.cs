@@ -5,7 +5,7 @@ namespace Model.Operators {
 	class PrevittOperator : IOperator {
 		static readonly int[,] 
 			OperX = { { 1, 1, 1 }, { 0, 0, 0 }, { -1, -1, -1 } },
-			OperY = BasicFunctions.Transponse(OperX);
+			OperY = BasicMatrixFunctions.Transponse(OperX);
 
 		public string GetName() {
 			return "Оператор Превитта";

@@ -45,10 +45,12 @@
   <ItemGroup>
     <Compile Include="Abstract\IOperator.cs" />
     <Compile Include="Model.cs" />
+    <Compile Include="OperatorsHelper\BasicFunctions.cs" />
     <Compile Include="OperatorsHelper\Convolution.cs" />
     <Compile Include="OperatorsHelper\Formats.cs" />
-    <Compile Include="OperatorsHelper\BasicFunctions.cs" />
+    <Compile Include="OperatorsHelper\BasicMatrixFunctions.cs" />
     <Compile Include="OperatorsHelper\OperatorsApplyer.cs" />
+    <Compile Include="Operators\GaussOperator.cs" />
     <Compile Include="Operators\IdentityOperator.cs" />
     <Compile Include="Operators\BrightnessOperator.cs" />
     <Compile Include="Operators\PrevittOperator.cs" />

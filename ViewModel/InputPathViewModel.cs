@@ -10,8 +10,18 @@ using Model;
 
 namespace ViewModel {
 	public class InputPathViewModel : DependencyObject {
-		public static string OnStaticGetValue() => StaticGetValue?.Invoke();
-		private static event Func<String> StaticGetValue;
+
+        #region Initialize
+
+        public static event Action<InputPathViewModel> InitializeViewModel
+        {
+            add => _initializeViewModel += value;
+            remove => _initializeViewModel -= value;
+        }
+
+	    private static event Action<InputPathViewModel> _initializeViewModel;
+
+	    #endregion
 
 		#region Browse
 		public static readonly DependencyProperty BrowseProperty = DependencyProperty.Register(
@@ -37,8 +47,9 @@ namespace ViewModel {
 		}
 		#endregion
 
-		public InputPathViewModel() {
-			StaticGetValue += () => PathValue;
-		}
+		public InputPathViewModel()
+        {
+            _initializeViewModel?.Invoke(this);
+        }
 	}
 }

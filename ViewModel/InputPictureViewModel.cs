@@ -13,18 +13,36 @@ namespace ViewModel
 {
 	public class InputPictureViewModel : DependencyObject
 	{
-		public static void OnStaticSetValue(string path) => StaticSetValue?.Invoke(path);
-		private static event Action<string> StaticSetValue;
-		public static string Extention { get; set; }
-		public static BitmapSource OnStaticGetValue() => StaticGetValue?.Invoke();
-		private static event Func<BitmapSource> StaticGetValue;
+	    #region Initialize
+	    public static event Action<InputPictureViewModel> InitializeViewModel
+	    {
+	        add => _initializeViewModel += value;
+	        remove => _initializeViewModel -= value;
+	    }
 
-		public static readonly DependencyProperty ImageSourseProperty = DependencyProperty.Register(
-			nameof(ImageSourse), typeof(BitmapSource), typeof(InputPictureViewModel), new PropertyMetadata(default(BitmapSource)));
+	    private static event Action<InputPictureViewModel> _initializeViewModel;
+	    #endregion
 
-		public InputPictureViewModel()
+	    public string Extention { get; set; }
+
+        #region Image
+
+        public static readonly DependencyProperty InputImageSourseProperty = DependencyProperty.Register(
+	        nameof(InputImageSourse), typeof(BitmapSource), typeof(InputPictureViewModel), new PropertyMetadata(default(BitmapSource)));
+	    private BitmapSource InputImageSourse
+	    {
+	        get { return (BitmapSource)GetValue(InputImageSourseProperty); }
+	        set { SetValue(InputImageSourseProperty, value); }
+	    }
+	    public BitmapSource GetImage() => InputImageSourse;
+	    public void SetImage(string path) => ChooseImage?.Invoke(path);
+	    private event Action<string> ChooseImage;
+
+	    #endregion
+
+        public InputPictureViewModel()
 		{
-			StaticSetValue += path =>
+			ChooseImage += path =>
 			{
 				if(File.Exists(path))
 				{
@@ -35,23 +53,23 @@ namespace ViewModel
 						{
 							case "jpg":
 							case "jpeg":
-								ImageSourse = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSourse = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							case "png":
-								ImageSourse = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSourse = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							case "bmp":
-								ImageSourse = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSourse = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							case "tiff":
-								ImageSourse = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSourse = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							case "gif":
-								ImageSourse = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								InputImageSourse = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
 									BitmapCacheOption.Default).Frames[0];
 								break;
 							default:
@@ -59,16 +77,9 @@ namespace ViewModel
 					}
 				}
 			};
-			StaticGetValue += () => ImageSourse;
+			_initializeViewModel?.Invoke(this);
 		}
 
-		public BitmapSource ImageSourse
-		{
-			get { return (BitmapSource) GetValue(ImageSourseProperty); }
-			set
-			{
-				SetValue(ImageSourseProperty, value); 
-			}
-		}
+
 	}
 }

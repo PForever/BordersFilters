@@ -14,5 +14,5 @@
 			if (i == name.Length) return "";
 			return name.Substring(i, name.Length - i);
 		}
-	}
+    }
 }

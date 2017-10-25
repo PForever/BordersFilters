@@ -59,7 +59,8 @@ namespace Model
 
 		#region Methods
 
-		public void Start()
+
+        public void Start()
 		{
 			Source = new Bitmap(Path);
 			var srcMatrix = GetBitMapColorMatrix(Source);
@@ -68,8 +69,9 @@ namespace Model
 			switch (Operator)
 			{
 				case OperatorsEnum.BrightnessOperator:
-					oper = new BrightnessOperator();
-					break;
+                    //oper = new BrightnessOperator();
+                    oper = new GaussOperator();
+                    break;
 				case OperatorsEnum.IdentityOperator:
 					oper = new IdentityOperator();
 					break;
@@ -87,11 +89,17 @@ namespace Model
 				default:
 					break;
 			}
-			byte threshold = 90;
-			var result = oper?.Transform(srcMatrix.GetGrayArray(), ReapplyCount);
-			//result = BasicFunctions.Threshold(result, threshold);
-			Bitmap bm = SetBitMapColorMatrix(result.GetColorArray() ?? srcMatrix);
-			Destination = GetBitmapSource(bm);
+		    if (oper != null)
+		    {
+		        var result = !RGBOperator? 
+		            oper.Transform(srcMatrix.GetGrayArray(), ReapplyCount).GetColorArray() :
+		            srcMatrix.GetColorArray(oper.Transform(srcMatrix.GetRedArray(), ReapplyCount),
+                                            oper.Transform(srcMatrix.GetGreenArray(), ReapplyCount),
+                                            oper.Transform(srcMatrix.GetBlueArray(), ReapplyCount));
+
+		        Bitmap bm = SetBitMapColorMatrix(result ?? srcMatrix);
+		        Destination = GetBitmapSource(bm);
+		    }
 		}
 		#region Bitmap
 

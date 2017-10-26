@@ -8,20 +8,58 @@ namespace Model.OperatorsHelper {
 	public static class BasicMatrixFunctions {
 
 
-		// Транспонирует переданную матрицу
-		public static int[,] Transponse(int[,] src) {
+        /// <summary>
+        /// Транспонирует переданную матрицу.
+        /// </summary>
+        public static int[,] Transponse(this int[,] src) {
 			int[,] res = new int[src.GetLength(1), src.GetLength(0)];
 			res.ForEach((i,j) => res[i, j] = src[j, i]);
 			return res;
 		}
-
-		public static byte[,] Threshold(byte[,] src, byte threshold) {
+        /// <summary>
+        /// Отбрасывает все значения меньше заданного порога.
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="threshold">Нижний порог.</param>
+		public static byte[,] Threshold(this byte[,] src, byte threshold) {
 			byte[,] result = new byte[src.GetLength(0), src.GetLength(1)];
 		    result.ForEach((i, j) => result[i, j] = (byte) (src[i, j] < threshold ? 0 : 255));
 			return result;
 		}
-
-	    public static double Determinant(this double[,] matrix)
+        /// <summary>
+        /// Делит все элементы матрицы на указаное число.
+        /// </summary>
+        /// <param name="src">Исходная матрица.</param>
+        /// <param name="denominator">Делитель.</param>
+	    public static double[,] Divide(this double[,] src, double denominator)
+	    {
+	        src.ForEach((i, j) => src[i, j] = src[i, j] / denominator);
+	        return src;
+	    }
+	    /// <summary>
+	    /// Делит все элементы матрицы на указаное число.
+	    /// </summary>
+	    /// <param name="src">Исходная матрица.</param>
+	    /// <param name="denominator">Делитель.</param>
+        public static int[,] Divide(this int[,] src, int denominator)
+	    {
+	        src.ForEach((i, j) => src[i, j] = src[i, j] / denominator);
+	        return src;
+	    }
+	    /// <summary>
+	    /// Делит все элементы матрицы на указаное число.
+	    /// </summary>
+	    /// <param name="src">Исходная матрица.</param>
+	    /// <param name="denominator">Делитель.</param>
+        public static byte[,] Divide(this byte[,] src, byte denominator)
+	    {
+	        src.ForEach((i, j) => src[i, j] = (src[i, j] / denominator).ToByte());
+	        return src;
+	    }
+	    /// <summary>
+	    /// Вычисляет определитель матрицы.
+	    /// </summary>
+        public static double Determinant(this double[,] matrix)
 	    {
 	        if (matrix.Length == 1) return matrix[0, 0];
             if (matrix.Length == 4)

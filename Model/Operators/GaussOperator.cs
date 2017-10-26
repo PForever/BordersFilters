@@ -20,18 +20,17 @@ namespace Model.Operators
             double sigma = (double)reapplyСount / 6;
             int halfLenght = reapplyСount / 2;
             _oper.ParallelForEach((i, j) => _oper[i, j] = GetGauss(sigma, i - halfLenght, j - halfLenght));
-            //double dec = Math.Abs(_oper.Determinant());
-            double max = _oper.Max();
-            _oper.ParallelForEach((i, j) => _oper[i, j] = _oper[i, j]/max);
+            double dec = Math.Abs(_oper.Determinant());
+            //double max = _oper.Max();
+            _oper.ParallelForEach((i, j) => _oper[i, j] = _oper[i, j]/dec);
             //_oper = new[,]
             //{
-            //    {0.000789, 0.006581, 0.013347, 0.006581, 0.000789}, 
+            //    {0.000789, 0.006581, 0.013347, 0.006581, 0.000789},
             //    {0.006581, 0.054901, 0.111345, 0.054901, 0.006581},
-            //    {0.013347, 0.111354, 0.225821, 0.111345, 0.013347}, 
+            //    {0.013347, 0.111354, 0.225821, 0.111345, 0.013347},
             //    {0.006581, 0.054901, 0.111345, 0.054901, 0.006581},
             //    {0.000789, 0.006581, 0.013347, 0.006581, 0.000789}
             //};
-
             byte[,] dst = new byte[src.GetLength(0),src.GetLength(1)];
             src.ParallelForEach((i, j) => dst[i, j] = src.Process(i, j, _oper));
             return dst;

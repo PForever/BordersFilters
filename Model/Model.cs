@@ -62,13 +62,13 @@ namespace Model
 
         public void Start()
 		{
-			try {
-				Source = new Bitmap(Path);
-			} catch (Exception e) {
-				Path = @"E:\GitRepos\BordersFilters\BordersFilters\bin\Debug\..\..\Resours\Shrek.png";
-			}
+            //try {
+            Source = new Bitmap(Path);
+            //} catch (Exception e) {
+            //	Path = @"E:\GitRepos\BordersFilters\BordersFilters\bin\Debug\..\..\Resours\Shrek.png";
+            //}
 
-			var srcMatrix = GetBitMapColorMatrix(Source);
+            var srcMatrix = GetBitMapColorMatrix(Source);
 			//byte[] pixels = BitmapSourceToArray(Source);
 			IOperator oper = null;
 			switch (Operator)
@@ -83,16 +83,19 @@ namespace Model
 					oper = new IdentityOperator();
 					break;
 				case OperatorsEnum.KannyOperator:
-					break;
+				    oper = new KannyOperator();
+                    break;
 				case OperatorsEnum.SobelOperator:
-					break;
+				    oper = new SobelOperator();
+                    break;
 				case OperatorsEnum.LaplasOperator:
 					break;
 				case OperatorsEnum.PruittOperator:
 					oper = new PrevittOperator();
 					break;
 				case OperatorsEnum.RobertsOperator:
-					break;
+				    oper = new RobertsOperator();
+                    break;
 				case OperatorsEnum.GaussOperator:
 					oper = new GaussOperator();
 					break;

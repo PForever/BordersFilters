@@ -30,6 +30,35 @@ namespace ViewModel
 	        set { SetValue(StartProperty, value); }
 	    }
 
+        #endregion
+
+	    #region Window
+
+	    #region WindowsHight
+
+	    public static readonly DependencyProperty WindowsWidthProperty = DependencyProperty.Register(
+	        nameof(WindowsWidth), typeof(double), typeof(ViewModel), new PropertyMetadata(300.0));
+
+	    public double WindowsWidth
+	    {
+	        get { return (double) GetValue(WindowsWidthProperty); }
+	        set { SetValue(WindowsWidthProperty, value); }
+	    }
+
+	    #endregion
+	    #region WindowHeight
+
+	    public static readonly DependencyProperty WindowHeightProperty = DependencyProperty.Register(
+	        nameof(WindowHeight), typeof(double), typeof(ViewModel), new PropertyMetadata(300.0));
+
+	    public double WindowHeight
+	    {
+	        get { return (double) GetValue(WindowHeightProperty); }
+	        set { SetValue(WindowHeightProperty, value); }
+	    }
+
+        #endregion
+
 	    #endregion
 
         public ViewModel()
@@ -51,7 +80,7 @@ namespace ViewModel
 			{
 
 				var path = InputPathView.PathValue;
-				if (path != null)
+				if (File.Exists(path))
 				{
 				    InputPictureView.SetImage(path);
 					model.Path = path;

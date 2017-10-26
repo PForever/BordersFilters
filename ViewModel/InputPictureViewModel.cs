@@ -48,32 +48,32 @@ namespace ViewModel
 				{
 					var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-						Extention = path.Extension();
-						switch (Extention)
-						{
-							case "jpg":
-							case "jpeg":
-								InputImageSource = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
-									BitmapCacheOption.Default).Frames[0];
-								break;
-							case "png":
-								InputImageSource = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
-									BitmapCacheOption.Default).Frames[0];
-								break;
-							case "bmp":
-								InputImageSource = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
-									BitmapCacheOption.Default).Frames[0];
-								break;
-							case "tiff":
-								InputImageSource = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
-									BitmapCacheOption.Default).Frames[0];
-								break;
-							case "gif":
-								InputImageSource = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
-									BitmapCacheOption.Default).Frames[0];
-								break;
-							default:
-								break;
+					Extention = path.Extension();
+					switch (Extention)
+					{
+						case "jpg":
+						case "jpeg":
+							InputImageSource = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								BitmapCacheOption.Default).Frames[0];
+							break;
+						case "png":
+							InputImageSource = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								BitmapCacheOption.Default).Frames[0];
+							break;
+						case "bmp":
+							InputImageSource = new BmpBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								BitmapCacheOption.Default).Frames[0];
+							break;
+						case "tiff":
+							InputImageSource = new TiffBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								BitmapCacheOption.Default).Frames[0];
+							break;
+						case "gif":
+							InputImageSource = new GifBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat,
+								BitmapCacheOption.Default).Frames[0];
+							break;
+						default:
+							break;
 					}
 				}
 			};

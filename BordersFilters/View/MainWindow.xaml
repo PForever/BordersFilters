@@ -7,17 +7,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BordersFilters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow"
+        Width="700"
+        Height="500"
+        MinWidth="300"
+        MinHeight="300">
+    <!--Height="{Binding WindowHeight, Mode=TwoWay}" Width="{Binding WindowsWidth, Mode=TwoWay}"-->
     <Window.DataContext>
         <viewModel:ViewModel/>
     </Window.DataContext>
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding ElementName=stackPanel, Path=Height}"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" x:Name="stackPanel">
             <viewers:InputPathView  Margin="4"/>
             <Grid Margin="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <viewers:ChoseAlgorithmView Grid.Column="1"/>
             </Grid>
@@ -28,14 +37,14 @@
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="1" Command="{Binding Start}">Start</Button>
             </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <viewers:InputPictureView Grid.Column="0"/>
-                <viewers:OutPictureView Grid.Column="1"/>
-            </Grid>
         </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <viewers:InputPictureView Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <viewers:OutPictureView Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
 </Window>

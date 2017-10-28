@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace ViewModel
 
 	    private static event Action<ChoseAlgorithmViewModel> _initializeViewModel;
 	    #endregion
-        #region OperatorsList
+        #region OperatorsList and OperatorListChoosed
         public static readonly DependencyProperty OperatorsListProperty = DependencyProperty.Register(
 			nameof(OperatorsList), typeof(ICollection<string>), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(default(ICollection<string>)));
 
@@ -27,9 +28,19 @@ namespace ViewModel
 			get { return (IList<string>)GetValue(OperatorsListProperty); }
 			set { SetValue(OperatorsListProperty, value); }
 		}
-		#endregion
-		#region Operation
-		public static readonly DependencyProperty OperationProperty = DependencyProperty.Register(
+
+
+	    public static readonly DependencyProperty ChoosedOperatorsListProperty = DependencyProperty.Register(
+	        nameof(ChosedOperatorsList), typeof(ObservableCollection<string>), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(default(ObservableCollection<string>)));
+
+	    public ObservableCollection<string> ChosedOperatorsList
+	    {
+	        get => (ObservableCollection<string>)GetValue(ChoosedOperatorsListProperty);
+	        set => SetValue(ChoosedOperatorsListProperty, value);
+	    }
+        #endregion
+        #region Operation
+        public static readonly DependencyProperty OperationProperty = DependencyProperty.Register(
 			nameof(Operation), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(default(int)));
 
 		public int Operation
@@ -64,9 +75,10 @@ namespace ViewModel
 	        set { SetValue(RGBOperatorProperty, value); }
 	    }
 
-	    #endregion
+        #endregion
 
-		public ChoseAlgorithmViewModel()
+
+        public ChoseAlgorithmViewModel()
 		{
 			OperatorsList = new[] {
 				"Преобразование яркости",
@@ -78,7 +90,8 @@ namespace ViewModel
 				"Оператор Лапласа",
 				"Оператор Превитта",
 				"Оператор Робертса" };
+		    ChosedOperatorsList = new ObservableCollection<string>();
             _initializeViewModel?.Invoke(this);
 		}
-	}
+    }
 }

@@ -48,6 +48,7 @@ namespace ViewModel {
 		}
 		#endregion
 
+
 		public InputPathViewModel()
         {
             _initializeViewModel?.Invoke(this);

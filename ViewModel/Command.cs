@@ -1,32 +1,60 @@
-п»їusing System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using System.Windows.Input;
 
 namespace ViewModel
 {
 	public class Command : ICommand
 	{
-		public Command(Action<string> action)
-		{
-			_action = action;
-		}
+	    #region Fields
 
-		public bool CanExecute(object parameter)
-		{
-			return true;
-		}
+	    private readonly Action execute;
 
-		private readonly Action<string> _action;
+	    private readonly Func<bool> canExecute;
 
-		public void Execute(object parameter)
-		{
-			//if(parameter is string s)_action?.Invoke(s);
-			_action?.Invoke(null);
-		}
+	    public event EventHandler CanExecuteChanged;
 
-		public event EventHandler CanExecuteChanged;
-	}
+	    #endregion
+
+	    #region Constractors
+
+	    public Command(Action execute) : this(execute, null) { }
+
+	    public Command(Action execute, Func<bool> canExecute)
+	    {
+	        if (execute == null)
+	        {
+	            throw new ArgumentNullException(nameof(execute));
+	        }
+	        this.execute = execute;
+	        this.canExecute = canExecute;
+	    }
+
+	    #endregion
+
+	    #region Methods
+
+	    public bool CanExecute(object parameter)
+	    {
+	        if (canExecute == null)
+	        {
+	            return true;
+	        }
+	        return canExecute();
+	    }
+
+	    public void Execute(object parameter)
+	    {
+	        execute();
+	    }
+
+        /// <summary>
+        /// Метод добавляет свойтвам возможность влиять на изменяемость доступности команды (кнопки)
+        /// </summary>
+	    public void RaiseCanExecuteChanged() 
+	    {
+	        CanExecuteChanged?.Invoke(this,EventArgs.Empty);
+	    }
+
+	    #endregion
+    }
 }

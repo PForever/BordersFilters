@@ -9,7 +9,7 @@ namespace Model.Operators {
 
 		public byte[,] Transform(byte[,] src) {
 			byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
-			return dst.ParallelForEach((i, j) => dst[i, j] = src.Process(i, j, _operX, _operY));
+			return dst.ForEach((i, j) => dst[i, j] = src.Process(i, j, _operX, _operY));
 		}
 
 		public byte[,] Transform(byte[,] src, int reapplyCount) {

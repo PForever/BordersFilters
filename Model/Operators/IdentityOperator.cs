@@ -11,7 +11,7 @@ namespace Model.Operators {
 			//var operatorsApplyer = new OperatorsApplyer(src, Matrix);
 			//operatorsApplyer.Apply();
 			//return operatorsApplyer.GetResult();
-			return dst.ForEach((i, j) => dst[i, j] = src.Process(i, j, Matrix));
+			return dst.ForEach((i, j) => dst[i, j] = src.Process(i, j, Matrix).ToByte());
 		}
 
 		public byte[,] Transform(byte[,] src, int reapplyCount) {

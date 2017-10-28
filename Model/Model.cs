@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
@@ -118,31 +119,17 @@ namespace Model
 
 		public Color[,] GetBitMapColorMatrix(Bitmap b1)
 		{
-			int hight = b1.Height;
-			int width = b1.Width;
+			Color[,] colorMatrix = new Color[b1.Width, b1.Height];
+		    colorMatrix.ForEach((i, j) => colorMatrix[i, j] = b1.GetPixel(i, j));
 
-			Color[,] colorMatrix = new Color[width, hight];
-			for (int i = 0; i < width; i++)
-			{
-				//colorMatrix[i] = new Color[hight];
-				for (int j = 0; j < hight; j++)
-				{
-					colorMatrix[i,j] = b1.GetPixel(i, j);
-				}
-			}
 			return colorMatrix;
 		}
 
 		public Bitmap SetBitMapColorMatrix(Color[,] colorMatrix)
 		{
 			Bitmap bm = new Bitmap(colorMatrix.GetLength(0), colorMatrix.GetLength(1));
-			for (int i = 0; i < colorMatrix.GetLength(0); i++)
-			{
-				for (int j = 0; j < colorMatrix.GetLength(1); j++)
-				{
-					bm.SetPixel(i, j, colorMatrix[i,j]);
-				}
-			}
+		    colorMatrix.ForEach((i, j) => bm.SetPixel(i, j, colorMatrix[i, j]));
+
 			return bm;
 		}
 

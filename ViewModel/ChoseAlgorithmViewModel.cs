@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 
 namespace ViewModel
@@ -67,20 +68,56 @@ namespace ViewModel
 	    #region RGBOperator
 
 	    public static readonly DependencyProperty RGBOperatorProperty = DependencyProperty.Register(
-	        nameof(RGBOperator), typeof(Boolean), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(false));
+	        nameof(RGBOperator), typeof(Boolean), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(false, (o, args) =>
+	        {
+	            int p = 0;
+                
+	        }));
 
 	    public Boolean RGBOperator
         {
 	        get { return (Boolean) GetValue(RGBOperatorProperty); }
-	        set { SetValue(RGBOperatorProperty, value); }
+	        set
+	        {
+	            SetValue(RGBOperatorProperty, value);
+	        }
 	    }
 
         #endregion
+        #region ListHeight
 
+        public static readonly DependencyProperty ListHeightProperty = DependencyProperty.Register(
+	        nameof(ListHeight), typeof(string), typeof(ChoseAlgorithmViewModel), new PropertyMetadata("0"));
 
+	    public string ListHeight
+	    {
+	        get { return (string) GetValue(ListHeightProperty); }
+	        set { SetValue(ListHeightProperty, value); }
+	    }
+
+        #endregion
+        #region Show
+
+        public static readonly DependencyProperty ShowProperty = DependencyProperty.Register(
+	        nameof(Show), typeof(Command), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(default(Command)));
+
+	    public Command Show
+	    {
+	        get { return (Command) GetValue(ShowProperty); }
+	        set { SetValue(ShowProperty, value); }
+	    }
+
+	    #endregion
+
+	    private bool _showed = false;
         public ChoseAlgorithmViewModel()
-		{
-			OperatorsList = new[] {
+        {
+            Show = new Command(() =>
+            {
+                ListHeight = _showed ? "0" : "auto";
+                _showed =! _showed;
+            });
+            OperatorsList = new[] {
 				"Преобразование яркости",
 				"Инверсирующий оператор",
 				"Тождественный оператор",

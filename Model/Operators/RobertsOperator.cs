@@ -15,6 +15,10 @@ namespace Model.Operators
             return dst.ForEach((i, j) => dst[i, j] = src.Process(i, j, _operX, _operY));
         }
 
+        public RobertsOperator() => Name = OperatorsEnum.RobertsOperator;
+
+        public OperatorsEnum Name { get; }
+
         public byte[,] Transform(byte[,] src, int reapplyCount)
         {
             for (int i = 0; i < reapplyCount; i++)

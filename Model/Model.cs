@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
@@ -30,9 +32,8 @@ namespace Model
         SobelOperator,
         LaplasOperator,
         PruittOperator,
-
-        RobertsOperator
-        // Operator0 = 0, Operator1, Operator2, Operator3, Operator4
+        RobertsOperator,
+        PrevittOperator
     }
 
     public class Initialization
@@ -48,7 +49,7 @@ namespace Model
 
         //public OperatorsEnum Operator { get; set; }
         public string Extantion { get; set; }
-
+        public Collection<Func<BitmapSource>> PreDestination { get; set; }
         public Bitmap Source { get; set; }
         public bool RGBOperator { get; set; }
         public int ReapplyCount { get; set; }
@@ -80,7 +81,7 @@ namespace Model
         {
             //var numberOfActiveCores = Environment.ProcessorCount - 1;
             // var i = 1;
-            //Parallel.ForEach(Operators, GetBitmapForOneOperators);
+
             //while (Operators.Count - i + 1 >= numberOfActiveCores)
             //{
             //    Parallel.For(i, i + numberOfActiveCores, GetBitmapForOneOperators);
@@ -90,62 +91,69 @@ namespace Model
             //{
             //    Parallel.For(i, Operators.Count, GetBitmapForOneOperators);
             //}
-
+            PreDestination = new Collection<Func<BitmapSource>>();
             Destination = new Collection<BitmapSource>();
-
-            foreach (var Operator in Operators)
-            {
-                Source = new Bitmap(Path);
-                var srcMatrix = GetBitMapColorMatrix(Source);
-                IOperator oper = null;
-                switch (Operator)
+            //foreach (var Operator in Operators)
+            //{
+                Parallel.ForEach(Operators, Operator =>
                 {
-                    case OperatorsEnum.BrightnessOperator:
-                        oper = new BrightnessOperator();
-                        break;
-                    case OperatorsEnum.InvertionOperator:
-                        oper = new InvertionOperator();
-                        break;
-                    case OperatorsEnum.IdentityOperator:
-                        oper = new IdentityOperator();
-                        break;
-                    case OperatorsEnum.KannyOperator:
-                        oper = new KannyOperator();
-                        break;
-                    case OperatorsEnum.SobelOperator:
-                        oper = new SobelOperator();
-                        break;
-                    case OperatorsEnum.LaplasOperator:
-                        break;
-                    case OperatorsEnum.PruittOperator:
-                        oper = new PrevittOperator();
-                        break;
-                    case OperatorsEnum.RobertsOperator:
-                        oper = new RobertsOperator();
-                        break;
-                    case OperatorsEnum.GaussOperator:
-                        oper = new GaussOperator();
-                        break;
-                    default:
-                        break;
-                }
-                if (oper != null)
-                {
-                    var result = !RGBOperator
-                        ? oper.Transform(srcMatrix.GetGrayArray(), ReapplyCount).GetColorArray()
-                        : srcMatrix.GetColorArray(oper.Transform(srcMatrix.GetRedArray(), ReapplyCount),
-                            oper.Transform(srcMatrix.GetGreenArray(), ReapplyCount),
-                            oper.Transform(srcMatrix.GetBlueArray(), ReapplyCount));
-
-                    Bitmap bm = SetBitMapColorMatrix(result ?? srcMatrix);
-
                     lock (SyncRoot1)
                     {
-                        Destination.Add(GetBitmapSource(bm));
+                        Source = new Bitmap(Path);
                     }
-                }
-            }
+                    var srcMatrix = GetBitMapColorMatrix(Source);
+                    IOperator oper = null;
+                    switch (Operator)
+                    {
+                        case OperatorsEnum.BrightnessOperator:
+                            oper = new BrightnessOperator();
+                            break;
+                        case OperatorsEnum.InvertionOperator:
+                            oper = new InvertionOperator();
+                            break;
+                        case OperatorsEnum.IdentityOperator:
+                            oper = new IdentityOperator();
+                            break;
+                        case OperatorsEnum.KannyOperator:
+                            oper = new KannyOperator();
+                            break;
+                        case OperatorsEnum.SobelOperator:
+                            oper = new SobelOperator();
+                            break;
+                        case OperatorsEnum.LaplasOperator:
+                            break;
+                        case OperatorsEnum.PruittOperator:
+                            oper = new PrevittOperator();
+                            break;
+                        case OperatorsEnum.RobertsOperator:
+                            oper = new RobertsOperator();
+                            break;
+                        case OperatorsEnum.GaussOperator:
+                            oper = new GaussOperator();
+                            break;
+                        default:
+                            break;
+                    }
+                    if (oper != null)
+                    {
+                        var result = !RGBOperator
+                            ? oper.Transform(srcMatrix.GetGrayArray(), ReapplyCount).GetColorArray()
+                            : srcMatrix.GetColorArray(oper.Transform(srcMatrix.GetRedArray(), ReapplyCount),
+                                oper.Transform(srcMatrix.GetGreenArray(), ReapplyCount),
+                                oper.Transform(srcMatrix.GetBlueArray(), ReapplyCount));
 
+                        lock (SyncRoot1)
+                        {
+                            PreDestination.Add(() =>
+                            {
+                                Bitmap bm = SetBitMapColorMatrix(result ?? srcMatrix);
+                                return GetBitmapSource(bm);
+                            });
+                        }
+                        //bm.Dispose();
+                    }
+                });
+           // }
         }
 
         //private void GetBitmapForOneOperators(OperatorsEnum Operator)
@@ -214,8 +222,8 @@ namespace Model
 				//colorMatrix[i] = new Color[hight];
 				for (int j = 0; j < hight; j++)
 				{
-                        colorMatrix[i, j] = b1.GetPixel(i, j);
 
+				    colorMatrix[i, j] = b1.GetPixel(i, j);
                 }
 			}
 			return colorMatrix;

@@ -13,6 +13,9 @@ namespace Model.Operators
     {
         private double[,] _oper;
         //static readonly int[,] _oper = { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+        public GaussOperator() => Name = OperatorsEnum.GaussOperator;
+
+        public OperatorsEnum Name { get; }
 
         public byte[,] Transform(byte[,] src, int reapplyСount)
         {

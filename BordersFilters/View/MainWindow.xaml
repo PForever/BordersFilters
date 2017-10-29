@@ -36,6 +36,5 @@
                 <viewers:OutPictureView Grid.Column="1" VerticalAlignment="Top" />
             </Grid>
         </StackPanel>
-
     </Grid>
 </Window>

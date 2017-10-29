@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using Model;
 using ViewModel.Additional;
 
@@ -91,15 +94,23 @@ namespace ViewModel
                                 .Index;
                             model.Operators.Add((OperatorsEnum)searchIndex);
                         }
+                        Collection<Func<BitmapSource>> preDestination = new Collection<Func<BitmapSource>>();
+                        model.PreDestination = preDestination;
                         model.Extantion = InputPictureView.Extention;
                         model.RGBOperator = ChoseAlgorithmView.RGBOperator;
                         model.ReapplyCount = ChoseAlgorithmView.ReapplyCount;
-                        model.Start();
-
-                        for (var i = 0; i < model.Destination.Count; i++)
+                        Task.Run(() =>
                         {
-                            OutPictureView.TabControls.Add(new TabControl(model.Destination[i], ChoseAlgorithmView.ChosedOperatorsList[i]));
-                        }
+                            model.Start();
+                            Dispatcher.Invoke(() =>
+                            {
+                                int t = 0;
+                                foreach (var func in model.PreDestination)
+                                {
+                                    OutPictureView.TabControls.Add(new TabControl(func(), ChoseAlgorithmView.ChosedOperatorsList[t++]));
+                                }
+                            });
+                        });
                     }
                 });
 		}

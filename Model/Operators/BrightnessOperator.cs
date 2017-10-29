@@ -1,10 +1,11 @@
 using Model.Abstract;
-
 namespace Model.Operators {
 
 
-	class BrightnessOperator : IOperator {
+	class BrightnessOperator : IOperator
+	{
 
+	    public BrightnessOperator() => Name = OperatorsEnum.BrightnessOperator;
 		private byte[,] Transform(byte[,] src) {
 		    //for (int i = 0; i < src.GetLength(0); i++)
 		    //{
@@ -16,7 +17,9 @@ namespace Model.Operators {
 			return src;
 		}
 
-		public byte[,] Transform(byte[,] src, int reapplyСount) {
+	    public OperatorsEnum Name { get; }
+
+	    public byte[,] Transform(byte[,] src, int reapplyСount) {
 			//for (int i = 0; i < reapplyСount; i++) {
 			//	src = Transform(src);
 			//}

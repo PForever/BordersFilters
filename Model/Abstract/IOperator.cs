@@ -1,4 +1,5 @@
 //DON'T TOUCH!!!!!
+using Model;
 namespace Model.Abstract {
 	interface IOperator {
         /// <summary>
@@ -7,6 +8,7 @@ namespace Model.Abstract {
         /// <param name="src">Ïèêñåëüíàÿ ìàòğèöà</param>
         /// <param name="reapplyÑount">×èñëî èòåğàöèé</param>
         /// <returns></returns>
-		byte[,] Transform(byte[,] src, int reapplyÑount);
+        OperatorsEnum Name { get; }
+        byte[,] Transform(byte[,] src, int reapplyÑount);
 	}
 }

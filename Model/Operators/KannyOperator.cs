@@ -36,6 +36,10 @@ namespace Model.Operators
         }
 
 
+        public KannyOperator() => Name = OperatorsEnum.KannyOperator;
+
+        public OperatorsEnum Name { get; }
+
         public byte[,] Transform(byte[,] src, int reapplyСount)
         {
             for (int i = 0; i < reapplyСount; i++)

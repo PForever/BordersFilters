@@ -20,6 +20,10 @@
     </UserControl.Resources>
     <Grid Background="White">
         <StackPanel Margin="{StaticResource 'Margin All'}">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="Выбор параметров алгоритмов:" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -57,18 +61,26 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     PreviewTextInput="UIElement_OnPreviewTextInput"
-                    Text="{Binding ReapplyCount, Mode=TwoWay}" />
-                <!--<ComboBox
-                    Grid.Column="2"
-                    Margin="{StaticResource 'Margin All'}"
-                    ItemsSource="{Binding OperatorsList}"
-                    SelectedIndex="{Binding Operation, Mode=TwoWay}" />-->
+                    Text="{Binding ReapplyCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text="Выбор алгоритмов" />
+            <Button Height="20" Command="{Binding Show}">
+                <!--<Button.Triggers>
+                    <EventTrigger RoutedEvent="{Binding Show}">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>-->
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="Выбор алгоритмов" />
+            </Button>
+
             <ListBox
+                Height="{Binding ListHeight, Mode=TwoWay}"
                 behaviours:MultiSelectorBehaviours.SynchronizedSelectedItems="{Binding ChosedOperatorsList}"
                 Background="{x:Null}"
                 ItemsSource="{Binding OperatorsList}"
@@ -87,6 +99,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListBox>
+
         </StackPanel>
     </Grid>
 </UserControl>

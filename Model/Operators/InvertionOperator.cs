@@ -16,7 +16,12 @@ namespace Model.Operators {
 		    return src;
 		}
 
-		public byte[,] Transform(byte[,] src, int reapplyСount) {
+
+	    public InvertionOperator() => Name = OperatorsEnum.InvertionOperator;
+
+        public OperatorsEnum Name { get; }
+
+	    public byte[,] Transform(byte[,] src, int reapplyСount) {
 			for (int i = 0; i < reapplyСount; i++) {
 				src = Transform(src);
 			}

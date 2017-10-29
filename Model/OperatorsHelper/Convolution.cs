@@ -93,6 +93,7 @@ namespace Model.OperatorsHelper
         {
             switch (grads[i, j])
             {
+                case 180:
                 case 0:
                     if(src.GetPoint(i, j-1) < src[i, j] &&  src.GetPoint(i, j+1) < src[i, j])
                         return (byte)(src[i, j] < borderMin ? 0 : borderMax < src[i, j] ? borderMax : value);

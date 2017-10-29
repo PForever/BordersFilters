@@ -29,7 +29,7 @@ namespace ViewModel
 
         public static readonly DependencyProperty InputImageSourseProperty = DependencyProperty.Register(
 	        nameof(InputImageSource), typeof(BitmapSource), typeof(InputPictureViewModel), new PropertyMetadata(default(BitmapSource)));
-	    private BitmapSource InputImageSource
+	    public BitmapSource InputImageSource
 	    {
 	        get { return (BitmapSource)GetValue(InputImageSourseProperty); }
 	        set { SetValue(InputImageSourseProperty, value); }

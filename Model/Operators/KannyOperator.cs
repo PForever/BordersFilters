@@ -7,8 +7,8 @@ namespace Model.Operators
 {
     class KannyOperator : IOperator
     {
-        private const byte BorderMin = 0*byte.MaxValue / 100;
-        private const byte BorderMax = 5*byte.MaxValue / 100;
+        private const byte BorderMin = 20*byte.MaxValue / 100;
+        private const byte BorderMax = 30*byte.MaxValue / 100;
         private const byte Middle = (BorderMin + BorderMax)/2;
 
         private Predicate<byte> BCheck => point => BorderMin < point && point < BorderMax;

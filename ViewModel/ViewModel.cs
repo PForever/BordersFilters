@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using Model;
+using ViewModel.Additional;
 
 
 namespace ViewModel
@@ -76,23 +73,35 @@ namespace ViewModel
             //{
             //	Dispatcher.Invoke(() => OutPictureViewModel.OnStaticSetValue(bms));
 		    //};
-            Start = new Command(str =>
-			{
 
-				var path = InputPathView.PathValue;
-				if (File.Exists(path))
-				{
-				    InputPictureView.SetImage(path);
-					model.Path = path;
-					model.Operator = (OperatorsEnum)ChoseAlgorithmView.Operation;
-					model.Extantion = InputPictureView.Extention;
-				    model.RGBOperator = ChoseAlgorithmView.RGBOperator;
-				    model.ReapplyCount = ChoseAlgorithmView.ReapplyCount;
-                    //new Task(() => _model.Start()).Start();
-                    model.Start();
-				    OutPictureView.OutImageSource = model.Destination;
-				}
-			});
+                Start = new Command(() =>
+                {
+
+                    var path = InputPathView.PathValue;
+                    if (File.Exists(path))
+                    {
+                        InputPictureView.SetImage(path);
+                        model.Path = path;
+                        model.Operators = new Collection<OperatorsEnum>();
+                        
+                        foreach (var oper in ChoseAlgorithmView.ChosedOperatorsList)
+                        {
+                            var searchIndex = ChoseAlgorithmView.OperatorsList
+                                .Select((item, index) => new {Item = item, Index = index}).First(i => i.Item == oper)
+                                .Index;
+                            model.Operators.Add((OperatorsEnum)searchIndex);
+                        }
+                        model.Extantion = InputPictureView.Extention;
+                        model.RGBOperator = ChoseAlgorithmView.RGBOperator;
+                        model.ReapplyCount = ChoseAlgorithmView.ReapplyCount;
+                        model.Start();
+
+                        for (var i = 0; i < model.Destination.Count; i++)
+                        {
+                            OutPictureView.TabControls.Add(new TabControl(model.Destination[i], ChoseAlgorithmView.ChosedOperatorsList[i]));
+                        }
+                    }
+                });
 		}
 	}
 }

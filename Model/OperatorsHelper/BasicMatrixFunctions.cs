@@ -91,5 +91,30 @@ namespace Model.OperatorsHelper {
             }
             return result;
 	    }
-    }
+
+		/// <summary>
+		/// Задаёт значения в матрице симметрично относительно каждого угла
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="dst">Матрица</param>
+		/// <param name="i"></param>
+		/// <param name="j"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static T[,] SymmetricalSetter<T>(this T[,] dst, int i, int j, T value) {
+			int size = dst.GetUpperBound(0);
+			dst[i, j] = dst[size - j, i] = dst[j, size - i] = dst[size - i, size - j] = value;
+			return dst;
+		}
+
+		/// <summary>
+		/// Меняет знак каждого элемента в массиве
+		/// </summary>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		public static int[,] Invert(this int[,] src) {
+			src.ForEach((i, j) => src[i, j] *= -1);
+			return src;
+		}
+	}
 }

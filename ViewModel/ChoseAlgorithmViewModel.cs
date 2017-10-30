@@ -153,7 +153,7 @@ namespace ViewModel
         #region BrowseOutPath
 	    public static readonly DependencyProperty OutPathValueProperty = DependencyProperty.Register(
 	        nameof(OutPathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(Directory.GetCurrentDirectory() +
-	                                                                                            @"\..\..\Resours\"));
+	                                                                                            @"\..\..\Results\"));
 
 	    public string OutPathValue
         {

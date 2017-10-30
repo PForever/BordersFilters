@@ -111,8 +111,8 @@ namespace ViewModel
                             }
                         });
                     });
-                    ChoseAlgorithmView.ChosedOperatorsList.Clear();
-                    ChoseAlgorithmView.SelectAllOperator = false;
+                    // ChoseAlgorithmView.ChosedOperatorsList.Clear();
+                    // ChoseAlgorithmView.SelectAllOperator = false;
                 }
             });
 		}

@@ -68,16 +68,17 @@ namespace Model.OperatorsHelper
             }
             return max;
         }
-        /// <summary>
-        /// Составляет двумерный массив Color из массивов цветов.
-        /// </summary>
-        /// <param name="dst">Изменяемый массив.</param>
-        /// <param name="srcR">Массив яркости красных цветов.</param>
-        /// <param name="srcG">Массив яркости зелёных цветов.</param>
-        /// <param name="srcB">Массив яркости синих цветов.</param>
-        /// <returns></returns>
-        public static Color[,] GetColorArray(this Color[,] dst, byte[,] srcR, byte[,] srcG, byte[,] srcB)
-        {
+		/// <summary>
+		/// Составляет двумерный массив Color из массивов цветов.
+		/// </summary>
+		/// <param name="dst">Изменяемый массив.</param>
+		/// <param name="srcR">Массив яркости красных цветов.</param>
+		/// <param name="srcG">Массив яркости зелёных цветов.</param>
+		/// <param name="srcB">Массив яркости синих цветов.</param>
+		/// <returns></returns>
+		public static Color[,] GetColorArray(this Color[,] dst, byte[,] srcR, byte[,] srcG, byte[,] srcB) {
+			if (srcR == null || srcG == null || srcB == null) return null;
+
             dst.ForEach((i, j) => dst[i, j] = Color.FromArgb(srcR[i, j], srcG[i, j], srcB[i, j]));
             return dst;
         }

@@ -138,12 +138,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resours\wallhaven-452501.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <Resource Include="License.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="License.txt" />
+    <Resource Include="Resours\habr.jpg" />
+    <Resource Include="Resours\heaven.jpg" />
+    <Resource Include="Resours\river.jpg" />
+    <Resource Include="Resours\Shapes.png" />
+    <Resource Include="Resours\Shrek.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

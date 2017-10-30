@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WinForms = System.Windows.Forms;
 
 namespace BordersFilters.View
 {
@@ -33,5 +34,17 @@ namespace BordersFilters.View
             if (_regex.IsMatch(e.Text)) e.Handled = true;
         }
 
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new WinForms.FolderBrowserDialog
+            {
+                RootFolder = System.Environment.SpecialFolder.DesktopDirectory,
+                ShowNewFolderButton = true
+            };
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                OutTextBox.Text = openFileDialog.SelectedPath;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -69,50 +70,51 @@ namespace ViewModel
 		    OutPictureViewModel.InitializeViewModel += (sunder) => OutPictureView = sunder;
 		    InputPathViewModel.InitializeViewModel += (sunder) => InputPathView = sunder;
 		    ChoseAlgorithmViewModel.InitializeViewModel += (sunder) => ChoseAlgorithmView = sunder;
-		    var model = new Initialization();
-		    #endregion
 
-            //_model.DestinationChanged += (bms) =>
-            //{
-            //	Dispatcher.Invoke(() => OutPictureViewModel.OnStaticSetValue(bms));
-		    //};
+            #endregion
 
-                Start = new Command(() =>
+            Start = new Command(() =>
+            {
+                var model = new Initialization();
+                var path = InputPathView.PathValue;
+                if (File.Exists(path))
                 {
-
-                    var path = InputPathView.PathValue;
-                    if (File.Exists(path))
+                    TabControl.SaveCompleted += (sender, e) =>
                     {
-                        InputPictureView.SetImage(path);
-                        model.Path = path;
-                        model.Operators = new Collection<OperatorsEnum>();
-                        
-                        foreach (var oper in ChoseAlgorithmView.ChosedOperatorsList)
+                        MessageBox.Show("Завершено!");
+                    };
+                    TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
+                    TabControl.SetInputImage(path);
+                    var OperatorsDictionary = TabControl.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
+                    OutPictureView.TabControls = new ObservableCollection<TabControl>();
+                    model.Path = path;
+                    model.Operators = new Collection<OperatorsEnum>();
+                    foreach (var oper in ChoseAlgorithmView.ChosedOperatorsList)
+                    {                    
+                        if (OperatorsDictionary.TryGetValue(oper, out var searchIndex))
                         {
-                            var searchIndex = ChoseAlgorithmView.OperatorsList
-                                .Select((item, index) => new {Item = item, Index = index}).First(i => i.Item == oper)
-                                .Index;
-                            model.Operators.Add((OperatorsEnum)searchIndex);
+                            model.Operators.Add(searchIndex);
                         }
-                        Collection<Func<BitmapSource>> preDestination = new Collection<Func<BitmapSource>>();
-                        model.PreDestination = preDestination;
-                        model.Extantion = InputPictureView.Extention;
-                        model.RGBOperator = ChoseAlgorithmView.RGBOperator;
-                        model.ReapplyCount = ChoseAlgorithmView.ReapplyCount;
-                        Task.Run(() =>
-                        {
-                            model.Start();
-                            Dispatcher.Invoke(() =>
-                            {
-                                int t = 0;
-                                foreach (var func in model.PreDestination)
-                                {
-                                    OutPictureView.TabControls.Add(new TabControl(func(), ChoseAlgorithmView.ChosedOperatorsList[t++]));
-                                }
-                            });
-                        });
                     }
-                });
+                    Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>> preDestination = new Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>>();
+                    model.PreDestination = preDestination;
+                    model.RGBOperator = ChoseAlgorithmView.RGBOperator;
+                    model.ReapplyCount = ChoseAlgorithmView.ReapplyCount;
+                    Task.Run(() =>
+                    {
+                        model.Start();
+                        Dispatcher.Invoke(() =>
+                        {
+                            foreach (var func in model.PreDestination)
+                            {
+                                OutPictureView.TabControls.Add(new TabControl(func()));
+                            }
+                        });
+                    });
+                    ChoseAlgorithmView.ChosedOperatorsList.Clear();
+                    ChoseAlgorithmView.SelectAllOperator = false;
+                }
+            });
 		}
 	}
 }

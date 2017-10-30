@@ -23,7 +23,30 @@
             <TextBlock
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                FontWeight="Bold"
                 Text="Выбор параметров алгоритмов:" />
+            <TextBlock
+                Margin="4,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="Введите путь к каталогу для сохранения выходных данных:" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    x:Name="OutTextBox"
+                    Grid.Column="0"
+                    Margin="{StaticResource 'Margin All'}"
+                    Text="{Binding OutPathValue, UpdateSourceTrigger=PropertyChanged}" />
+                <Button
+                    Grid.Column="1"
+                    Margin="{StaticResource 'Margin All'}"
+                    Click="ButtonBase_OnClick">
+                    Browse
+                </Button>
+            </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -63,27 +86,44 @@
                     PreviewTextInput="UIElement_OnPreviewTextInput"
                     Text="{Binding ReapplyCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
-            <Button Height="20" Command="{Binding Show}">
-                <!--<Button.Triggers>
-                    <EventTrigger RoutedEvent="{Binding Show}">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation></DoubleAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Button.Triggers>-->
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="Выбор алгоритмов" />
-            </Button>
-
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                Text="Выбор алгоритмов" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Height="20"
+                    Command="{Binding Show}"
+                    Content="Показать все" />
+                <Grid Grid.Column="1" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="5*" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox
+                        Grid.Column="0"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding SelectAllOperator, Mode=TwoWay}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Text="{Binding SelectAllText, Mode=TwoWay}" />
+                </Grid>
+            </Grid>
             <ListBox
                 Height="{Binding ListHeight, Mode=TwoWay}"
-                behaviours:MultiSelectorBehaviours.SynchronizedSelectedItems="{Binding ChosedOperatorsList}"
+                behaviours:MultiSelectorBehaviours.SynchronizedSelectedItems="{Binding ChosedOperatorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Background="{x:Null}"
-                ItemsSource="{Binding OperatorsList}"
+                ItemsSource="{Binding OperatorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 SelectionMode="Multiple">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

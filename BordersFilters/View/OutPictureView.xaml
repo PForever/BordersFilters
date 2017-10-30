@@ -19,21 +19,50 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <StackPanel Margin="{StaticResource 'Margin All'}">
-            <TextBlock TextAlignment="Center">После обработки</TextBlock>
-
-            <TabControl ItemsSource="{Binding TabControls}">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding NameOfAlgorithm, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
-                        <Image Source="{Binding OutImageSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
-        </StackPanel>
+        <TabControl
+            Margin="{StaticResource 'Margin All'}"
+            VerticalAlignment="Stretch"
+            ItemsSource="{Binding TabControls}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding NameOfAlgorithm, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="7.5*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Source="{Binding InputImageSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Image
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Source="{Binding OutImageSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        <Button
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            MinWidth="170"
+                            MinHeight="30"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding SaveCommand}"
+                            Content="Сохранить в выбранном каталоге" />
+                    </Grid>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
     </Grid>
 </UserControl>

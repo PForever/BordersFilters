@@ -9,32 +9,29 @@
     xmlns:viewers="clr-namespace:BordersFilters.View"
     Title="MainWindow"
     Width="700"
-    Height="800"
-    MinWidth="300"
-    MinHeight="800"
+    Height="850"
+    MinWidth="350"
+    MinHeight="700"
     mc:Ignorable="d">
-    <!--  Height="{Binding WindowHeight, Mode=TwoWay}" Width="{Binding WindowsWidth, Mode=TwoWay}"  -->
     <Window.DataContext>
         <viewModel:ViewModel />
     </Window.DataContext>
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
             <viewers:InputPathView />
             <viewers:ChoseAlgorithmView />
             <Button
-                MinWidth="90"
+                MinWidth="100"
+                MinHeight="28"
                 HorizontalAlignment="Center"
                 Command="{Binding Start}">
                 Start
             </Button>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <viewers:InputPictureView Grid.Column="0" VerticalAlignment="Top" />
-                <viewers:OutPictureView Grid.Column="1" VerticalAlignment="Top" />
-            </Grid>
         </StackPanel>
+        <viewers:OutPictureView Grid.Row="1" />
     </Grid>
 </Window>

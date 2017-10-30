@@ -1,18 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+using System.IO;
 using System.Windows;
+using WinForms = System.Windows.Forms;
 
 namespace ViewModel
 {
 	public class ChoseAlgorithmViewModel : DependencyObject
 	{
-	    #region Initialize
-	    public static event Action<ChoseAlgorithmViewModel> InitializeViewModel
+
+	    #region Events and Invocators
+
+	    public static event EventHandler SelectAllOperatorsEvent;
+	    public static void OnSelectAllOperatorsEvent()
+	    {
+	        SelectAllOperatorsEvent?.Invoke(null, EventArgs.Empty);
+	    }
+
+	    public static event EventHandler DeleteChoosedOperatorsEvent;
+	    public static void OnDeleteChoosedOperatorsEvent()
+	    {
+	        DeleteChoosedOperatorsEvent?.Invoke(null, EventArgs.Empty);
+	    }
+
+	    #endregion
+        #region Initialize
+        public static event Action<ChoseAlgorithmViewModel> InitializeViewModel
 	    {
 	        add => _initializeViewModel += value;
 	        remove => _initializeViewModel -= value;
@@ -39,19 +53,6 @@ namespace ViewModel
 	        get => (ObservableCollection<string>)GetValue(ChoosedOperatorsListProperty);
 	        set => SetValue(ChoosedOperatorsListProperty, value);
 	    }
-        #endregion
-        #region Operation
-        public static readonly DependencyProperty OperationProperty = DependencyProperty.Register(
-			nameof(Operation), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(default(int)));
-
-		public int Operation
-		{
-			get { return (int) GetValue(OperationProperty); }
-			set
-			{
-				SetValue(OperationProperty, value);
-			}
-		}
         #endregion
 	    #region ReapplyCount
 
@@ -107,28 +108,113 @@ namespace ViewModel
 	        set { SetValue(ShowProperty, value); }
 	    }
 
-	    #endregion
+        #endregion
+        #region SelectAllOperator
 
-	    private bool _showed = false;
+        public static readonly DependencyProperty SelectAllProperty = DependencyProperty.Register(
+	        nameof(SelectAllOperator), typeof(Boolean), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(false, (o, args) =>
+	        {
+	            if ((bool)args.NewValue)
+	            {
+	                OnSelectAllOperatorsEvent();
+                }
+	            else
+	            {
+	                OnDeleteChoosedOperatorsEvent();
+	            }
+	        }));
+        public Boolean SelectAllOperator
+	    {
+	        get { return (Boolean)GetValue(SelectAllProperty); }
+	        set
+	        {
+	            SetValue(SelectAllProperty, value);
+	        }
+	    }
+
+
+
+        #endregion
+        #region SelectAllText
+	    public static readonly DependencyProperty SelectAllTextProperty = DependencyProperty.Register(
+	        nameof(SelectAllText), typeof(string), typeof(ChoseAlgorithmViewModel), new PropertyMetadata("Выбрать все"));
+
+	    public string SelectAllText
+        {
+	        get { return (string)GetValue(SelectAllTextProperty); }
+	        set
+	        {
+	            SetValue(SelectAllTextProperty, value);
+	        }
+	    }
+
+
+        #endregion
+        #region BrowseOutPath
+	    public static readonly DependencyProperty OutPathValueProperty = DependencyProperty.Register(
+	        nameof(OutPathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(Directory.GetCurrentDirectory() +
+	                                                                                            @"\..\..\Resours\"));
+
+	    public string OutPathValue
+        {
+	        get
+	        {
+	            return (string)GetValue(OutPathValueProperty);
+	        }
+	        set
+	        {
+	            SetValue(OutPathValueProperty, value);
+	        }
+	    }
+        #endregion
+
+        private bool _showed = false;
+
+
         public ChoseAlgorithmViewModel()
         {
+            SelectAllOperatorsEvent += SelectAllItems;
+            DeleteChoosedOperatorsEvent += DeleteChoose;
+
+            ChosedOperatorsList = new ObservableCollection<string>();
             Show = new Command(() =>
             {
                 ListHeight = _showed ? "0" : "auto";
                 _showed =! _showed;
             });
             OperatorsList = new[] {
-				"Преобразование яркости",
-				"Инверсирующий оператор",
-				"Тождественный оператор",
-				"Оператор Гаусса",
-				"Оператор Кэнни",
-				"Оператор Собеля",
-				"Оператор Лапласа",
-				"Оператор Превитта",
-				"Оператор Робертса" };
-		    ChosedOperatorsList = new ObservableCollection<string>();
+                "Brightness Operator",
+                "Invertion Operator",
+                "Identity Operator",
+                "Gauss Operator",
+                "Kanny Operator",
+                "Sobel Operator",
+                "Laplas Operator",
+                "Pruitt Operator",
+                "Roberts Operator",
+                "Previtt Operator"
+            };
+		   
             _initializeViewModel?.Invoke(this);
 		}
+
+	    #region Methods for Selecting
+
+	    public void SelectAllItems(object sender, EventArgs e)
+	    {
+	        foreach (var operation in OperatorsList)
+	        {
+	            ChosedOperatorsList.Add(operation);
+	        }
+	        SelectAllText = "Убрать выделение";
+	    }
+
+	    public void DeleteChoose(object sender, EventArgs e)
+	    {
+	        ChosedOperatorsList.Clear();
+	        SelectAllText = "Выбрать все";
+	    }
+
+	    #endregion
     }
 }

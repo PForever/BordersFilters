@@ -39,60 +39,27 @@ namespace Model
     public class Initialization
     {
 
-        private Collection<BitmapSource> _destination;
 
         #region Properties
 
         public string Path { get; set; }
-
+        public Dictionary<OperatorsEnum,BitmapSource> Destination;
         public Collection<OperatorsEnum> Operators { get; set; }
-
-        //public OperatorsEnum Operator { get; set; }
-        public string Extantion { get; set; }
-        public Collection<Func<BitmapSource>> PreDestination { get; set; }
+        public Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>> PreDestination { get; set; }
         public Bitmap Source { get; set; }
         public bool RGBOperator { get; set; }
         public int ReapplyCount { get; set; }
         private static readonly object SyncRoot1 = new object();
-        private static readonly object SyncRoot2 = new object();
+        //private static readonly object SyncRoot2 = new object();
 
-        public Collection<BitmapSource> Destination
-        {
-            get { return _destination; }
-            set
-            {
-                _destination = value;
-                _destinationChanged?.Invoke(Destination);
-            }
-        }
-
-        private event Action<Collection<BitmapSource>> _destinationChanged;
-
-        public event Action<Collection<BitmapSource>> DestinationChanged
-        {
-            add { _destinationChanged += value; }
-            remove { _destinationChanged -= value; }
-        }
 
         #endregion
 
 
         public void Start()
         {
-            //var numberOfActiveCores = Environment.ProcessorCount - 1;
-            // var i = 1;
-
-            //while (Operators.Count - i + 1 >= numberOfActiveCores)
-            //{
-            //    Parallel.For(i, i + numberOfActiveCores, GetBitmapForOneOperators);
-            //    i += numberOfActiveCores;
-            //}
-            //if (Operators.Count - i + 1 != 0)
-            //{
-            //    Parallel.For(i, Operators.Count, GetBitmapForOneOperators);
-            //}
-            PreDestination = new Collection<Func<BitmapSource>>();
-            Destination = new Collection<BitmapSource>();
+            PreDestination = new Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>>();
+            Destination = new Dictionary<OperatorsEnum,BitmapSource>();
             //foreach (var Operator in Operators)
             //{
                 Parallel.ForEach(Operators, Operator =>
@@ -121,15 +88,19 @@ namespace Model
                             oper = new SobelOperator();
                             break;
                         case OperatorsEnum.LaplasOperator:
+                                                                // Нет Laplas
                             break;
                         case OperatorsEnum.PruittOperator:
-                            oper = new PrevittOperator();
+                                                                // Нет Pruitt
                             break;
                         case OperatorsEnum.RobertsOperator:
                             oper = new RobertsOperator();
                             break;
                         case OperatorsEnum.GaussOperator:
                             oper = new GaussOperator();
+                            break;
+                        case OperatorsEnum.PrevittOperator:
+                            oper = new PrevittOperator();
                             break;
                         default:
                             break;
@@ -147,10 +118,12 @@ namespace Model
                             PreDestination.Add(() =>
                             {
                                 Bitmap bm = SetBitMapColorMatrix(result ?? srcMatrix);
-                                return GetBitmapSource(bm);
+                                var variable = new Dictionary<OperatorsEnum, BitmapSource>();
+                                variable.Add(Operator, GetBitmapSource(bm));
+                                return variable;
+                                //return new Dictionary<OperatorsEnum, BitmapSource>.Add(Operator, GetBitmapSource(bm));
                             });
                         }
-                        //bm.Dispose();
                     }
                 });
            // }

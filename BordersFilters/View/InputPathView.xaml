@@ -20,7 +20,7 @@
 
     <Grid Background="White">
         <StackPanel>
-            <TextBlock TextAlignment="Center">Выбор изображения</TextBlock>
+            <TextBlock FontWeight="Bold" TextAlignment="Center">Выбор изображения</TextBlock>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*" />

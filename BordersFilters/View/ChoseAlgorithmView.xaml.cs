@@ -34,17 +34,5 @@ namespace BordersFilters.View
             if (_regex.IsMatch(e.Text)) e.Handled = true;
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            var openFileDialog = new WinForms.FolderBrowserDialog
-            {
-                RootFolder = System.Environment.SpecialFolder.DesktopDirectory,
-                ShowNewFolderButton = true
-            };
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                OutTextBox.Text = openFileDialog.SelectedPath;
-            }
-        }
     }
 }

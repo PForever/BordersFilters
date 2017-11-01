@@ -77,7 +77,7 @@ namespace Model {
 						oper = new SobelOperator();
 						break;
 					case OperatorsEnum.LaplasOperator:
-						oper = new LaplasOperator();
+						//oper = new LaplasOperator();
 						break;
 					case OperatorsEnum.RobertsOperator:
 						oper = new RobertsOperator();

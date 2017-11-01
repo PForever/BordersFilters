@@ -19,127 +19,146 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Background="White">
-        <StackPanel Margin="{StaticResource 'Margin All'}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <TextBlock
+                Grid.Row="0"
+                Grid.ColumnSpan="5"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontWeight="Bold"
                 Text="Выбор параметров алгоритмов:" />
-            <TextBlock
-                Margin="4,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="Введите путь к каталогу для сохранения выходных данных:" />
-            <Grid>
+            <Grid
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBox
-                    x:Name="OutTextBox"
-                    Grid.Column="0"
-                    Margin="{StaticResource 'Margin All'}"
-                    Text="{Binding OutPathValue, UpdateSourceTrigger=PropertyChanged}" />
-                <Button
-                    Grid.Column="1"
-                    Margin="{StaticResource 'Margin All'}"
-                    Click="ButtonBase_OnClick">
-                    Browse
-                </Button>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="5*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="RGB" />
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="Точность" />
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="5*" />
-                </Grid.ColumnDefinitions>
-                <CheckBox
-                    Grid.Column="0"
-                    Margin="{StaticResource 'Margin All'}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    IsChecked="{Binding RGBOperator, Mode=TwoWay}" />
-                <TextBox
-                    Grid.Column="1"
-                    MinWidth="20"
-                    MaxWidth="20"
-                    Margin="{StaticResource 'Margin All'}"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    PreviewTextInput="UIElement_OnPreviewTextInput"
-                    Text="{Binding ReapplyCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontWeight="Bold"
-                Text="Выбор алгоритмов" />
-            <Grid>
-                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
                 <Button
                     Grid.Column="0"
-                    Height="20"
-                    Command="{Binding Show}"
-                    Content="Показать все" />
-                <Grid Grid.Column="1" HorizontalAlignment="Left">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="5*" />
-                    </Grid.ColumnDefinitions>
-                    <CheckBox
-                        Grid.Column="0"
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Left"
+                    Command="{Binding Show}">
+                    <TextBlock
                         Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontWeight="Bold"
+                        Text="Выбор алгоритмов" />
+                </Button>
+                <CheckBox
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    IsChecked="{Binding SelectAllOperator, Mode=TwoWay}" />
+                <TextBlock
+                    Grid.Column="2"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Text="{Binding SelectAllText, Mode=TwoWay}" />
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1.4*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid
+                    Grid.Column="0"
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding SelectAllOperator, Mode=TwoWay}" />
-                    <TextBlock
+                        Text="RGB:" />
+                    <CheckBox
                         Grid.Column="1"
+                        Margin="{StaticResource 'Margin All'}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Text="{Binding SelectAllText, Mode=TwoWay}" />
+                        IsChecked="{Binding RGBOperator, Mode=TwoWay}" />
                 </Grid>
+                <Grid
+                    Grid.Column="1"
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2.2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Text="Точность" />
+                    <TextBox
+                        Grid.Column="1"
+                        Width="20"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        PreviewTextInput="UIElement_OnPreviewTextInput"
+                        Text="{Binding ReapplyCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+                <Button
+                    Grid.Column="2"
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Right"
+                    Command="{Binding SetCatalog}">
+                    <TextBlock
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontWeight="Bold"
+                        Text="Выбор директории" />
+                </Button>
             </Grid>
-            <ListBox
-                Height="{Binding ListHeight, Mode=TwoWay}"
-                behaviours:MultiSelectorBehaviours.SynchronizedSelectedItems="{Binding ChosedOperatorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Background="{x:Null}"
-                ItemsSource="{Binding OperatorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                SelectionMode="Multiple">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <CheckBox
-                            Margin="{StaticResource 'Margin All'}"
-                            Content="{Binding}"
-                            IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ListBox>
-
-        </StackPanel>
+        </Grid>
+        <ListBox
+            Grid.Row="1"
+            Height="{Binding ListHeight, Mode=TwoWay}"
+            Margin="{StaticResource 'Margin All'}"
+            behaviours:MultiSelectorBehaviours.SynchronizedSelectedItems="{Binding ChosedOperatorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Background="{x:Null}"
+            ItemsSource="{Binding OperatorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectionMode="Multiple">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox
+                        Margin="{StaticResource 'Margin All'}"
+                        Content="{Binding}"
+                        IsChecked="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

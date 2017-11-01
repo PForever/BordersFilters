@@ -54,12 +54,18 @@
                         <Button
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
-                            MinWidth="170"
-                            MinHeight="30"
+                            MinWidth="80"
+                            MinHeight="20"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Command="{Binding SaveCommand}"
-                            Content="Сохранить в выбранном каталоге" />
+                            Command="{Binding SaveCommand}">
+                            <TextBlock
+                                Margin="{StaticResource 'Margin All'}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="Save" />
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </TabControl.ContentTemplate>

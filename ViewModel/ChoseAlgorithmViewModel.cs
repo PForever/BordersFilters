@@ -151,25 +151,21 @@ namespace ViewModel
 
         #endregion
         #region BrowseOutPath
-	    public static readonly DependencyProperty OutPathValueProperty = DependencyProperty.Register(
-	        nameof(OutPathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(Directory.GetCurrentDirectory() +
-	                                                                                            @"\..\..\Results\"));
-
-	    public string OutPathValue
-        {
-	        get
-	        {
-	            return (string)GetValue(OutPathValueProperty);
-	        }
-	        set
-	        {
-	            SetValue(OutPathValueProperty, value);
-	        }
-	    }
+        public string OutPathValue { get; set; }
         #endregion
+        #region SetCatalogCommand
 
+        public static readonly DependencyProperty SetCatalogProperty = DependencyProperty.Register(
+	        nameof(SetCatalog), typeof(Command), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(default(Command)));
+
+	    public Command SetCatalog
+        {
+	        get { return (Command)GetValue(SetCatalogProperty); }
+	        set { SetValue(SetCatalogProperty, value); }
+	    }
+
+        #endregion
         private bool _showed = false;
-
 
         public ChoseAlgorithmViewModel()
         {
@@ -182,6 +178,8 @@ namespace ViewModel
                 ListHeight = _showed ? "0" : "auto";
                 _showed =! _showed;
             });
+            SetCatalog = new Command(ChooseCatalog);
+      
             OperatorsList = new[] {
                 "Brightness Operator",
                 "Invertion Operator",
@@ -198,7 +196,7 @@ namespace ViewModel
             _initializeViewModel?.Invoke(this);
 		}
 
-	    #region Methods for Selecting
+	    #region Methods for Selecting/Choosing
 
 	    public void SelectAllItems(object sender, EventArgs e)
 	    {
@@ -215,6 +213,18 @@ namespace ViewModel
 	        SelectAllText = "Выбрать все";
 	    }
 
+	    public void ChooseCatalog()
+	    {
+	        var openFileDialog = new WinForms.FolderBrowserDialog
+	        {
+	            RootFolder = System.Environment.SpecialFolder.DesktopDirectory,
+	            ShowNewFolderButton = true
+	        };
+	        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+	        {
+	            OutPathValue = openFileDialog.SelectedPath;
+	        }
+        }
 	    #endregion
     }
 }

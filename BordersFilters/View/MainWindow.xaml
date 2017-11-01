@@ -16,6 +16,11 @@
     <Window.DataContext>
         <viewModel:ViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <Thickness x:Key="Margin All">4, 4, 4, 4</Thickness>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -29,7 +34,12 @@
                 MinHeight="28"
                 HorizontalAlignment="Center"
                 Command="{Binding Start}">
-                Start
+                <TextBlock
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="Start" />
             </Button>
         </StackPanel>
         <viewers:OutPictureView Grid.Row="1" />

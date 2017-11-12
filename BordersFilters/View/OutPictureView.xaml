@@ -5,6 +5,7 @@
     xmlns:behaviours="clr-namespace:ViewModel.Behaviours;assembly=ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BordersFilters"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     d:DesignHeight="300"
@@ -13,11 +14,6 @@
     <UserControl.DataContext>
         <viewModel:OutPictureViewModel />
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <Thickness x:Key="Margin All">4, 4, 4, 4</Thickness>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <TabControl
             Margin="{StaticResource 'Margin All'}"
@@ -54,17 +50,20 @@
                         <Button
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
-                            MinWidth="80"
-                            MinHeight="20"
+                            MinWidth="110"
+                            MinHeight="22"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Command="{Binding SaveCommand}">
+                            Command="{Binding SaveCommand}"
+                            Style="{DynamicResource MaterialDesignFlatButton}"
+                            ToolTip="Сохраняется в //Debug если директория не выбрана">
                             <TextBlock
                                 Margin="{StaticResource 'Margin All'}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
+                                FontSize="14"
                                 FontWeight="Bold"
-                                Text="Save" />
+                                Text="Save image" />
                         </Button>
                     </Grid>
                 </DataTemplate>

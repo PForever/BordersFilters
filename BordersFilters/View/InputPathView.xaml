@@ -4,23 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BordersFilters"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:InputPathViewModel />
     </UserControl.DataContext>
-
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <Thickness x:Key="Margin All">4, 4, 4, 4</Thickness>
-        </ResourceDictionary>
-    </UserControl.Resources>
-
-
-    <Grid Background="White">
+    <Grid>
         <StackPanel>
-            <TextBlock FontWeight="Bold" TextAlignment="Center">Выбор изображения</TextBlock>
+            <TextBlock
+                FontWeight="Bold"
+                Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                TextAlignment="Center">
+                Выбор изображения
+            </TextBlock>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*" />
@@ -35,7 +33,9 @@
                     x:Name="btnBrowse"
                     Grid.Column="1"
                     Margin="{StaticResource 'Margin All'}"
-                    Click="btnBrowse_OnClick">
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                    Click="btnBrowse_OnClick"
+                    Style="{DynamicResource MaterialDesignRaisedButton}">
                     Browse
                 </Button>
             </Grid>

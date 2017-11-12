@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.1.953, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.3.1.953\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -58,9 +64,6 @@
     <Compile Include="View\InputPathView.xaml.cs">
       <DependentUpon>InputPathView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InputPictureView.xaml.cs">
-      <DependentUpon>InputPictureView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\OutPictureView.xaml.cs">
       <DependentUpon>OutPictureView.xaml</DependentUpon>
     </Compile>
@@ -68,10 +71,6 @@
       <DependentUpon>ChoseAlgorithmView.xaml</DependentUpon>
     </Compile>
     <Page Include="View\InputPathView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\InputPictureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

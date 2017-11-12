@@ -54,15 +54,15 @@ namespace ViewModel
 	        set => SetValue(ChoosedOperatorsListProperty, value);
 	    }
         #endregion
-	    #region ReapplyCount
+        #region UsageCount
 
-        public static readonly DependencyProperty ReapplyCountProperty = DependencyProperty.Register(
-	        nameof(ReapplyCount), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(1));
+        public static readonly DependencyProperty UsageCountProperty = DependencyProperty.Register(
+	        nameof(UsageCount), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(1));
 
-	    public int ReapplyCount
-	    {
-	        get { return (int) GetValue(ReapplyCountProperty); }
-	        set { SetValue(ReapplyCountProperty, value); }
+	    public int UsageCount
+        {
+	        get { return (int) GetValue(UsageCountProperty); }
+	        set { SetValue(UsageCountProperty, value); }
 	    }
 
 	    #endregion
@@ -88,7 +88,7 @@ namespace ViewModel
         #region ListHeight
 
         public static readonly DependencyProperty ListHeightProperty = DependencyProperty.Register(
-	        nameof(ListHeight), typeof(string), typeof(ChoseAlgorithmViewModel), new PropertyMetadata("0"));
+	        nameof(ListHeight), typeof(string), typeof(ChoseAlgorithmViewModel), new PropertyMetadata("auto"));
 
 	    public string ListHeight
 	    {
@@ -165,7 +165,32 @@ namespace ViewModel
 	    }
 
         #endregion
-        private bool _showed = false;
+        #region MatrixSize
+
+	    public static readonly DependencyProperty MatrixSizeProperty = DependencyProperty.Register(
+	        nameof(MatrixSize), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(1));
+
+	    public int MatrixSize
+        {
+	        get { return (int)GetValue(MatrixSizeProperty); }
+	        set { SetValue(MatrixSizeProperty, value); }
+	    }
+
+        #endregion
+        #region Sigma
+
+        public static readonly DependencyProperty SigmaProperty = DependencyProperty.Register(
+	        nameof(Sigma), typeof(double), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(1.0));
+
+	    public double Sigma
+        {
+	        get { return (double)GetValue(SigmaProperty); }
+	        set { SetValue(SigmaProperty, value); }
+	    }
+
+	    #endregion
+
+        private bool _showed = true;
 
         public ChoseAlgorithmViewModel()
         {

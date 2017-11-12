@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Imaging;
+using MaterialDesignThemes.Wpf;
 using Model;
 using Model.OperatorsHelper;
 
@@ -21,7 +22,7 @@ namespace ViewModel.Additional
         public static BitmapSource InputImageSource { get; set; }
         public static string BaseOfSavingDirectory { get; set; }
         public Command SaveCommand { get; set; }
-        public string OutPath => BaseOfSavingDirectory + @"\\" + NameOfAlgorithm + ".jpg";
+        public string OutPath { get; set; }
 
 
         public TabControl(Dictionary<OperatorsEnum,BitmapSource> dictionary)
@@ -41,6 +42,14 @@ namespace ViewModel.Additional
 
         private void SaveFile()
         {
+            if (BaseOfSavingDirectory == null)
+            {
+                OutPath = Directory.GetCurrentDirectory() + @"\\" + NameOfAlgorithm + ".jpg";
+            }
+            else
+            {
+                OutPath = BaseOfSavingDirectory + @"\\" + NameOfAlgorithm + ".jpg";
+            }
             var encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(OutImageSource));
             using (var filestream = new FileStream(OutPath, FileMode.Create))

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using MaterialDesignThemes.Wpf;
 using Model;
 using ViewModel.Additional;
 
@@ -15,15 +16,28 @@ namespace ViewModel
 	public class ViewModel : DependencyObject
 	{
         #region Controllers
-        public InputPictureViewModel InputPictureView { get; set; }
+        //public InputPictureViewModel InputPictureView { get; set; }
         public OutPictureViewModel OutPictureView { get; set; }
         public InputPathViewModel InputPathView { get; set; }
         public ChoseAlgorithmViewModel ChoseAlgorithmView { get; set; }
         #endregion
 
-	    #region Command
+        #region Message
 
-	    public static readonly DependencyProperty StartProperty = DependencyProperty.Register(
+	    public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(
+	        nameof(messageQueue), typeof(SnackbarMessageQueue), typeof(ViewModel), new PropertyMetadata(default(SnackbarMessageQueue)));
+
+	    public SnackbarMessageQueue messageQueue
+        {
+	        get { return (SnackbarMessageQueue)GetValue(MessageProperty); }
+	        set { SetValue(MessageProperty, value); }
+	    }
+
+        #endregion
+
+        #region Command
+
+        public static readonly DependencyProperty StartProperty = DependencyProperty.Register(
 	        nameof(Start), typeof(Command), typeof(ViewModel), new PropertyMetadata(default(Command)));
 	    public Command Start
 	    {
@@ -66,7 +80,6 @@ namespace ViewModel
 		{
             #region Initialize
 
-		    InputPictureViewModel.InitializeViewModel += (sunder) => InputPictureView = sunder;
 		    OutPictureViewModel.InitializeViewModel += (sunder) => OutPictureView = sunder;
 		    InputPathViewModel.InitializeViewModel += (sunder) => InputPathView = sunder;
 		    ChoseAlgorithmViewModel.InitializeViewModel += (sunder) => ChoseAlgorithmView = sunder;
@@ -76,30 +89,36 @@ namespace ViewModel
             Start = new Command(() =>
             {
                 var model = new Initialization();
+                messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6)));
                 var path = InputPathView.PathValue;
                 if (File.Exists(path))
                 {
                     TabControl.SaveCompleted += (sender, e) =>
                     {
-                        MessageBox.Show("Завершено!");
+                        messageQueue.Enqueue("Сохранено!");
                     };
                     TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
                     TabControl.SetInputImage(path);
-                    var OperatorsDictionary = TabControl.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
+                    var operatorsDictionary = TabControl.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
                     OutPictureView.TabControls = new ObservableCollection<TabControl>();
                     model.Path = path;
                     model.Operators = new Collection<OperatorsEnum>();
                     foreach (var oper in ChoseAlgorithmView.ChosedOperatorsList)
                     {                    
-                        if (OperatorsDictionary.TryGetValue(oper, out var searchIndex))
+                        if (operatorsDictionary.TryGetValue(oper, out var searchIndex))
                         {
                             model.Operators.Add(searchIndex);
                         }
                     }
                     Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>> preDestination = new Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>>();
                     model.PreDestination = preDestination;
+
+                    // Присвоение операторов
                     model.RGBOperator = ChoseAlgorithmView.RGBOperator;
-                    model.ReapplyCount = ChoseAlgorithmView.ReapplyCount;
+                    model.UsageCount = ChoseAlgorithmView.UsageCount;
+                    model.MatrixSize = ChoseAlgorithmView.MatrixSize;
+                    model.Sigma = ChoseAlgorithmView.Sigma;
+
                     Task.Run(() =>
                     {
                         model.Start();
@@ -111,9 +130,8 @@ namespace ViewModel
                             }
                         });
                     });
-                    // ChoseAlgorithmView.ChosedOperatorsList.Clear();
-                    // ChoseAlgorithmView.SelectAllOperator = false;
                 }
+                messageQueue.Enqueue("Обработано!");
             });
 		}
 	}

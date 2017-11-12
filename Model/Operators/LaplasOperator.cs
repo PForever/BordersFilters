@@ -3,7 +3,7 @@ using Model.Abstract;
 using Model.OperatorsHelper;
 
 namespace Model.Operators {
-	class LaplasOperator : IOperator {
+	public class LaplasOperator : IOperator {
 		bool inverted = true;
 
 		public LaplasOperator() => Name = OperatorsEnum.LaplasOperator;

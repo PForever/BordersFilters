@@ -43,10 +43,14 @@ namespace Model {
 		public Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>> PreDestination { get; set; }
 		public Bitmap Source { get; set; }
 		public bool RGBOperator { get; set; }
-		public int ReapplyCount { get; set; }
-		private static readonly object SyncRoot1 = new object();
-		//private static readonly object SyncRoot2 = new object();
 
+		public int UsageCount { get; set; } // Количество использований
+	    public int MatrixSize { get; set; } // Размерность матрицы
+        public double Sigma { get; set; } // Параметр - сигма
+
+	    public int ReapplyCount = 1; // Удалить после оптимизации алгоритмов
+
+        private static readonly object SyncRoot1 = new object();
 
 		#endregion
 
@@ -105,7 +109,6 @@ namespace Model {
 						var variable = new Dictionary<OperatorsEnum, BitmapSource>();
 						variable.Add(Operator, GetBitmapSource(bm));
 						return variable;
-						//return new Dictionary<OperatorsEnum, BitmapSource>.Add(Operator, GetBitmapSource(bm));
 					});
 				}
 				

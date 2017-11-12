@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:BordersFilters"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
@@ -38,8 +37,10 @@
                     MinHeight="{StaticResource ButtomHeight}"
                     Margin="{StaticResource 'Margin All'}"
                     materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                    Background="{DynamicResource PrimaryHueMidBrush}"
                     Click="btnBrowse_OnClick"
                     FontSize="12"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                     Style="{DynamicResource MaterialDesignRaisedButton}">
                     Browse
                 </Button>

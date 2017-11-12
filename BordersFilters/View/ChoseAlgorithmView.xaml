@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviours="clr-namespace:ViewModel.Behaviours;assembly=ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:BordersFilters.View"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
@@ -140,9 +139,11 @@
                         Margin="{StaticResource 'Margin All'}"
                         HorizontalAlignment="Left"
                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
                         Command="{Binding Show}"
                         Content="Выбор алгоритмов"
                         FontSize="12"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                         Style="{DynamicResource MaterialDesignRaisedButton}" />
                     <CheckBox
                         Grid.Column="1"
@@ -164,9 +165,11 @@
                     Margin="{StaticResource 'Margin All'}"
                     HorizontalAlignment="Right"
                     materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                    Background="{DynamicResource PrimaryHueMidBrush}"
                     Command="{Binding SetCatalog}"
                     Content="Выбор директории"
                     FontSize="12"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                     Style="{DynamicResource MaterialDesignRaisedButton}" />
             </Grid>
         </Grid>

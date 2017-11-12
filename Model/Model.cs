@@ -29,7 +29,7 @@ namespace Model {
 		SobelOperator,
 		LaplasOperator,
 		RobertsOperator,
-		PrevittOperator
+		PrewittOperator
 	}
 
 	public class Initialization {
@@ -89,8 +89,8 @@ namespace Model {
 					case OperatorsEnum.GaussOperator:
 						oper = new GaussOperator();
 						break;
-					case OperatorsEnum.PrevittOperator:
-						oper = new PrevittOperator();
+					case OperatorsEnum.PrewittOperator:
+						oper = new PrewittOperator();
 						break;
 					default:
 						break;

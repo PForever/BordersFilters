@@ -74,7 +74,7 @@ namespace ViewModel
 
         #endregion
 
-	    #endregion
+        #endregion
 
         public ViewModel()
 		{
@@ -89,10 +89,21 @@ namespace ViewModel
             Start = new Command(() =>
             {
                 var model = new Initialization();
-                messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6)));
+                messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6.3)));
                 var path = InputPathView.PathValue;
                 if (File.Exists(path))
                 {
+                    // Присвоение операторов и обновление параметров модели
+                    model.RGBOperator = ChoseAlgorithmView.RGBOperator;
+                    model.UsageCount = ChoseAlgorithmView.UsageCount;
+                    model.MatrixSize = ChoseAlgorithmView.MatrixSize;
+                    model.Sigma = ChoseAlgorithmView.Sigma;
+                    model.Path = path;
+                    OutPictureView.TabControls = new ObservableCollection<TabControl>();
+                    model.Operators = new Collection<OperatorsEnum>();
+
+
+                    // Работа с таб контролами и наборами операторов
                     TabControl.SaveCompleted += (sender, e) =>
                     {
                         messageQueue.Enqueue("Сохранено!");
@@ -100,9 +111,6 @@ namespace ViewModel
                     TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
                     TabControl.SetInputImage(path);
                     var operatorsDictionary = TabControl.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
-                    OutPictureView.TabControls = new ObservableCollection<TabControl>();
-                    model.Path = path;
-                    model.Operators = new Collection<OperatorsEnum>();
                     foreach (var oper in ChoseAlgorithmView.ChosedOperatorsList)
                     {                    
                         if (operatorsDictionary.TryGetValue(oper, out var searchIndex))
@@ -110,14 +118,10 @@ namespace ViewModel
                             model.Operators.Add(searchIndex);
                         }
                     }
+
+                    //Работа с потоками
                     Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>> preDestination = new Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>>();
                     model.PreDestination = preDestination;
-
-                    // Присвоение операторов
-                    model.RGBOperator = ChoseAlgorithmView.RGBOperator;
-                    model.UsageCount = ChoseAlgorithmView.UsageCount;
-                    model.MatrixSize = ChoseAlgorithmView.MatrixSize;
-                    model.Sigma = ChoseAlgorithmView.Sigma;
 
                     Task.Run(() =>
                     {
@@ -128,10 +132,10 @@ namespace ViewModel
                             {
                                 OutPictureView.TabControls.Add(new TabControl(func()));
                             }
-                        });
+                            messageQueue.Enqueue("Обработано!");
+                        });                     
                     });
-                }
-                messageQueue.Enqueue("Обработано!");
+                }           
             });
 		}
 	}

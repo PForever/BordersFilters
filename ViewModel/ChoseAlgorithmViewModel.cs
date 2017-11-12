@@ -213,9 +213,8 @@ namespace ViewModel
                 "Kanny Operator",
                 "Sobel Operator",
                 "Laplas Operator",
-                "Pruitt Operator",
                 "Roberts Operator",
-                "Previtt Operator"
+                "Prewitt Operator"
             };
 		   
             _initializeViewModel?.Invoke(this);

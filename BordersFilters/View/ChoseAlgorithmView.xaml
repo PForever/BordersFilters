@@ -133,18 +133,17 @@
                     </Grid.ColumnDefinitions>
                     <Button
                         Grid.Column="0"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
                         Margin="{StaticResource 'Margin All'}"
                         HorizontalAlignment="Left"
                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                         Command="{Binding Show}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        <TextBlock
-                            Margin="{StaticResource 'Margin All'}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="12"
-                            Text="Выбор алгоритмов" />
-                    </Button>
+                        Content="Выбор алгоритмов"
+                        FontSize="12"
+                        Style="{DynamicResource MaterialDesignRaisedButton}" />
                     <CheckBox
                         Grid.Column="1"
                         HorizontalAlignment="Left"
@@ -158,18 +157,17 @@
                 </Grid>
                 <Button
                     Grid.Column="1"
+                    Width="{StaticResource ButtomWidth}"
+                    Height="{StaticResource ButtomHeight}"
+                    MinWidth="{StaticResource ButtomWidth}"
+                    MinHeight="{StaticResource ButtomHeight}"
                     Margin="{StaticResource 'Margin All'}"
                     HorizontalAlignment="Right"
                     materialDesign:ShadowAssist.ShadowDepth="Depth2"
                     Command="{Binding SetCatalog}"
-                    Style="{DynamicResource MaterialDesignRaisedButton}">
-                    <TextBlock
-                        Margin="{StaticResource 'Margin All'}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="12"
-                        Text="Выбор директории" />
-                </Button>
+                    Content="Выбор директории"
+                    FontSize="12"
+                    Style="{DynamicResource MaterialDesignRaisedButton}" />
             </Grid>
         </Grid>
         <ListBox

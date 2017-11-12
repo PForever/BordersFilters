@@ -224,7 +224,8 @@ namespace ViewModel
 
 	    public void SelectAllItems(object sender, EventArgs e)
 	    {
-	        foreach (var operation in OperatorsList)
+	        ChosedOperatorsList.Clear();
+            foreach (var operation in OperatorsList)
 	        {
 	            ChosedOperatorsList.Add(operation);
 	        }

@@ -15,8 +15,18 @@ namespace ViewModel
 {
 	public class ViewModel : DependencyObject
 	{
+
+        #region Event Invokers
+
+	    public static event EventHandler SaveCompleted;
+	    private static void OnSaveCompleted()
+	    {
+	        SaveCompleted?.Invoke(null, EventArgs.Empty);
+	    }
+
+        #endregion
+
         #region Controllers
-        //public InputPictureViewModel InputPictureView { get; set; }
         public OutPictureViewModel OutPictureView { get; set; }
         public InputPathViewModel InputPathView { get; set; }
         public ChoseAlgorithmViewModel ChoseAlgorithmView { get; set; }
@@ -35,7 +45,7 @@ namespace ViewModel
 
         #endregion
 
-        #region Command
+        #region Start Command
 
         public static readonly DependencyProperty StartProperty = DependencyProperty.Register(
 	        nameof(Start), typeof(Command), typeof(ViewModel), new PropertyMetadata(default(Command)));
@@ -47,11 +57,24 @@ namespace ViewModel
 
         #endregion
 
-	    #region Window
+	    #region Save Command
 
-	    #region WindowsHight
+	    public static readonly DependencyProperty SaveProperty = DependencyProperty.Register(
+	        nameof(Save), typeof(Command), typeof(ViewModel), new PropertyMetadata(default(Command)));
 
-	    public static readonly DependencyProperty WindowsWidthProperty = DependencyProperty.Register(
+	    public Command Save
+        {
+	        get { return (Command)GetValue(SaveProperty); }
+	        set { SetValue(SaveProperty, value); }
+	    }
+
+	    #endregion
+
+        #region Window
+
+        #region WindowsHight
+
+        public static readonly DependencyProperty WindowsWidthProperty = DependencyProperty.Register(
 	        nameof(WindowsWidth), typeof(double), typeof(ViewModel), new PropertyMetadata(300.0));
 
 	    public double WindowsWidth
@@ -83,13 +106,18 @@ namespace ViewModel
 		    OutPictureViewModel.InitializeViewModel += (sunder) => OutPictureView = sunder;
 		    InputPathViewModel.InitializeViewModel += (sunder) => InputPathView = sunder;
 		    ChoseAlgorithmViewModel.InitializeViewModel += (sunder) => ChoseAlgorithmView = sunder;
+		    messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6.3)));
 
             #endregion
 
             Start = new Command(() =>
             {
-                var model = new Initialization();
-                messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6.3)));
+                if (ChoseAlgorithmView.ChosedOperatorsList.Count == 0)
+                {
+                    messageQueue.Enqueue("Выберите алгоритмы!");
+                    return;
+                }
+                var model = new Initialization();          
                 var path = InputPathView.PathValue;
                 if (File.Exists(path))
                 {
@@ -102,12 +130,7 @@ namespace ViewModel
                     OutPictureView.TabControls = new ObservableCollection<TabControl>();
                     model.Operators = new Collection<OperatorsEnum>();
 
-
                     // Работа с таб контролами и наборами операторов
-                    TabControl.SaveCompleted += (sender, e) =>
-                    {
-                        messageQueue.Enqueue("Сохранено!");
-                    };
                     TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
                     TabControl.SetInputImage(path);
                     var operatorsDictionary = TabControl.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
@@ -136,7 +159,21 @@ namespace ViewModel
                         });                     
                     });
                 }           
+            });	
+            Save = new Command(() =>
+            {
+                if (OutPictureView.TabControls == null)
+                {
+                    messageQueue.Enqueue("Нет данных для сохранения!");
+                    return;
+                }
+                TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
+                foreach (var tabControl in OutPictureView.TabControls)
+                {
+                    tabControl.SaveImage();    
+                }
+                messageQueue.Enqueue("Сохранено!");
             });
-		}
-	}
+        }
+    }
 }

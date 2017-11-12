@@ -27,44 +27,20 @@
             <TabControl.ContentTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="7.5*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Image
-                            Grid.Row="0"
                             Grid.Column="0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Source="{Binding InputImageSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                         <Image
-                            Grid.Row="0"
                             Grid.Column="1"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Source="{Binding OutImageSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                        <Button
-                            Grid.Row="1"
-                            Grid.ColumnSpan="2"
-                            MinWidth="110"
-                            MinHeight="22"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Command="{Binding SaveCommand}"
-                            Style="{DynamicResource MaterialDesignFlatButton}"
-                            ToolTip="Сохраняется в //Debug если директория не выбрана">
-                            <TextBlock
-                                Margin="{StaticResource 'Margin All'}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                FontWeight="Bold"
-                                Text="Save image" />
-                        </Button>
                     </Grid>
                 </DataTemplate>
             </TabControl.ContentTemplate>

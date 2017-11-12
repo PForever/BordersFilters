@@ -10,19 +10,12 @@ namespace ViewModel.Additional
 {
     public class TabControl
     {
-        public static event EventHandler SaveCompleted;
-        private static void OnSaveCompleted()
-        {
-            SaveCompleted?.Invoke(null, EventArgs.Empty);
-        }
-
         private static Dictionary<string,OperatorsEnum> OperationDictionary;
         public string NameOfAlgorithm { get; set; }
         public BitmapSource OutImageSource { get; set; }
         public static BitmapSource InputImageSource { get; set; }
         public static string BaseOfSavingDirectory { get; set; }
-        public Command SaveCommand { get; set; }
-        public string OutPath { get; set; }
+        public static string OutPath { get; set; }
 
 
         public TabControl(Dictionary<OperatorsEnum,BitmapSource> dictionary)
@@ -34,13 +27,11 @@ namespace ViewModel.Additional
                 {
                     NameOfAlgorithm = expression.Key;
                     OutImageSource = bm;
-                    SaveCommand = new Command(SaveFile);
                 }
             }
-
         }
 
-        private void SaveFile()
+        public void SaveImage()
         {
             if (BaseOfSavingDirectory == null)
             {
@@ -56,7 +47,6 @@ namespace ViewModel.Additional
             {
                 encoder.Save(filestream);
             }
-            OnSaveCompleted();
         }
 
         public static void SetInputImage(string inputPath)

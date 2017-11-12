@@ -10,9 +10,9 @@
     xmlns:viewers="clr-namespace:BordersFilters.View"
     Title="MainWindow"
     Width="720"
-    Height="660"
+    Height="640"
     MinWidth="500"
-    MinHeight="500"
+    MinHeight="630"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     TextElement.FontSize="12"
@@ -30,40 +30,44 @@
                 </materialDesign:TransitionerSlide.ForwardWipe>
                 <Grid Background="White">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="16*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <StackPanel>
-                        <viewers:InputPathView />
-                        <viewers:ChoseAlgorithmView />
-                    </StackPanel>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <viewers:InputPathView Grid.Row="0" VerticalAlignment="Stretch" />
+                        <viewers:ChoseAlgorithmView Grid.Row="1" VerticalAlignment="Stretch" />
+                    </Grid>
                     <Button
                         Grid.Row="1"
-                        MinWidth="100"
-                        MinHeight="28"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
                         Margin="{StaticResource 'Margin All'}"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                         Command="{Binding Start}"
-                        Style="{DynamicResource MaterialDesignRaisedButton}">
-                        <TextBlock
-                            Margin="{StaticResource 'Margin All'}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
-                            FontSize="12"
-                            Text="Start" />
-                    </Button>
+                        Content="Start"
+                        FontSize="12"
+                        Style="{DynamicResource MaterialDesignRaisedButton}" />
                     <Button
                         Grid.Row="1"
-                        MinWidth="100"
-                        MinHeight="28"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
                         Margin="{StaticResource 'Margin All'}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                         Command="{x:Static materialDesign:Transitioner.MoveNextCommand}"
                         Content="К результатам"
+                        FontSize="12"
                         Style="{DynamicResource MaterialDesignRaisedButton}" />
                 </Grid>
             </materialDesign:TransitionerSlide>
@@ -73,27 +77,42 @@
                 </materialDesign:TransitionerSlide.BackwardWipe>
                 <Grid Background="White">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="16*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <viewers:OutPictureView Grid.Row="0" />
                     <Button
                         Grid.Row="1"
-                        MinWidth="100"
-                        MinHeight="28"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
                         Margin="{StaticResource 'Margin All'}"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                         Command="{x:Static materialDesign:Transitioner.MovePreviousCommand}"
                         Content="К параметрам"
+                        FontSize="12"
                         Style="{DynamicResource MaterialDesignRaisedButton}" />
+                    <Button
+                        Grid.Row="1"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                        Command="{Binding Save}"
+                        Content="Сохранить"
+                        FontSize="12"
+                        Style="{DynamicResource MaterialDesignRaisedButton}"
+                        ToolTip="Сохраняется в //Debug если директория не выбрана" />
                 </Grid>
             </materialDesign:TransitionerSlide>
         </materialDesign:Transitioner>
-        <materialDesign:Snackbar
-            HorizontalAlignment="Center"
-            HorizontalContentAlignment="Center"
-            MessageQueue="{Binding messageQueue}" />
+        <materialDesign:Snackbar HorizontalAlignment="Center" MessageQueue="{Binding messageQueue}" />
     </Grid>
 </Window>

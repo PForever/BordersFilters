@@ -17,7 +17,9 @@
             Margin="{StaticResource 'Margin All'}"
             VerticalAlignment="Stretch"
             Background="#424242"
-            ItemsSource="{Binding TabControls}">
+            FixedHeaderCount="4"
+            ItemsSource="{Binding TabControls}"
+            SelectedIndex="0">
             <dragablz:TabablzControl.HeaderItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding NameOfAlgorithm, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />

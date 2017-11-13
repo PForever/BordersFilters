@@ -38,7 +38,16 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" TargetType="{x:Type dragablz:TabablzControl}" />
+            <Style BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" TargetType="{x:Type dragablz:TabablzControl}">
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}" TargetType="dragablz:DragablzItem">
+                            <Setter Property="Background" Value="#212121" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryHueMidBrush}" />
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <Thickness x:Key="Margin All">4, 4, 4, 4</Thickness>
             <system:Double x:Key="ButtomWidth">145</system:Double>
             <system:Double x:Key="ButtomHeight">28</system:Double>

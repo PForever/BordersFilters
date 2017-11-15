@@ -206,16 +206,15 @@ namespace ViewModel
             SetCatalog = new Command(ChooseCatalog);
       
             OperatorsList = new[] {
-                "Brightness Operator",
                 "Invertion Operator",
                 "Identity Operator",
                 "Gauss Operator",
                 "Kanny Operator",
                 "Sobel Operator",
                 "Laplas Operator",
+                "Laplas-Gauss Operator",
                 "Roberts Operator",
                 "Prewitt Operator",
-                "Laplas-Gauss Operator"
             };
 		   
             _initializeViewModel?.Invoke(this);

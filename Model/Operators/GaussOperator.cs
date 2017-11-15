@@ -9,37 +9,36 @@ using Model.OperatorsHelper;
 
 namespace Model.Operators
 {
-    class GaussOperator : IOperator
-    {
-        private double[,] _oper;
-        //static readonly int[,] _oper = { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } };
+    class GaussOperator : IOperator { 
+
         public GaussOperator() => Name = OperatorsEnum.GaussOperator;
 
         public OperatorsEnum Name { get; }
+   
+        private double[,] _oper;
 
-        public byte[,] Transform(byte[,] src, int reapplyСount)
+        public byte[,] Transform(byte[,] src, int MatrixSize, double Sigma)
         {
-            _oper = new double[reapplyСount, reapplyСount];
-            double sigma = (double)reapplyСount / 6;
-            int halfLenght = reapplyСount / 2;
-            _oper.ParallelForEach((i, j) => _oper[i, j] = GetGauss(sigma, i - halfLenght, j - halfLenght));
-            double dec = Math.Abs(_oper.Determinant());
-            //double max = _oper.Max();
-            _oper.ParallelForEach((i, j) => _oper[i, j] = _oper[i, j]/dec);
-            //_oper = new[,]
-            //{
-            //    {0.000789, 0.006581, 0.013347, 0.006581, 0.000789},
-            //    {0.006581, 0.054901, 0.111345, 0.054901, 0.006581},
-            //    {0.013347, 0.111354, 0.225821, 0.111345, 0.013347},
-            //    {0.006581, 0.054901, 0.111345, 0.054901, 0.006581},
-            //    {0.000789, 0.006581, 0.013347, 0.006581, 0.000789}
-            //};
+			_oper = GetGauss(MatrixSize, Sigma);
+
             byte[,] dst = new byte[src.GetLength(0),src.GetLength(1)];
             src.ParallelForEach((i, j) => dst[i, j] = src.Process(i, j, _oper));
+
             return dst;
         }
 
-        private double GetGauss(double sigma, int i, int j) => (1 / (2 * Math.PI * Math.Pow(sigma, 2))) *
+		public double[,] GetGauss(int MatrixSize, double Sigma) {
+			double[,] gauss = new double[MatrixSize, MatrixSize];
+            int halfLenght = MatrixSize / 2;
+
+			gauss.ParallelForEach((i, j) => gauss[i, j] = Gauss(Sigma, i - halfLenght, j - halfLenght));
+
+            double det = Math.Abs(gauss.Determinant());
+            gauss.ParallelForEach((i, j) => gauss[i, j] = gauss[i, j]/det);
+			return gauss;
+		}
+
+        private double Gauss(double sigma, int i, int j) => (1 / (2 * Math.PI * Math.Pow(sigma, 2))) *
                                                                Math.Exp(-(Math.Pow(i, 2) + Math.Pow(j, 2)) /
                                                                         (2 * Math.Pow(sigma, 2)));
     }

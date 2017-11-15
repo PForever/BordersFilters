@@ -4,48 +4,44 @@ using Model.OperatorsHelper;
 
 namespace Model.Operators {
 	public class LaplasGaussOperator : IOperator {
-		bool inverted = true;
-		double[,] _oper;
-
 		public LaplasGaussOperator() => Name = OperatorsEnum.LaplasGaussOperator;
 
 		public OperatorsEnum Name { get; }
-
-		public byte[,] Transform(byte[,] src) {
-			return Transform(src, 3);
-		}
-
+		
 		// ОСТОРОЖНО!!!! 
 		// АБСОЛЮТНО
 		// НЕ ТЕЩЕННЫЙ
 		// КОД!!!!!
 
-		public byte[,] Transform(byte[,] src, int matrix_size) {
-			if (matrix_size < 3 || matrix_size % 2 == 0) return null;
+		bool inverted = true;
+		double[,] _oper;
+
+		public byte[,] Transform(byte[,] src, int MatrixSize, double Sigma) {
+			if (MatrixSize < 3 || MatrixSize % 2 == 0) return null;
 			byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
 
-			int[,] oper = GetGaussianLaplasian(matrix_size, 2);
+			int[,] oper = GetGaussianLaplasian(MatrixSize, Sigma);
 			if (inverted) oper = oper.Divide(-1);
 
-			return dst.ParallelForEach((i, j) => dst[i, j] = Math.Abs(src.Process(i, j, oper)).ToByte());
-
+			dst = dst.ParallelForEach((i, j) => dst[i, j] = src.Process(i, j, oper).ToByte());
+			return dst;
 		}
+		
+		public int[,] GetGaussianLaplasian(int MatrixSize, double Sigma) {
+			if (MatrixSize < 3 || MatrixSize % 2 == 0) return null;
+			_oper = new double[MatrixSize, MatrixSize];
+			double[,] oper = new double[MatrixSize, MatrixSize];
 
-		public int[,] GetGaussianLaplasian(int matrix_size, double sigma) {
-			if (matrix_size < 3 || matrix_size % 2 == 0) return null;
-			_oper = new double[matrix_size, matrix_size];
-			double[,] oper = new double[matrix_size, matrix_size];
-
-			int mid = matrix_size / 2;
+			int mid = MatrixSize / 2;
 			int sum = 0;
 
-			for (int i = 0; i < matrix_size; i++) {
-				for (int j = 0; j < matrix_size; j++) {
+			for (int i = 0; i < mid; i++) {
+				for (int j = 0; j < mid; j++) {
 					oper.SymmetricalSetter(mid - i, mid - j, LoG(i, j));
 				}
 			}
 
-			int[,] int_oper = new int[matrix_size, matrix_size];
+			int[,] int_oper = new int[MatrixSize, MatrixSize];
 
 			double det = Math.Abs(oper.Determinant());
 			_oper.ParallelForEach((i, j) => int_oper[i, j] = (int) (_oper[i, j] / det));

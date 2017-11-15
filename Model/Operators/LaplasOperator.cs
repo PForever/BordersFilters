@@ -4,27 +4,22 @@ using Model.OperatorsHelper;
 
 namespace Model.Operators {
 	public class LaplasOperator : IOperator {
-		bool inverted = true;
-
 		public LaplasOperator() => Name = OperatorsEnum.LaplasOperator;
 
 		public OperatorsEnum Name { get; }
+		
+		bool inverted = true;
 
-		public byte[,] Transform(byte[,] src) {
-			return Transform(src, 3);
-		}
-
-		public byte[,] Transform(byte[,] src, int matrix_size) {
-			if (matrix_size < 3 || matrix_size % 2 == 0) return null;
+		public byte[,] Transform(byte[,] src, int MatrixSize, double Sigma) {
+			if (MatrixSize < 3 || MatrixSize % 2 == 0) return null;
 			byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
 
 			int[,] oper;
 
-			oper = GetLaplasian(matrix_size);
+			oper = GetLaplasian(MatrixSize);
 			if (inverted) oper = oper.Divide(-1);
 			
 			return dst.ParallelForEach((i, j) => dst[i, j] = Math.Abs(src.Process(i, j, oper)).ToByte());
-
 		}
 
 		private int[,] GetLaplasian(int matrix_size) {

@@ -15,14 +15,13 @@ namespace ViewModel
 {
 	public class ViewModel : DependencyObject
 	{
-
         #region Event Invokers
 
-	    public static event EventHandler SaveCompleted;
-	    private static void OnSaveCompleted()
-	    {
-	        SaveCompleted?.Invoke(null, EventArgs.Empty);
-	    }
+	    //public static event EventHandler<EventArgs> SaveCompleted;
+	    //private static void OnSaveCompleted(EventArgs e)
+	    //{
+	    //    SaveCompleted?.Invoke(null, e);
+	    //}
 
         #endregion
 
@@ -113,7 +112,7 @@ namespace ViewModel
             Start = new Command(() =>
             {
                 if (ChoseAlgorithmView.ChosedOperatorsList.Count == 0)
-                {
+                {                 
                     messageQueue.Enqueue("Выберите алгоритмы!");
                     return;
                 }

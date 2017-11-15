@@ -214,7 +214,8 @@ namespace ViewModel
                 "Sobel Operator",
                 "Laplas Operator",
                 "Roberts Operator",
-                "Prewitt Operator"
+                "Prewitt Operator",
+                "Laplas-Gauss Operator"
             };
 		   
             _initializeViewModel?.Invoke(this);

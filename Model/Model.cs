@@ -28,6 +28,7 @@ namespace Model {
 		KannyOperator,
 		SobelOperator,
 		LaplasOperator,
+		LaplasGaussOperator,
 		RobertsOperator,
 		PrevittOperator
 	}

@@ -1,9 +1,56 @@
-﻿<Application x:Class="BordersFilters.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:BordersFilters"
-             StartupUri="View/MainWindow.xaml">
+﻿<Application
+    x:Class="BordersFilters.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+    xmlns:local="clr-namespace:BordersFilters"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  primary color  -->
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Orange.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+
+                    <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="{StaticResource Primary100}" />
+                    <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="{StaticResource Primary100Foreground}" />
+                    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{StaticResource Primary500}" />
+                    <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="{StaticResource Primary500Foreground}" />
+                    <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="{StaticResource Primary700}" />
+                    <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="{StaticResource Primary700Foreground}" />
+                </ResourceDictionary>
+                <!--  secondary colour  -->
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.Yellow.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+
+                    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource Accent200}" />
+                    <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="{StaticResource Accent200Foreground}" />
+                </ResourceDictionary>
+
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" TargetType="{x:Type dragablz:TabablzControl}">
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}" TargetType="dragablz:DragablzItem">
+                            <Setter Property="Background" Value="#212121" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryHueMidBrush}" />
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Thickness x:Key="Margin All">4, 4, 4, 4</Thickness>
+            <system:Double x:Key="ButtomWidth">145</system:Double>
+            <system:Double x:Key="ButtomHeight">28</system:Double>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

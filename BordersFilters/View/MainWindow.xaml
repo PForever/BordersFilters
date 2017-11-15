@@ -3,45 +3,123 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:BordersFilters"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     xmlns:viewers="clr-namespace:BordersFilters.View"
     Title="MainWindow"
-    Width="700"
-    Height="850"
-    MinWidth="350"
-    MinHeight="700"
+    Width="720"
+    Height="670"
+    MinWidth="500"
+    MinHeight="670"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+    TextElement.FontSize="12"
+    TextElement.FontWeight="Medium"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
     <Window.DataContext>
         <viewModel:ViewModel />
     </Window.DataContext>
-    <Window.Resources>
-        <ResourceDictionary>
-            <Thickness x:Key="Margin All">4, 4, 4, 4</Thickness>
-        </ResourceDictionary>
-    </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            <viewers:InputPathView />
-            <viewers:ChoseAlgorithmView />
-            <Button
-                MinWidth="100"
-                MinHeight="28"
-                HorizontalAlignment="Center"
-                Command="{Binding Start}">
-                <TextBlock
-                    Margin="{StaticResource 'Margin All'}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontWeight="Bold"
-                    Text="Start" />
-            </Button>
-        </StackPanel>
-        <viewers:OutPictureView Grid.Row="1" />
+        <materialDesign:Transitioner AutoApplyTransitionOrigins="True" SelectedIndex="0">
+            <materialDesign:TransitionerSlide>
+                <materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:SlideWipe Direction="Right" />
+                </materialDesign:TransitionerSlide.ForwardWipe>
+                <Grid Background="#424242">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="16*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <viewers:InputPathView Grid.Row="0" VerticalAlignment="Stretch" />
+                        <viewers:ChoseAlgorithmView Grid.Row="1" VerticalAlignment="Stretch" />
+                    </Grid>
+                    <Button
+                        Grid.Row="1"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Command="{Binding Start}"
+                        Content="Start"
+                        FontSize="12"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Style="{DynamicResource MaterialDesignRaisedButton}" />
+                    <Button
+                        Grid.Row="1"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Command="{x:Static materialDesign:Transitioner.MoveNextCommand}"
+                        Content="К результатам"
+                        FontSize="12"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Style="{DynamicResource MaterialDesignRaisedButton}" />
+                </Grid>
+            </materialDesign:TransitionerSlide>
+            <materialDesign:TransitionerSlide>
+                <materialDesign:TransitionerSlide.BackwardWipe>
+                    <materialDesign:SlideWipe Direction="Left" />
+                </materialDesign:TransitionerSlide.BackwardWipe>
+                <Grid Background="#424242">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="16*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <viewers:OutPictureView Grid.Row="0" />
+                    <Button
+                        Grid.Row="1"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Command="{x:Static materialDesign:Transitioner.MovePreviousCommand}"
+                        Content="К параметрам"
+                        FontSize="12"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Style="{DynamicResource MaterialDesignRaisedButton}" />
+                    <Button
+                        Grid.Row="1"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Command="{Binding Save}"
+                        Content="Сохранить"
+                        FontSize="12"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Style="{DynamicResource MaterialDesignRaisedButton}"
+                        ToolTip="Сохраняется в //Debug если директория не выбрана" />
+                </Grid>
+            </materialDesign:TransitionerSlide>
+        </materialDesign:Transitioner>
+        <materialDesign:Snackbar HorizontalAlignment="Center" MessageQueue="{Binding messageQueue}" />
     </Grid>
 </Window>

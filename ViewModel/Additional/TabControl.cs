@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Imaging;
 using Model;
@@ -9,19 +8,12 @@ namespace ViewModel.Additional
 {
     public class TabControl
     {
-        public static event EventHandler SaveCompleted;
-        private static void OnSaveCompleted()
-        {
-            SaveCompleted?.Invoke(null, EventArgs.Empty);
-        }
-
         private static Dictionary<string,OperatorsEnum> OperationDictionary;
         public string NameOfAlgorithm { get; set; }
         public BitmapSource OutImageSource { get; set; }
         public static BitmapSource InputImageSource { get; set; }
         public static string BaseOfSavingDirectory { get; set; }
-        public Command SaveCommand { get; set; }
-        public string OutPath => BaseOfSavingDirectory + @"\\" + NameOfAlgorithm + ".jpg";
+        public static string OutPath { get; set; }
 
 
         public TabControl(Dictionary<OperatorsEnum,BitmapSource> dictionary)
@@ -33,21 +25,26 @@ namespace ViewModel.Additional
                 {
                     NameOfAlgorithm = expression.Key;
                     OutImageSource = bm;
-                    SaveCommand = new Command(SaveFile);
                 }
             }
-
         }
 
-        private void SaveFile()
+        public void SaveImage()
         {
+            if (BaseOfSavingDirectory == null)
+            {
+                OutPath = Directory.GetCurrentDirectory() + @"\\" + NameOfAlgorithm + ".jpg";
+            }
+            else
+            {
+                OutPath = BaseOfSavingDirectory + @"\\" + NameOfAlgorithm + ".jpg";
+            }
             var encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(OutImageSource));
             using (var filestream = new FileStream(OutPath, FileMode.Create))
             {
                 encoder.Save(filestream);
             }
-            OnSaveCompleted();
         }
 
         public static void SetInputImage(string inputPath)

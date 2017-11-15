@@ -3,7 +3,7 @@ using Model.Abstract;
 using Model.OperatorsHelper;
 
 namespace Model.Operators {
-	class LaplasGaussOperator : IOperator {
+	public class LaplasGaussOperator : IOperator {
 		bool inverted = true;
 		double[,] _oper;
 

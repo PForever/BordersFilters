@@ -34,6 +34,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.197\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.1.953, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.3.1.953\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -58,9 +67,6 @@
     <Compile Include="View\InputPathView.xaml.cs">
       <DependentUpon>InputPathView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InputPictureView.xaml.cs">
-      <DependentUpon>InputPictureView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\OutPictureView.xaml.cs">
       <DependentUpon>OutPictureView.xaml</DependentUpon>
     </Compile>
@@ -71,10 +77,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\InputPictureView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\OutPictureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -82,10 +84,6 @@
     <Page Include="View\ChoseAlgorithmView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -99,10 +97,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Themes\Style1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -146,6 +140,9 @@
     <Resource Include="Resours\river.jpg" />
     <Resource Include="Resours\Shapes.png" />
     <Resource Include="Resours\Shrek.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

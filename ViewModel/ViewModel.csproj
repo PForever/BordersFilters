@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.1.953, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.3.1.953\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -57,7 +63,6 @@
     <Compile Include="Command.cs" />
     <Compile Include="InputPathViewModel.cs" />
     <Compile Include="OutPictureViewModel.cs" />
-    <Compile Include="InputPictureViewModel.cs" />
     <Compile Include="Additional\TabControl.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +72,9 @@
       <Project>{58a25f28-fd98-41f3-9046-152ee7e7b91f}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviours="clr-namespace:ViewModel.Behaviours;assembly=ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:BordersFilters.View"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     d:DesignHeight="300"
@@ -13,12 +13,7 @@
     <UserControl.DataContext>
         <viewModel:ChoseAlgorithmViewModel />
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <Thickness x:Key="Margin All">4, 4, 4, 4</Thickness>
-        </ResourceDictionary>
-    </UserControl.Resources>
-    <Grid Background="White">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -27,115 +22,155 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Row="0"
-                Grid.ColumnSpan="5"
+                Grid.ColumnSpan="4"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontWeight="Bold"
+                Style="{StaticResource MaterialDesignSubheadingTextBlock}"
                 Text="Выбор параметров алгоритмов:" />
-            <Grid
+            <materialDesign:Card
                 Grid.Row="1"
                 Grid.Column="0"
-                HorizontalAlignment="Left">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
-                <Button
-                    Grid.Column="0"
-                    Margin="{StaticResource 'Margin All'}"
-                    HorizontalAlignment="Left"
-                    Command="{Binding Show}">
+                Margin="{StaticResource 'Margin All'}">
+                <StackPanel>
                     <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="RGB" />
+                    <ToggleButton
                         Margin="{StaticResource 'Margin All'}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontWeight="Bold"
-                        Text="Выбор алгоритмов" />
-                </Button>
-                <CheckBox
-                    Grid.Column="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    IsChecked="{Binding SelectAllOperator, Mode=TwoWay}" />
-                <TextBlock
-                    Grid.Column="2"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Text="{Binding SelectAllText, Mode=TwoWay}" />
-            </Grid>
-            <Grid
+                        IsChecked="{Binding RGBOperator, Mode=TwoWay}" />
+                </StackPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card
                 Grid.Row="1"
                 Grid.Column="1"
-                HorizontalAlignment="Right">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="1.4*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <Grid
-                    Grid.Column="0"
-                    Margin="{StaticResource 'Margin All'}"
-                    HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.2*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                Margin="{StaticResource 'Margin All'}">
+                <StackPanel>
                     <TextBlock
-                        Grid.Column="0"
-                        HorizontalAlignment="Right"
+                        HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Text="RGB:" />
-                    <CheckBox
-                        Grid.Column="1"
-                        Margin="{StaticResource 'Margin All'}"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        IsChecked="{Binding RGBOperator, Mode=TwoWay}" />
-                </Grid>
-                <Grid
-                    Grid.Column="1"
-                    Margin="{StaticResource 'Margin All'}"
-                    HorizontalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2.2*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Column="0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Text="Точность" />
+                        Text="Кол-во применений" />
                     <TextBox
-                        Grid.Column="1"
-                        Width="20"
+                        MinWidth="23"
                         Margin="{StaticResource 'Margin All'}"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         PreviewTextInput="UIElement_OnPreviewTextInput"
-                        Text="{Binding ReapplyCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </Grid>
-                <Button
-                    Grid.Column="2"
-                    Margin="{StaticResource 'Margin All'}"
-                    HorizontalAlignment="Right"
-                    Command="{Binding SetCatalog}">
+                        Text="{Binding UsageCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </materialDesign:Card>
+
+
+            <materialDesign:Card
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="{StaticResource 'Margin All'}">
+                <StackPanel>
                     <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="Размер матрицы (N*N)" />
+                    <TextBox
+                        MinWidth="23"
                         Margin="{StaticResource 'Margin All'}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        FontWeight="Bold"
-                        Text="Выбор директории" />
-                </Button>
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        PreviewTextInput="UIElement_OnPreviewTextInput"
+                        Text="{Binding MatrixSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card
+                Grid.Row="1"
+                Grid.Column="3"
+                Margin="{StaticResource 'Margin All'}">
+                <StackPanel>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="Сигма" />
+                    <TextBox
+                        MinWidth="23"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        PreviewTextInput="UIElement_OnPreviewTextInput"
+                        Text="{Binding Sigma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </materialDesign:Card>
+
+            <Grid Grid.Row="2" Grid.ColumnSpan="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="0"
+                        Width="{StaticResource ButtomWidth}"
+                        Height="{StaticResource ButtomHeight}"
+                        MinWidth="{StaticResource ButtomWidth}"
+                        MinHeight="{StaticResource ButtomHeight}"
+                        Margin="{StaticResource 'Margin All'}"
+                        HorizontalAlignment="Left"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Command="{Binding Show}"
+                        Content="Выбор алгоритмов"
+                        FontSize="12"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Style="{DynamicResource MaterialDesignRaisedButton}" />
+                    <CheckBox
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding SelectAllOperator, Mode=TwoWay}" />
+                    <TextBlock
+                        Grid.Column="2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Text="{Binding SelectAllText, Mode=TwoWay}" />
+                </Grid>
+                <Button
+                    Grid.Column="1"
+                    Width="{StaticResource ButtomWidth}"
+                    Height="{StaticResource ButtomHeight}"
+                    MinWidth="{StaticResource ButtomWidth}"
+                    MinHeight="{StaticResource ButtomHeight}"
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Right"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                    Background="{DynamicResource PrimaryHueMidBrush}"
+                    Command="{Binding SetCatalog}"
+                    Content="Выбор директории"
+                    FontSize="12"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                    Style="{DynamicResource MaterialDesignRaisedButton}" />
             </Grid>
         </Grid>
         <ListBox

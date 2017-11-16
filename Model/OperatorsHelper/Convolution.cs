@@ -35,12 +35,6 @@ namespace Model.OperatorsHelper
             double result = 0;
             int size = oper.GetLength(0);
             oper.ForEach((k, l) => result += oper[k, l] * pix.GetPoint(i + k - size / 2, j + l - size / 2));
-<<<<<<< HEAD
-			//return Math.Abs(result).ToByte();
-			return result.ToByte();
-		}
-        private static byte GetPoint(this byte[,] arr, int i, int j)
-=======
             return result.ToByte();
         }
         /// <summary>
@@ -52,7 +46,6 @@ namespace Model.OperatorsHelper
         /// <param name="oper">Оператор свёртки.</param>
         /// <returns></returns>
         public static int Process(this int[,] pix, int i, int j, int[,] oper)
->>>>>>> 9cf16ae5b64198bc132399b52cc5d9bd9bf4c869
         {
             int result = 0;
             int size = oper.GetLength(0);

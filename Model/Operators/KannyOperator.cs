@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Model.Abstract;
 using Model.OperatorsHelper;
 
@@ -7,9 +11,9 @@ namespace Model.Operators
 {
     class KannyOperator : IOperator
     {
-        private const byte BorderMin = 20*byte.MaxValue / 100;
-        private const byte BorderMax = 30*byte.MaxValue / 100;
-        private const byte Middle = (BorderMin + BorderMax)/2;
+        private const int BorderMin = 5*byte.MaxValue / 100;
+        private const int BorderMax = 25*byte.MaxValue / 100;
+        private const int Middle = (BorderMin + BorderMax)/2;
 
         private Predicate<byte> BCheck => point => BorderMin < point && point < BorderMax;
         private readonly double[,] _oper = new double[,]
@@ -20,19 +24,25 @@ namespace Model.Operators
             {2, 4, 5, 4, 2}}.Divide(159);
 
         static readonly int[,]
-            _operX = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } },
-            _operY = _operX.Transponse();
+            OperX = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } },
+            OperY = OperX.Transponse();
 
-        private byte[,] Transform(byte[,] src)
+        private byte[,] Transform(int[,] src)
         {
-            byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
+            int[,] dst = new int[src.GetLength(0), src.GetLength(1)];
+
             int[,] grads = new int[src.GetLength(0), src.GetLength(1)];
-            //Parallel
-            dst.ParallelForEach((i, j) => dst[i, j] = src.Process(i, j, _oper)); //применяем гаусса
-            src.ParallelForEach((i, j) => src[i, j] = dst.Process(i, j, _operX, _operY, out grads[i, j])); //применяем собеля со взятием градиента
-            dst.ParallelForEach((i, j) => dst[i, j] = src.NonMaximum(grads, i, j, BorderMin, BorderMax, Middle)); //применяем NonMax и Двойную пороговую фильтрацию
-            src.ParallelForEach((i, j) => src[i, j] = dst[i, j] == Middle ? dst.UncertaintyTracing(grads, i, j, BorderMax) : dst[i, j] == BorderMax ? byte.MaxValue : byte.MinValue); //трассировка области неоднозначности
-            return src;
+            ConcurrentBag<Point> midPoints = new ConcurrentBag<Point>();
+
+            //применяем гаусса
+            dst.ParallelForEach((i, j) => dst[i, j] = src.Process(i, j, _oper));
+            //применяем собеля со взятием градиента
+            src.ParallelForEach((i, j) => src[i,j] = dst.Process(i, j, OperX, OperY, out grads[i, j]));
+            //применяем NonMax и Двойную пороговую фильтрацию
+            dst.ParallelForEach((i, j) => dst[i, j] = src[i,j] == byte.MinValue? byte.MinValue : src.NonMaximum(grads, i, j, BorderMin, BorderMax, Middle, midPoints));
+            //трассировка области неоднозначности
+            midPoints.ForEach(point => { if(dst[point.X,point.Y] == Middle) dst.UncertaintyTracing(grads, point.X, point.Y); });
+            return dst.ToByte();
         }
 
 
@@ -44,7 +54,7 @@ namespace Model.Operators
         {
             for (int i = 0; i < reapplyСount; i++)
             {
-                src = Transform(src);
+                src = Transform(src.ToInt());
             }
             return src;
         }

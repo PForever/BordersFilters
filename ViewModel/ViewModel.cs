@@ -122,7 +122,6 @@ namespace ViewModel
                 {
                     // Присвоение операторов и обновление параметров модели
                     model.RGBOperator = ChoseAlgorithmView.RGBOperator;
-                    model.UsageCount = ChoseAlgorithmView.UsageCount;
                     model.MatrixSize = ChoseAlgorithmView.MatrixSize;
                     model.Sigma = ChoseAlgorithmView.Sigma;
                     model.Path = path;

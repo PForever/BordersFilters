@@ -9,6 +9,6 @@ namespace Model.Abstract {
         /// <param name="reapplyÑount">×èñëî èòåğàöèé</param>
         /// <returns></returns>
         OperatorsEnum Name { get; }
-        byte[,] Transform(byte[,] src, int reapplyÑount);
+        byte[,] Transform(byte[,] src, int MatrixSize, double Sigma);
 	}
 }

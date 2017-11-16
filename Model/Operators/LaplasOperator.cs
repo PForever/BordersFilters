@@ -11,6 +11,7 @@ namespace Model.Operators {
 		bool inverted = true;
 
 		public byte[,] Transform(byte[,] src, int MatrixSize, double Sigma) {
+<<<<<<< HEAD
 			if (MatrixSize < 3 || MatrixSize % 2 == 0) MatrixSize = 3;
 			byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
 
@@ -18,6 +19,17 @@ namespace Model.Operators {
 			if (inverted) oper = oper.Divide(-1);
 			
 			return dst.ForEach((i, j) => dst[i, j] = Math.Abs(src.Process(i, j, oper)).ToByte());
+=======
+			if (MatrixSize < 3 || MatrixSize % 2 == 0) return null;
+			byte[,] dst = new byte[src.GetLength(0), src.GetLength(1)];
+
+			int[,] oper;
+
+			oper = GetLaplasian(MatrixSize);
+			if (inverted) oper = oper.Divide(-1);
+			
+			return dst.ParallelForEach((i, j) => dst[i, j] = Math.Abs(src.Process(i, j, oper)).ToByte());
+>>>>>>> 9cf16ae5b64198bc132399b52cc5d9bd9bf4c869
 		}
 
 		private int[,] GetLaplasian(int matrix_size) {

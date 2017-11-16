@@ -49,7 +49,9 @@
     <Compile Include="OperatorsHelper\Convolution.cs" />
     <Compile Include="OperatorsHelper\Formats.cs" />
     <Compile Include="OperatorsHelper\BasicMatrixFunctions.cs" />
+    <Compile Include="OperatorsHelper\Gradient.cs" />
     <Compile Include="OperatorsHelper\OperatorsApplyer.cs" />
+    <Compile Include="OperatorsHelper\Point.cs" />
     <Compile Include="Operators\InvertionOperator.cs" />
     <Compile Include="Operators\GaussOperator.cs" />
     <Compile Include="Operators\IdentityOperator.cs" />

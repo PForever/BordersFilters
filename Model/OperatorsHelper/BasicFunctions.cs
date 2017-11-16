@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -105,6 +106,20 @@ namespace Model.OperatorsHelper
             }
             return src;
         }
+
+        /// <summary>
+        /// Выполняет задоное действие проходя по всей размерности массива.
+        /// Метод допускает изменение состояния элементов массива.
+        /// </summary>
+        /// <typeparam name="T">Тип элементов массива.</typeparam>
+        /// <param name="src">Исходный массив.</param>
+        /// <param name="action">Выполняемое действие.
+        /// Первый аргумент -- счётчик нулевого измерения масиива.
+        /// Второй аргумент -- счётчик первого измерения массива.</param>
+        public static void ForEach<T>(this ConcurrentBag<T> src, Action<T> action)
+        {
+            foreach (var element in src) action(element);
+        }
         /// <summary>
         /// Выполняет задоное действие проходя по всей размерности массива в параллельном режиме.
         /// Метод допускает изменение состояния элементов массива.
@@ -134,5 +149,23 @@ namespace Model.OperatorsHelper
         /// Конвернирует double в byte, сохраняя максимальность или минимальность значения при отбрасывании битов.
         /// </summary>
         public static byte ToByte(this double value) => (byte)(value > 255 ? 255 : (value < 0 ? 0 : value));
+        /// <summary>
+        /// Конвернирует int[,] в byte[,], сохраняя максимальность или минимальность значения при отбрасывании битов.
+        /// </summary>
+        public static byte[,] ToByte(this int[,] intArray)
+        {
+            var byteArray = new byte[intArray.GetLength(0), intArray.GetLength(1)];
+            byteArray.ForEach((i, j) => byteArray[i, j] = intArray[i, j].ToByte());
+            return byteArray;
+        }
+        /// <summary>
+        /// Конвернирует byte[,] в int[,] , сохраняя максимальность или минимальность значения при отбрасывании битов.
+        /// </summary>
+        public static int[,] ToInt(this byte[,] byteArray)
+        {
+            var intArray = new int[byteArray.GetLength(0), byteArray.GetLength(1)];
+            intArray.ForEach((i, j) => intArray[i, j] = byteArray[i, j]);
+            return intArray;
+        }
     }
 }

@@ -22,7 +22,11 @@ namespace Model.Operators
             return dst;
         }
 
+<<<<<<< HEAD
 		public static double[,] GetGauss(int MatrixSize, double Sigma) {
+=======
+		public double[,] GetGauss(int MatrixSize, double Sigma) {
+>>>>>>> 9cf16ae5b64198bc132399b52cc5d9bd9bf4c869
 			double[,] gauss = new double[MatrixSize, MatrixSize];
             int halfLenght = MatrixSize / 2;
 
@@ -33,7 +37,11 @@ namespace Model.Operators
 			return gauss;
 		}
 
+<<<<<<< HEAD
         private static double Gauss(double sigma, int i, int j) => (1 / (2 * Math.PI * Math.Pow(sigma, 2))) *
+=======
+        private double Gauss(double sigma, int i, int j) => (1 / (2 * Math.PI * Math.Pow(sigma, 2))) *
+>>>>>>> 9cf16ae5b64198bc132399b52cc5d9bd9bf4c869
                                                                Math.Exp(-(Math.Pow(i, 2) + Math.Pow(j, 2)) /
                                                                         (2 * Math.Pow(sigma, 2)));
     }

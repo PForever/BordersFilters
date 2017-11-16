@@ -14,6 +14,7 @@ namespace BordersFilters.View
         {
             InitializeComponent();
         }
+
         private void btnBrowse_OnClick(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog

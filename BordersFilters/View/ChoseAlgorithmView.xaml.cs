@@ -22,11 +22,11 @@ namespace BordersFilters.View
     /// </summary>
     public partial class ChoseAlgorithmView : UserControl
     {
-
         public ChoseAlgorithmView()
         {
             InitializeComponent();
         }
+
         private readonly Regex _regex = new Regex("[^0-9]");
 
         private void UIElement_OnPreviewTextInput(object sender, TextCompositionEventArgs e)

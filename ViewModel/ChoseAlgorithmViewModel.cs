@@ -168,7 +168,7 @@ namespace ViewModel
         #region MatrixSize
 
 	    public static readonly DependencyProperty MatrixSizeProperty = DependencyProperty.Register(
-	        nameof(MatrixSize), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(1));
+	        nameof(MatrixSize), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(3));
 
 	    public int MatrixSize
         {
@@ -180,7 +180,7 @@ namespace ViewModel
         #region Sigma
 
         public static readonly DependencyProperty SigmaProperty = DependencyProperty.Register(
-	        nameof(Sigma), typeof(double), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(1.0));
+	        nameof(Sigma), typeof(double), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(1.41));
 
 	    public double Sigma
         {

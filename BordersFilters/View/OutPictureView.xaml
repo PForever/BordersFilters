@@ -19,7 +19,7 @@
             Background="#424242"
             FixedHeaderCount="4"
             ItemsSource="{Binding TabControls}"
-            SelectedIndex="0">
+            SelectedIndex="1">
             <dragablz:TabablzControl.HeaderItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding NameOfAlgorithm, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />

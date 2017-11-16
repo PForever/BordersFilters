@@ -59,21 +59,17 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Margin="{StaticResource 'Margin All'}">
-                <StackPanel>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="Кол-во применений" />
-                    <TextBox
-                        MinWidth="23"
-                        Margin="{StaticResource 'Margin All'}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        PreviewTextInput="UIElement_OnPreviewTextInput"
-                        Text="{Binding UsageCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
+                <TextBox
+                    MinWidth="23"
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    materialDesign:HintAssist.Hint="Количество применений"
+                    PreviewTextInput="UIElement_OnPreviewTextInput"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding UsageCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </materialDesign:Card>
 
 
@@ -81,42 +77,33 @@
                 Grid.Row="1"
                 Grid.Column="2"
                 Margin="{StaticResource 'Margin All'}">
-                <StackPanel>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="Размер матрицы (N*N)" />
-                    <TextBox
-                        MinWidth="23"
-                        Margin="{StaticResource 'Margin All'}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        PreviewTextInput="UIElement_OnPreviewTextInput"
-                        Text="{Binding MatrixSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
+                <TextBox
+                    MinWidth="23"
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    materialDesign:HintAssist.Hint="Размер матрицы (N*N)"
+                    PreviewTextInput="UIElement_OnPreviewTextInput"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding MatrixSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </materialDesign:Card>
 
             <materialDesign:Card
                 Grid.Row="1"
                 Grid.Column="3"
                 Margin="{StaticResource 'Margin All'}">
-                <StackPanel>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="Сигма" />
-                    <TextBox
-                        MinWidth="23"
-                        Margin="{StaticResource 'Margin All'}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        PreviewTextInput="UIElement_OnPreviewTextInput"
-                        Text="{Binding Sigma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
+                <TextBox
+                    MinWidth="23"
+                    Margin="{StaticResource 'Margin All'}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    materialDesign:HintAssist.Hint="Параметр сигма"
+                    Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding Sigma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </materialDesign:Card>
 
             <Grid Grid.Row="2" Grid.ColumnSpan="4">

@@ -5,6 +5,7 @@
     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
     xmlns:local="clr-namespace:BordersFilters"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:view="clr-namespace:BordersFilters.View"
     StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>

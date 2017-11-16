@@ -1,27 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using MaterialDesignThemes.Wpf;
 using Model;
 using ViewModel.Additional;
 
 
 namespace ViewModel
 {
-	public class ViewModel : DependencyObject
-	{
+	public class ViewModel : DependencyObject, INotifyPropertyChanged
+    {
+
+        #region Dialog 
+
+        private bool _isDialogOpen = false;
+        private object _dialogContent;
+
+        public bool IsDialogOpen
+        {
+            get { return _isDialogOpen; }
+            set
+            {
+                if (_isDialogOpen == value) return;
+                _isDialogOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public object DialogContent
+        {
+            get { return _dialogContent; }
+            set
+            {
+                if (_dialogContent == value) return;
+                _dialogContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
         #region Event Invokers
 
-	    //public static event EventHandler<EventArgs> SaveCompleted;
-	    //private static void OnSaveCompleted(EventArgs e)
-	    //{
-	    //    SaveCompleted?.Invoke(null, e);
-	    //}
+        public event Action CalculationStoped;
+
+        protected virtual void OnCalculationStoped()
+        {
+            CalculationStoped?.Invoke();
+        }
+
+        public event Action CalculationStarted;
+	    protected virtual void OnCalculationStarted()
+	    {
+	        CalculationStarted?.Invoke();
+	    }
+
+        public event Action<string> SomethingHappen;
+	    protected virtual void OnSomethingHappen(string obj)
+	    {
+	        SomethingHappen?.Invoke(obj);
+	    }
 
         #endregion
 
@@ -29,19 +72,6 @@ namespace ViewModel
         public OutPictureViewModel OutPictureView { get; set; }
         public InputPathViewModel InputPathView { get; set; }
         public ChoseAlgorithmViewModel ChoseAlgorithmView { get; set; }
-        #endregion
-
-        #region Message
-
-	    public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(
-	        nameof(messageQueue), typeof(SnackbarMessageQueue), typeof(ViewModel), new PropertyMetadata(default(SnackbarMessageQueue)));
-
-	    public SnackbarMessageQueue messageQueue
-        {
-	        get { return (SnackbarMessageQueue)GetValue(MessageProperty); }
-	        set { SetValue(MessageProperty, value); }
-	    }
-
         #endregion
 
         #region Start Command
@@ -69,35 +99,6 @@ namespace ViewModel
 
 	    #endregion
 
-        #region Window
-
-        #region WindowsHight
-
-        public static readonly DependencyProperty WindowsWidthProperty = DependencyProperty.Register(
-	        nameof(WindowsWidth), typeof(double), typeof(ViewModel), new PropertyMetadata(300.0));
-
-	    public double WindowsWidth
-	    {
-	        get { return (double) GetValue(WindowsWidthProperty); }
-	        set { SetValue(WindowsWidthProperty, value); }
-	    }
-
-	    #endregion
-	    #region WindowHeight
-
-	    public static readonly DependencyProperty WindowHeightProperty = DependencyProperty.Register(
-	        nameof(WindowHeight), typeof(double), typeof(ViewModel), new PropertyMetadata(300.0));
-
-	    public double WindowHeight
-	    {
-	        get { return (double) GetValue(WindowHeightProperty); }
-	        set { SetValue(WindowHeightProperty, value); }
-	    }
-
-        #endregion
-
-        #endregion
-
         public ViewModel()
 		{
             #region Initialize
@@ -105,64 +106,75 @@ namespace ViewModel
 		    OutPictureViewModel.InitializeViewModel += (sunder) => OutPictureView = sunder;
 		    InputPathViewModel.InitializeViewModel += (sunder) => InputPathView = sunder;
 		    ChoseAlgorithmViewModel.InitializeViewModel += (sunder) => ChoseAlgorithmView = sunder;
-		    messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6.3)));
+		   // messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6.3)));
 
             #endregion
 
             Start = new Command(() =>
             {
+                //Инициализация 
+
                 if (ChoseAlgorithmView.ChosedOperatorsList.Count == 0)
-                {                 
-                    messageQueue.Enqueue("Выберите алгоритмы!");
+                {
+                    OnSomethingHappen("Выберите алгоритмы!");
                     return;
                 }
-                var model = new Initialization();          
                 var path = InputPathView.PathValue;
-                if (File.Exists(path))
+                if (!File.Exists(path))
                 {
-                    // Присвоение операторов и обновление параметров модели
-                    model.RGBOperator = ChoseAlgorithmView.RGBOperator;
-                    model.MatrixSize = ChoseAlgorithmView.MatrixSize;
-                    model.Sigma = ChoseAlgorithmView.Sigma;
-                    model.Path = path;
-                    OutPictureView.TabControls = new ObservableCollection<TabControl>();
-                    model.Operators = new Collection<OperatorsEnum>();
+                    OnSomethingHappen("Выберите путь!");
+                    return;                        
+                }
 
-                    // Работа с таб контролами и наборами операторов
-                    TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
-                    TabControl.SetInputImage(path);
-                    var operatorsDictionary = TabControl.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
-                    foreach (var oper in ChoseAlgorithmView.ChosedOperatorsList)
-                    {                    
-                        if (operatorsDictionary.TryGetValue(oper, out var searchIndex))
-                        {
-                            model.Operators.Add(searchIndex);
-                        }
-                    }
+                var model = new Initialization
+                {
+                    RGBOperator = ChoseAlgorithmView.RGBOperator,
+                    MatrixSize = ChoseAlgorithmView.MatrixSize,
+                    Sigma = ChoseAlgorithmView.Sigma,
+                    Path = path
+                };
 
-                    //Работа с потоками
-                    Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>> preDestination = new Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>>();
-                    model.PreDestination = preDestination;
+                // Присвоение операторов и обновление параметров модели
+                OutPictureView.TabControls = new ObservableCollection<TabControl>();
+                model.Operators = new Collection<OperatorsEnum>();
 
-                    Task.Run(() =>
+                // Работа с таб контролами и наборами операторов
+                TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
+                TabControl.SetInputImage(path);
+                var operatorsDictionary = TabControl.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
+                foreach (var oper in ChoseAlgorithmView.ChosedOperatorsList)
+                {                    
+                    if (operatorsDictionary.TryGetValue(oper, out var searchIndex))
                     {
-                        model.Start();
-                        Dispatcher.Invoke(() =>
+                        model.Operators.Add(searchIndex);
+                    }
+                }
+
+                //Работа с потоками
+                Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>> preDestination = new Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>>();
+                model.PreDestination = preDestination;
+
+                OnCalculationStarted();
+
+                Task.Run(() =>
+                {
+                    model.Start();
+                    Dispatcher.Invoke(() =>
+                    {
+                        foreach (var func in model.PreDestination)
                         {
-                            foreach (var func in model.PreDestination)
-                            {
-                                OutPictureView.TabControls.Add(new TabControl(func()));
-                            }
-                            messageQueue.Enqueue("Обработано!");
-                        });                     
-                    });
-                }           
+                            OutPictureView.TabControls.Add(new TabControl(func()));
+                        }
+                        OnCalculationStoped();
+                    });                     
+                });
             });	
+
             Save = new Command(() =>
             {
                 if (OutPictureView.TabControls == null)
                 {
-                    messageQueue.Enqueue("Нет данных для сохранения!");
+                    OnSomethingHappen("Нет данных для сохранения!");
                     return;
                 }
                 TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
@@ -170,8 +182,20 @@ namespace ViewModel
                 {
                     tabControl.SaveImage();    
                 }
-                messageQueue.Enqueue("Сохранено!");
+                OnSomethingHappen("Сохранено!");
             });
         }
+
+        #region Notify
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+
     }
 }

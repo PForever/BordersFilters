@@ -27,8 +27,9 @@ namespace Model.Operators
             OperX = { { 1, 2, 1 }, { 0, 0, 0 }, { -1, -2, -1 } },
             OperY = OperX.Transponse();
 
-        private byte[,] Transform(int[,] src)
+        public byte[,] Transform(byte[,] src1, int MatrixSize, double Sigma)
         {
+            var src = src1.ToInt();
             int[,] dst = new int[src.GetLength(0), src.GetLength(1)];
 
             int[,] grads = new int[src.GetLength(0), src.GetLength(1)];
@@ -54,7 +55,7 @@ namespace Model.Operators
         {
             for (int i = 0; i < reapplyСount; i++)
             {
-                src = Transform(src.ToInt());
+                //src = Transform(src);
             }
             return src;
         }

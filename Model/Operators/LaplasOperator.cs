@@ -1,7 +1,11 @@
 ﻿using System;
 using Model.Abstract;
 using Model.OperatorsHelper;
-
+/// <summary>
+/// Оператор осуществляет преобразование изображения оператором Лапласа. 
+/// В качестве входных параметров принимает размер матрицы, сигму игнорирует.
+/// В случае, если параметры некорректны, используются параметры по умолчанию: 3
+/// </summary>
 namespace Model.Operators {
 	public class LaplasOperator : IOperator {
 		public LaplasOperator() => Name = OperatorsEnum.LaplasOperator;

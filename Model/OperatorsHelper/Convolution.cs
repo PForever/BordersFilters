@@ -33,8 +33,9 @@ namespace Model.OperatorsHelper
             double result = 0;
             int size = oper.GetLength(0);
             oper.ForEach((k, l) => result += oper[k, l] * pix.GetPoint(i + k - size / 2, j + l - size / 2));
-            return result.ToByte();
-        }
+			//return Math.Abs(result).ToByte();
+			return result.ToByte();
+		}
         private static byte GetPoint(this byte[,] arr, int i, int j)
         {
             return arr[arr.GetUpperBound(0) - i < 0 ? arr.GetUpperBound(0) : (i > 0 ? i : 0),

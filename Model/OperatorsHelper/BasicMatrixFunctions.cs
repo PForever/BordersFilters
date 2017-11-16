@@ -43,7 +43,8 @@ namespace Model.OperatorsHelper {
 	    /// <param name="denominator">Делитель.</param>
         public static int[,] Divide(this int[,] src, int denominator)
 	    {
-	        src.ForEach((i, j) => src[i, j] = src[i, j] / denominator);
+			if (src[0, 0] == -2147483648) src.ForEach((i, j) => src[i, j]++);
+			src.ForEach((i, j) => src[i, j] = src[i,j] / denominator);
 	        return src;
 	    }
 	    /// <summary>

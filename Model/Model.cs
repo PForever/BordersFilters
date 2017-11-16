@@ -1,18 +1,11 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Model.Abstract;
 using Model.Operators;
@@ -21,8 +14,7 @@ using Color = System.Drawing.Color;
 
 namespace Model {
 	public enum OperatorsEnum {
-		BrightnessOperator = 0,
-		InvertionOperator,
+		InvertionOperator = 0,
 		IdentityOperator,
 		GaussOperator,
 		KannyOperator,
@@ -31,7 +23,6 @@ namespace Model {
 		LaplasGaussOperator,
 		RobertsOperator,
 		PrewittOperator,
-	    LaplasGaussOperator
     }
 
 	public class Initialization {
@@ -45,31 +36,24 @@ namespace Model {
 		public Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>> PreDestination { get; set; }
 		public Bitmap Source { get; set; }
 		public bool RGBOperator { get; set; }
-
-		public int UsageCount { get; set; } // Количество использований
+		
 	    public int MatrixSize { get; set; } // Размерность матрицы
         public double Sigma { get; set; } // Параметр - сигма
-
-	    public int ReapplyCount = 1; // Удалить после оптимизации алгоритмов
 
         private static readonly object SyncRoot1 = new object();
 
 		#endregion
 
-
 		public void Start() {
 			PreDestination = new Collection<Func<Dictionary<OperatorsEnum, BitmapSource>>>();
 			Destination = new Dictionary<OperatorsEnum, BitmapSource>();
-			Parallel.ForEach(Operators, Operator => {
+			Parallel.ForEach(Operators, (Action<OperatorsEnum>)(Operator => {
 				lock (SyncRoot1) {
 					Source = new Bitmap(Path);
 				}
 				var srcMatrix = GetBitMapColorMatrix(Source);
 				IOperator oper = null;
 				switch (Operator) {
-					case OperatorsEnum.BrightnessOperator:
-						oper = new BrightnessOperator();
-						break;
 					case OperatorsEnum.InvertionOperator:
 						oper = new InvertionOperator();
 						break;
@@ -85,6 +69,9 @@ namespace Model {
 					case OperatorsEnum.LaplasOperator:
 						oper = new LaplasOperator();
 						break;
+				    case OperatorsEnum.LaplasGaussOperator:
+				        oper = new LaplasGaussOperator();
+				        break;
                     case OperatorsEnum.RobertsOperator:
 						oper = new RobertsOperator();
 						break;
@@ -94,19 +81,16 @@ namespace Model {
 					case OperatorsEnum.PrewittOperator:
 						oper = new PrewittOperator();
 						break;
-				    case OperatorsEnum.LaplasGaussOperator:
-				        oper = new LaplasGaussOperator();
-				        break;
                     default:
 						break;
 				}
 				if (oper == null) return;
 				
 				var result = !RGBOperator
-					? oper.Transform(srcMatrix.GetGrayArray(), ReapplyCount).GetColorArray()
-					: srcMatrix.GetColorArray(oper.Transform(srcMatrix.GetRedArray(), ReapplyCount),
-						oper.Transform(srcMatrix.GetGreenArray(), ReapplyCount),
-						oper.Transform(srcMatrix.GetBlueArray(), ReapplyCount));
+					? oper.Transform(srcMatrix.GetGrayArray(), MatrixSize, Sigma).GetColorArray()
+					: srcMatrix.GetColorArray(oper.Transform(srcMatrix.GetRedArray(), MatrixSize, Sigma),
+						oper.Transform(srcMatrix.GetGreenArray(), MatrixSize, Sigma),
+						oper.Transform(srcMatrix.GetBlueArray(), MatrixSize, Sigma));
 
 				lock (SyncRoot1) {
 					PreDestination.Add(() => {
@@ -117,7 +101,7 @@ namespace Model {
 					});
 				}
 				
-			});
+			}));
 		}
 
 		#region Bitmap

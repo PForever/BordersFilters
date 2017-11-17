@@ -32,15 +32,14 @@ namespace Model.Operators {
 
 			if (inverted) oper = oper.Divide(-1);
 
-			dst = dst.ParallelForEach((i, j) => dst[i, j] = ((int) src.Process(i, j, oper)).ToByte());
-			return dst;
+			return dst.ParallelForEach((i, j) => dst[i, j] = src.Process(i, j, oper).Binary());
 		}
 
 		public double[,] GetGaussianLaplasian(int MatrixSize, double Sigma) {
 			if (MatrixSize < 3 || MatrixSize % 2 == 0) {
 				MatrixSize = 3;
 			}
-			Sigma = Sigma == 1 ? 1.4 : Sigma;
+			Sigma = Math.Abs(Sigma - 1) < float.Epsilon ? 1.4 : Sigma;
 
 			double[,] oper = new double[MatrixSize, MatrixSize];
 

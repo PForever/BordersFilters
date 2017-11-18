@@ -1,13 +1,14 @@
 ﻿using System;
 using Model.Abstract;
 using Model.OperatorsHelper;
-/// <summary>
-/// Оператор осуществляет преобразование изображения оператором Лапласа. 
-/// В качестве входных параметров принимает размер матрицы, сигму игнорирует.
-/// В случае, если параметры некорректны, используются параметры по умолчанию: 3
-/// </summary>
+
 namespace Model.Operators {
-	public class LaplasOperator : IOperator {
+    /// <summary>
+    /// Оператор осуществляет преобразование изображения оператором Лапласа. 
+    /// В качестве входных параметров принимает размер матрицы, сигму игнорирует.
+    /// В случае, если параметры некорректны, используются параметры по умолчанию: 3
+    /// </summary>
+    public class LaplasOperator : IOperator {
 		public LaplasOperator() => Name = OperatorsEnum.LaplasOperator;
 
 		public OperatorsEnum Name { get; }
@@ -21,7 +22,7 @@ namespace Model.Operators {
 			int[,] oper = GetLaplasian(MatrixSize);
 			if (inverted) oper = oper.Divide(-1);
 
-			return dst.ForEach((i, j) => dst[i, j] = Math.Abs(src.Process(i, j, oper)).ToByte());
+			return dst.ForEach((i, j) => dst[i, j] = Math.Abs(src.Process(i, j, oper)).Binary());
 		}
 
 		private int[,] GetLaplasian(int matrix_size) {

@@ -167,5 +167,38 @@ namespace Model.OperatorsHelper
             intArray.ForEach((i, j) => intArray[i, j] = byteArray[i, j]);
             return intArray;
         }
+        /// <summary>
+        /// Проводит процедуру бинаризации изображения.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns>Массив пикселей.</returns>
+        public static byte[,] Binary(this byte[,] arr) => arr.ForEach((i, j) => { if (arr[i, j] >= Thresholad) arr[i, j] = byte.MaxValue; });
+
+        /// <summary>
+        /// Проводит процедуру бинаризации изображения.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns>Массив пикселей.</returns>
+        public static byte[,] Binary(this int[,] arr)
+        {
+            var byteArr = new byte[arr.GetLength(0), arr.GetLength(1)];
+            arr.ForEach((i, j) => byteArr[i,j] = arr[i, j] <= Thresholad ? byte.MinValue : byte.MaxValue);
+            return byteArr;
+        }
+
+        /// <summary>
+        /// Проводит процедуру бинаризации.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>Пикселей.</returns>
+        public static byte Binary(this byte value) => value <= Thresholad ? byte.MinValue : byte.MaxValue;
+        /// <summary>
+        /// Проводит процедуру бинаризации.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>Пикселей.</returns>
+        public static byte Binary(this int value) => value <= Thresholad ? byte.MinValue : byte.MaxValue;
+
+        private const byte Thresholad = (byte) (0.20 * byte.MaxValue);
     }
 }

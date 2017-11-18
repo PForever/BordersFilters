@@ -43,7 +43,7 @@ namespace Model.Operators
             dst.ParallelForEach((i, j) => dst[i, j] = src[i,j] == byte.MinValue? byte.MinValue : src.NonMaximum(grads, i, j, BorderMin, BorderMax, Middle, midPoints));
             //трассировка области неоднозначности
             midPoints.ForEach(point => { if(dst[point.X,point.Y] == Middle) dst.UncertaintyTracing(grads, point.X, point.Y); });
-            return dst.ToByte();
+            return dst.Binary();
         }
 
 

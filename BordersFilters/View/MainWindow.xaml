@@ -14,15 +14,18 @@
     MinHeight="640"
     Background="{DynamicResource BackgroundBrush}"
     BorderBrush="{DynamicResource PrimaryHueMidBrush}"
-    BorderThickness="1"
-    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    ShowIconOnTitleBar="True"
+    BorderThickness="0"
+    Icon="Icon.ico"
+    ShowIconOnTitleBar="False"
     TextElement.FontSize="12"
     TextElement.FontWeight="Medium"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     WindowStartupLocation="CenterScreen"
     WindowTitleBrush="{StaticResource PrimaryHueMidBrush}"
     mc:Ignorable="d">
+    <Controls:MetroWindow.FontFamily>pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto</Controls:MetroWindow.FontFamily>
     <Grid Margin="{StaticResource 'Margin All'}">
         <materialDesign:Transitioner AutoApplyTransitionOrigins="True" SelectedIndex="0">
             <materialDesign:TransitionerSlide>
@@ -129,7 +132,7 @@
         <materialDesign:DialogHost
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            CloseOnClickAway="True"
+            CloseOnClickAway="False"
             DialogContent="{Binding DialogContent}"
             IsOpen="{Binding IsDialogOpen}" />
     </Grid>

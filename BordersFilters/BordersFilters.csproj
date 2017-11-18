@@ -162,7 +162,7 @@
     <Folder Include="View\Themes\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resours\Icon.jpg" />
+    <Resource Include="View\Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

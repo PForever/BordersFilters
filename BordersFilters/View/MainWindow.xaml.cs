@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
+using MaterialDesignThemes.Wpf;
 
 namespace BordersFilters.View
 {

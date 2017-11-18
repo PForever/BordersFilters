@@ -163,7 +163,7 @@
         <ListBox
             Grid.Row="1"
             Height="{Binding ListHeight, Mode=TwoWay}"
-            Margin="{StaticResource 'Margin All'}"
+            Margin="0,4,0,0"
             behaviours:MultiSelectorBehaviours.SynchronizedSelectedItems="{Binding ChosedOperatorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Background="{x:Null}"
             ItemsSource="{Binding OperatorsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

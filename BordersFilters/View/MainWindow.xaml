@@ -9,9 +9,9 @@
     xmlns:viewers="clr-namespace:BordersFilters.View"
     Title="Border Filters"
     Width="720"
-    Height="640"
+    Height="630"
     MinWidth="500"
-    MinHeight="640"
+    MinHeight="400"
     Background="{DynamicResource BackgroundBrush}"
     BorderBrush="{DynamicResource PrimaryHueMidBrush}"
     BorderThickness="0"
@@ -35,12 +35,12 @@
                 <Grid Background="{StaticResource BackgroundBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="16*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <viewers:InputPathView Grid.Row="0" VerticalAlignment="Stretch" />
                         <viewers:ChoseAlgorithmView Grid.Row="1" VerticalAlignment="Stretch" />

@@ -9,7 +9,7 @@ using WinForms = System.Windows.Forms;
 
 namespace ViewModel
 {
-	public class ChoseAlgorithmViewModel : DependencyObject
+	public class ChoseAlgorithmViewModel : DependencyObject, IDisposable
 	{
 
 	    #region Events and Invocators
@@ -199,14 +199,15 @@ namespace ViewModel
 	        Sigma = Configurator.Logic.LogicElement.Sigma;
 	    }
 
-	    ~ChoseAlgorithmViewModel()
+	    public void Dispose()
 	    {
 	        Configurator.Path.PathItems["Output"].Path = OutPathValue;
 	        Configurator.Logic.LogicElement.RGB = _RGBValue;
 	        Configurator.Logic.LogicElement.Matrix = _matrixSizeValue;
 	        Configurator.Logic.LogicElement.Sigma = _sigmaValue;
         }
-        #endregion
+
+	    #endregion
 
         public ChoseAlgorithmViewModel()
         {
@@ -275,6 +276,13 @@ namespace ViewModel
 	            OutPathValue = openFileDialog.SelectedPath;
 	        }
         }
-	    #endregion
+	    private void ChosedOperatorsListOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+	    {
+	        if (Equals(OperatorsList.Count, ChosedOperatorsList.Count))
+	        {
+	            SelectAllOperator = true;
+	        }
+	    }
+        #endregion
     }
 }

@@ -20,7 +20,7 @@ namespace BordersFilters.View
             var openFileDialog = new OpenFileDialog
             {
                 AddExtension = true,
-                InitialDirectory = Path.IsPathRooted(textBox.Text) ? Path.GetFullPath(textBox.Text) : Directory.GetCurrentDirectory() + @"\Resours",
+                InitialDirectory = Path.IsPathRooted(InputFilePath.Text) ? Path.GetFullPath(InputFilePath.Text) : Directory.GetCurrentDirectory() + @"\Resours",
                 Filter = "Image files (*.png;*.jpeg;*.jpg;*.bmp;*.gif;*tiff)|*.png;*.jpeg;*.jpg;*.bmp;*.gif;*tiff|All files (*.*)|*.*"
                 
             };

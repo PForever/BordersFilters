@@ -176,16 +176,19 @@ namespace ViewModel
         #region Configuration
         private void InitConfig()
         {
-            Width = _winSize.Width;
-	        Height = _winSize.Height;
+
+            _width = _winSize.Width;
+	        _height = _winSize.Height;
 	        _top = _winSize.Top;
 	        _left = _winSize.Left;
             _windowState = _winSize.WindowState;
         }
         ~ViewModel()
 	    {
-	        _winSize.WindowState = WindowState;
+	        InputPathView.Dispose();
+	        ChoseAlgorithmView.Dispose();
 
+            _winSize.WindowState = WindowState;
 	        _winSize.Width = Width;
 	        _winSize.Height = Height;
 	        _winSize.Top = Top;

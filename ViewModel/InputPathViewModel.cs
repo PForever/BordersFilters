@@ -10,7 +10,7 @@ using Model;
 using ViewModel.Configs;
 
 namespace ViewModel {
-	public class InputPathViewModel : DependencyObject
+	public class InputPathViewModel : DependencyObject, IDisposable
 	{
 
         #region Initialize
@@ -52,11 +52,13 @@ namespace ViewModel {
 	    {
 	        PathValue = Configurator.Path.PathItems["Input"].Path;
 	    }
-	    ~InputPathViewModel()
+
+	    public void Dispose()
 	    {
 	        Configurator.Path.PathItems["Input"].Path = _pathValue;
-	    }
-	    #endregion
+        }
+
+        #endregion
 
         public InputPathViewModel()
         {

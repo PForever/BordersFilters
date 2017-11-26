@@ -20,6 +20,8 @@ namespace ViewModel.Configs
             Path = (PathConfigurationSection)_configurator.Sections[nameof(PathConfigurationSection)];
             Logic = (LogicConfigurationSection)_configurator.Sections[nameof(LogicConfigurationSection)];
         }
+        
+            
         //public static Configurator CreateConfigurator() => new Configurator();
     }
 }

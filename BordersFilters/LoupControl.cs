@@ -18,7 +18,7 @@ namespace BordersFilters
 {
     public class LoupControl
     {
-        public double Scale;
+        public double Scale = 1;
 
         public System.Windows.Size SelectedPartSize;
 
@@ -42,8 +42,7 @@ namespace BordersFilters
 
         public void OnMouseEnter(Grid parentOfImage,Image outputImage /*TabControlVm tabControl*/)
         {
-            Scale = 1;
-            SelectedPartSize = new Size(100,100);
+            SelectedPartSize = new Size(150,100);
 
             if (Equals(Parent, parentOfImage))
             {
@@ -91,9 +90,10 @@ namespace BordersFilters
             InputCanvas = new Canvas
             {
                 HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Top,
+                VerticalAlignment = VerticalAlignment.Center,
                 Children = { InputRectangle },
-                Width = outputImage.ActualWidth
+                Width = outputImage.ActualWidth,
+                Height = outputImage.ActualHeight
             };
 
             Parent.Children.Add(InputCanvas);
@@ -116,9 +116,10 @@ namespace BordersFilters
             OutputCanvas = new Canvas
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
+                VerticalAlignment = VerticalAlignment.Center,
                 Children = { OutputRectangle },
-                Width = outputImage.ActualWidth
+                Width = outputImage.ActualWidth,
+                Height = outputImage.ActualHeight
             };
 
             Parent.Children.Add(OutputCanvas);
@@ -137,17 +138,17 @@ namespace BordersFilters
                 return;
             }
 
-            var deltaX = (Scale-1) * (20 / image.ActualWidth);
-            var deltaY = (Scale-1) * (20 / image.ActualHeight);
+            var deltaX = 1.2 * Math.Pow(Scale - 1, 0.5)  * (35 / image.ActualWidth);
+            var deltaY = 1.2 * Math.Pow(Scale - 1, 0.5)  * (20 / image.ActualHeight);
 
             InputImageBrush.Viewbox = new Rect(
-                (position.X - SelectedPartSize.Width / 2) / image.ActualWidth - deltaX,
-                (position.Y  - SelectedPartSize.Height / 2) / image.ActualHeight - deltaY, 
+                (position.X - SelectedPartSize.Width / 2) / image.ActualWidth + deltaX,
+                (position.Y  - SelectedPartSize.Height / 2) / image.ActualHeight + deltaY, 
                 SelectedPartSize.Width / image.ActualWidth,
                 SelectedPartSize.Height / image.ActualHeight);
             OutputImageBrush.Viewbox = new Rect(
-                (position.X  - SelectedPartSize.Width / 2) / image.ActualWidth - deltaX,
-                (position.Y  - SelectedPartSize.Height / 2) / image.ActualHeight - deltaY, 
+                (position.X  - SelectedPartSize.Width / 2) / image.ActualWidth + deltaX,
+                (position.Y  - SelectedPartSize.Height / 2) / image.ActualHeight + deltaY, 
                 SelectedPartSize.Width / image.ActualWidth,
                 SelectedPartSize.Height / image.ActualHeight);
 

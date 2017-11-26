@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
     d:DesignHeight="300"
@@ -48,6 +49,7 @@
                             VerticalAlignment="Center"
                             MouseEnter="OutputImage_OnMouseEnter"
                             MouseMove="OutputImage_OnMouseMove"
+                            MouseWheel="OutputImage_OnMouseWheel"
                             Source="{Binding OutImageSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </Grid>
                 </DataTemplate>

@@ -47,5 +47,21 @@ namespace BordersFilters.View
         {
             Loup.IsActive = !Loup.IsActive;
         }
+
+        private void OutputImage_OnMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Loup.Scale <= 10)
+            {
+                Loup.Scale += e.Delta/120;
+            }
+            else
+            {
+                Loup.Scale = 1;
+            }
+            if (!(sender is Image image) || !Loup.IsActive) return;
+            Loup.OnMouseEnter((Grid)image.Parent, image);
+            Loup.SetLoup(e.GetPosition(image), image);
+        }
+
     }
 }

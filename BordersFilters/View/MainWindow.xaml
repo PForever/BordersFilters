@@ -38,6 +38,9 @@
                 <materialDesign:TransitionerSlide.ForwardWipe>
                     <materialDesign:SlideWipe Direction="Right" />
                 </materialDesign:TransitionerSlide.ForwardWipe>
+
+                <!--  1 слайд с настройками алгоритмов  -->
+
                 <Grid Background="{StaticResource BackgroundBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="16*" />
@@ -85,6 +88,9 @@
                         Style="{DynamicResource MaterialDesignRaisedButton}" />
                 </Grid>
             </materialDesign:TransitionerSlide>
+
+            <!--  2 слайд с выходными картинками - результатами алгоритмов  -->
+
             <materialDesign:TransitionerSlide>
                 <materialDesign:TransitionerSlide.BackwardWipe>
                     <materialDesign:SlideWipe Direction="Left" />
@@ -92,7 +98,7 @@
                 <Grid Background="{StaticResource BackgroundBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="16*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <viewers:OutPictureView Grid.Row="0" />
                     <Button
@@ -131,6 +137,9 @@
                 </Grid>
             </materialDesign:TransitionerSlide>
         </materialDesign:Transitioner>
+
+        <!--  Вспомогательные элементы - информаторы о состоянии процесса обработки  -->
+
         <materialDesign:Snackbar
             x:Name="Snackbar"
             HorizontalAlignment="Center"

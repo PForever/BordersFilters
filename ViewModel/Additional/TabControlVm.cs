@@ -1,13 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Model;
 using Model.OperatorsHelper;
 
 namespace ViewModel.Additional
 {
-    public class TabControl
+    public class TabControlVm
     {
+        
+
         private static Dictionary<string,OperatorsEnum> OperationDictionary;
         public string NameOfAlgorithm { get; set; }
         public BitmapSource OutImageSource { get; set; }
@@ -16,8 +23,9 @@ namespace ViewModel.Additional
         public static string OutPath { get; set; }
 
 
-        public TabControl(Dictionary<OperatorsEnum,BitmapSource> dictionary)
+        public TabControlVm(Dictionary<OperatorsEnum,BitmapSource> dictionary)
         {
+
             BitmapSource bm;
             foreach (var expression in OperationDictionary)
             {

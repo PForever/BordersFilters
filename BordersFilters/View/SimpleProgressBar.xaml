@@ -13,19 +13,17 @@
     TextElement.FontWeight="Medium"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
-    <Grid>
-        <StackPanel Width="100" Height="80">
-            <ProgressBar
-                Width="24"
-                Height="24"
-                Margin="16"
-                IsIndeterminate="True"
-                Style="{DynamicResource MaterialDesignCircularProgressBar}"
-                Value="33" />
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Text="Обработка..." />
-        </StackPanel>
-    </Grid>
+    <StackPanel Width="100" Height="80">
+        <ProgressBar
+            Width="24"
+            Height="24"
+            Margin="16"
+            IsIndeterminate="True"
+            Style="{DynamicResource MaterialDesignCircularProgressBar}"
+            Value="33" />
+        <TextBlock
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="Обработка..." />
+    </StackPanel>
 </UserControl>

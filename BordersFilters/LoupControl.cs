@@ -42,7 +42,7 @@ namespace BordersFilters
 
         public void OnMouseEnter(Grid parentOfImage,Image outputImage /*TabControlVm tabControl*/)
         {
-            Scale = 2;
+            Scale = 1;
             SelectedPartSize = new Size(100,100);
 
             if (Equals(Parent, parentOfImage))
@@ -90,9 +90,10 @@ namespace BordersFilters
 
             InputCanvas = new Canvas
             {
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Top,
-                Children = { InputRectangle }
+                Children = { InputRectangle },
+                Width = outputImage.ActualWidth
             };
 
             Parent.Children.Add(InputCanvas);
@@ -116,7 +117,8 @@ namespace BordersFilters
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
-                Children = { OutputRectangle }
+                Children = { OutputRectangle },
+                Width = outputImage.ActualWidth
             };
 
             Parent.Children.Add(OutputCanvas);
@@ -135,14 +137,17 @@ namespace BordersFilters
                 return;
             }
 
+            var deltaX = (Scale-1) * (20 / image.ActualWidth);
+            var deltaY = (Scale-1) * (20 / image.ActualHeight);
+
             InputImageBrush.Viewbox = new Rect(
-               (position.X  - SelectedPartSize.Width / 2) / image.ActualWidth,
-                (position.Y  - SelectedPartSize.Height / 2) / image.ActualHeight, 
+                (position.X - SelectedPartSize.Width / 2) / image.ActualWidth - deltaX,
+                (position.Y  - SelectedPartSize.Height / 2) / image.ActualHeight - deltaY, 
                 SelectedPartSize.Width / image.ActualWidth,
                 SelectedPartSize.Height / image.ActualHeight);
             OutputImageBrush.Viewbox = new Rect(
-                (position.X  - SelectedPartSize.Width / 2) / image.ActualWidth,
-                (position.Y  - SelectedPartSize.Height / 2) / image.ActualHeight, 
+                (position.X  - SelectedPartSize.Width / 2) / image.ActualWidth - deltaX,
+                (position.Y  - SelectedPartSize.Height / 2) / image.ActualHeight - deltaY, 
                 SelectedPartSize.Width / image.ActualWidth,
                 SelectedPartSize.Height / image.ActualHeight);
 

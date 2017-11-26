@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -9,12 +10,73 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using Model;
 using ViewModel.Additional;
+using ViewModel.Configs;
+using ViewModel.Configs.Size;
 
 
 namespace ViewModel
 {
 	public class ViewModel : DependencyObject, INotifyPropertyChanged
-    {
+	{
+	    #region Window Size
+
+	    private readonly SizeElement _winSize = Configurator.Size.SizeItems["Window"];
+
+        private string _width;
+        public string Width
+	    {
+	        get => _width;
+	        set
+	        {
+	            _width = value;
+	            OnPropertyChanged(nameof(Width));
+	        }
+	    }
+
+	    private string _height;
+        public string Height
+	    {
+	        get => _height;
+	        set
+	        {
+                _height = value;
+	            OnPropertyChanged(nameof(Height));
+	        }
+	    }
+
+	    private string _top;
+        public string Top
+	    {
+	        get => _top;
+	        set
+	        {
+	            _top = value;
+	            OnPropertyChanged(nameof(Top));
+	        }
+	    }
+
+	    private string _left;
+        public string Left
+	    {
+	        get => _left;
+	        set
+	        {
+	            _left = value;
+	            OnPropertyChanged(nameof(Left));
+	        }
+	    }
+
+	    private int _windowState;
+	    public int WindowState
+        {
+	        get => _windowState;
+	        set
+	        {
+	            _windowState = value;
+	            OnPropertyChanged(nameof(WindowState));
+	        }
+	    }
+        #endregion
 
         #region Dialog 
 
@@ -99,16 +161,44 @@ namespace ViewModel
 
 	    #endregion
 
+	    #region Initialize
+	    private void Initialize()
+	    {
+
+	        OutPictureViewModel.InitializeViewModel += (sunder) => OutPictureView = sunder;
+	        InputPathViewModel.InitializeViewModel += (sunder) => InputPathView = sunder;
+	        ChoseAlgorithmViewModel.InitializeViewModel += (sunder) => ChoseAlgorithmView = sunder;
+	        // messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6.3)));
+	        InitConfig();
+	    }
+        #endregion
+
+        #region Configuration
+        private void InitConfig()
+        {
+            Width = _winSize.Width;
+	        Height = _winSize.Height;
+	        _top = _winSize.Top;
+	        _left = _winSize.Left;
+            _windowState = _winSize.WindowState;
+        }
+        ~ViewModel()
+	    {
+	        _winSize.WindowState = WindowState;
+
+	        _winSize.Width = Width;
+	        _winSize.Height = Height;
+	        _winSize.Top = Top;
+	        _winSize.Left = Left;
+            Configurator.Save();
+	    }
+
+	    #endregion
+
+
         public ViewModel()
 		{
-            #region Initialize
-
-		    OutPictureViewModel.InitializeViewModel += (sunder) => OutPictureView = sunder;
-		    InputPathViewModel.InitializeViewModel += (sunder) => InputPathView = sunder;
-		    ChoseAlgorithmViewModel.InitializeViewModel += (sunder) => ChoseAlgorithmView = sunder;
-		   // messageQueue = new SnackbarMessageQueue(new TimeSpan((long)Math.Pow(10, 6.3)));
-
-            #endregion
+		    Initialize();
 
             Start = new Command(() =>
             {

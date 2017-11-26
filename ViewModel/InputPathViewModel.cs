@@ -7,9 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Model;
+using ViewModel.Configs;
 
 namespace ViewModel {
-	public class InputPathViewModel : DependencyObject {
+	public class InputPathViewModel : DependencyObject
+	{
 
         #region Initialize
 
@@ -34,22 +36,31 @@ namespace ViewModel {
 		#endregion
 
 		#region Path
-		public static readonly DependencyProperty PathValueProperty = DependencyProperty.Register(
-			nameof(PathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(Directory.GetCurrentDirectory() +
-				@"\..\..\Resours\Shapes.png"));
-
-		public string PathValue {
-			get {
-				return (string)GetValue(PathValueProperty);
-			}
-			set {
-				SetValue(PathValueProperty, value);
-			}
+	    private static string _pathValue;
+        public static readonly DependencyProperty PathValueProperty = DependencyProperty.Register(
+			nameof(PathValue), typeof(string), typeof(InputPathViewModel), new PropertyMetadata(_pathValue, (o, args) => _pathValue = (string) args.NewValue));
+		public string PathValue
+		{
+		    get => (string)GetValue(PathValueProperty);
+		    set => SetValue(PathValueProperty, value);
 		}
-		#endregion
 
-		public InputPathViewModel()
+	    #endregion
+
+	    #region Configuration
+	    public void InitConfig()
+	    {
+	        PathValue = Configurator.Path.PathItems["Input"].Path;
+	    }
+	    ~InputPathViewModel()
+	    {
+	        Configurator.Path.PathItems["Input"].Path = _pathValue;
+	    }
+	    #endregion
+
+        public InputPathViewModel()
         {
+            InitConfig();
             _initializeViewModel?.Invoke(this);
         }
 	}

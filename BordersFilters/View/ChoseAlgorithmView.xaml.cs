@@ -33,6 +33,5 @@ namespace BordersFilters.View
         {
             if (_regex.IsMatch(e.Text)) e.Handled = true;
         }
-
     }
 }

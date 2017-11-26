@@ -27,7 +27,7 @@
                     x:Name="textBox"
                     Grid.Column="0"
                     Margin="{StaticResource 'Margin All'}"
-                    Text="{Binding PathValue, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding PathValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Button
                     x:Name="btnBrowse"
                     Grid.Column="1"

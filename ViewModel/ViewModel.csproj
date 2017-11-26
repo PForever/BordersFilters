@@ -36,6 +36,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -50,14 +51,23 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Additional\TabControlVm.cs" />
     <Compile Include="Behaviours\IListItemConverter.cs" />
     <Compile Include="Behaviours\TwoListSynchronizer.cs" />
     <Compile Include="ChoseAlgorithmViewModel.cs" />
     <Compile Include="Behaviours\MultiSelectorBehaviours.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="Configs\Configurator.cs" />
+    <Compile Include="Configs\Path\PathCollection.cs" />
+    <Compile Include="Configs\Size\SizeCollection.cs" />
+    <Compile Include="Configs\Path\PathConfigurationSection.cs" />
+    <Compile Include="Configs\Logic\LogicConfigurationSection.cs" />
+    <Compile Include="Configs\Size\SizeConfigurationSection.cs" />
+    <Compile Include="Configs\Path\PathElement.cs" />
+    <Compile Include="Configs\Logic\LogicElement.cs" />
+    <Compile Include="Configs\Size\SizeElement.cs" />
     <Compile Include="InputPathViewModel.cs" />
     <Compile Include="OutPictureViewModel.cs" />
-    <Compile Include="Additional\TabControlVm.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

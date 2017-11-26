@@ -25,7 +25,7 @@
                 x:Name="InputFilePath"
                 Grid.Column="0"
                 Margin="{StaticResource 'Margin All'}"
-                Text="{Binding PathValue, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding PathValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 Grid.Column="1"
                 Width="{StaticResource ButtomWidth}"

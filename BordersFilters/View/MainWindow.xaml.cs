@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows;
-using MaterialDesignThemes.Wpf;
 
 namespace BordersFilters.View
 {
@@ -41,6 +42,17 @@ namespace BordersFilters.View
         {
             _viewModel.IsDialogOpen = false;
             ShowMessage("Обработано!");
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var size = ViewModel.Configs.Configurator.Size.SizeItems["Window"];
+            Top = size.Top == "auto" ? (SystemParameters.WorkArea.Height - Height) / 2 : Convert.ToDouble(size.Top,CultureInfo.InvariantCulture);
+            Left = size.Left == "auto" ? (SystemParameters.WorkArea.Width - Width) / 2 : Convert.ToDouble(size.Left, CultureInfo.InvariantCulture);
+            Width = Convert.ToDouble(size.Width, CultureInfo.InvariantCulture);
+            Height = Convert.ToDouble(size.Height, CultureInfo.InvariantCulture);
+            Show();
+            WindowState = (WindowState)size.WindowState;
         }
     }
 }

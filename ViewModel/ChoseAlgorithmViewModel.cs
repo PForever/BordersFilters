@@ -4,11 +4,12 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Windows;
+using ViewModel.Configs;
 using WinForms = System.Windows.Forms;
 
 namespace ViewModel
 {
-	public class ChoseAlgorithmViewModel : DependencyObject
+	public class ChoseAlgorithmViewModel : DependencyObject, IDisposable
 	{
 
 	    #region Events and Invocators
@@ -68,13 +69,9 @@ namespace ViewModel
 
 	    #endregion
 	    #region RGBOperator
-
+	    private static Boolean _RGBValue;
 	    public static readonly DependencyProperty RGBOperatorProperty = DependencyProperty.Register(
-	        nameof(RGBOperator), typeof(Boolean), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(false, (o, args) =>
-	        {
-	            int p = 0;
-                
-	        }));
+	        nameof(RGBOperator), typeof(Boolean), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(_RGBValue, (o, args) => _RGBValue = (Boolean) args.NewValue));
 
 	    public Boolean RGBOperator
         {
@@ -163,25 +160,24 @@ namespace ViewModel
         {
 	        get { return (Command)GetValue(SetCatalogProperty); }
 	        set { SetValue(SetCatalogProperty, value); }
-	    }
-
+        }
         #endregion
         #region MatrixSize
-
-	    public static readonly DependencyProperty MatrixSizeProperty = DependencyProperty.Register(
-	        nameof(MatrixSize), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(3));
+	    private static int _matrixSizeValue;
+        public static readonly DependencyProperty MatrixSizeProperty = DependencyProperty.Register(
+	        nameof(MatrixSize), typeof(int), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(_matrixSizeValue, (o, args) => _matrixSizeValue = (int)args.NewValue));
 
 	    public int MatrixSize
         {
 	        get { return (int)GetValue(MatrixSizeProperty); }
 	        set { SetValue(MatrixSizeProperty, value); }
 	    }
-
         #endregion
         #region Sigma
 
+	    public static double _sigmaValue;
         public static readonly DependencyProperty SigmaProperty = DependencyProperty.Register(
-	        nameof(Sigma), typeof(double), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(1.41));
+	        nameof(Sigma), typeof(double), typeof(ChoseAlgorithmViewModel), new PropertyMetadata(_sigmaValue, (o, args) => _sigmaValue = (double) args.NewValue));
 
 	    public double Sigma
         {
@@ -189,15 +185,38 @@ namespace ViewModel
 	        set { SetValue(SigmaProperty, value); }
 	    }
 
-	    #endregion
+        #endregion
+
 
         private bool _showed = true;
 
+	    #region Configuration
+	    private void InitConfig()
+	    {
+	        OutPathValue = Configurator.Path.PathItems["Output"].Path;
+	        RGBOperator = Configurator.Logic.LogicElement.RGB;
+	        MatrixSize = Configurator.Logic.LogicElement.Matrix;
+	        Sigma = Configurator.Logic.LogicElement.Sigma;
+	    }
+
+	    public void Dispose()
+	    {
+	        Configurator.Path.PathItems["Output"].Path = OutPathValue;
+	        Configurator.Logic.LogicElement.RGB = _RGBValue;
+	        Configurator.Logic.LogicElement.Matrix = _matrixSizeValue;
+	        Configurator.Logic.LogicElement.Sigma = _sigmaValue;
+        }
+
+	    #endregion
+
         public ChoseAlgorithmViewModel()
         {
+            InitConfig();
+
             SelectAllOperatorsEvent += SelectAllItems;
             DeleteChoosedOperatorsEvent += DeleteChoose;
 
+            #region List
             ChosedOperatorsList = new ObservableCollection<string>();
             ChosedOperatorsList.CollectionChanged += ChosedOperatorsListOnCollectionChanged;
 
@@ -220,21 +239,14 @@ namespace ViewModel
                 "Roberts Operator",
                 "Prewitt Operator",
             };
+            #endregion
 		   
             _initializeViewModel?.Invoke(this);
 		}
 
-	    private void ChosedOperatorsListOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-	    {
-	        if (Equals(OperatorsList.Count, ChosedOperatorsList.Count))
-	        {
-	            SelectAllOperator = true;
-	        }	        
-	    }
-
 	    #region Methods for Selecting/Choosing
 
-	    public void SelectAllItems(object sender, EventArgs e)
+        public void SelectAllItems(object sender, EventArgs e)
 	    {
 	        ChosedOperatorsList.Clear();
             foreach (var operation in OperatorsList)
@@ -252,16 +264,25 @@ namespace ViewModel
 
 	    public void ChooseCatalog()
 	    {
-	        var openFileDialog = new WinForms.FolderBrowserDialog
-	        {
-	            RootFolder = System.Environment.SpecialFolder.DesktopDirectory,
-	            ShowNewFolderButton = true
-	        };
-	        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            var openFileDialog = new WinForms.FolderBrowserDialog
+            {
+                RootFolder = Environment.SpecialFolder.MyComputer,
+                ShowNewFolderButton = true,
+                SelectedPath = Path.IsPathRooted(OutPathValue) ? OutPathValue : Directory.GetCurrentDirectory() + @"\Resours"
+            };
+
+            if (openFileDialog.ShowDialog() == WinForms.DialogResult.OK)
 	        {
 	            OutPathValue = openFileDialog.SelectedPath;
 	        }
         }
-	    #endregion
+	    private void ChosedOperatorsListOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+	    {
+	        if (Equals(OperatorsList.Count, ChosedOperatorsList.Count))
+	        {
+	            SelectAllOperator = true;
+	        }
+	    }
+        #endregion
     }
 }

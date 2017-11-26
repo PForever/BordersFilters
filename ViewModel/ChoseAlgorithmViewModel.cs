@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Windows;
 using WinForms = System.Windows.Forms;
@@ -198,11 +199,14 @@ namespace ViewModel
             DeleteChoosedOperatorsEvent += DeleteChoose;
 
             ChosedOperatorsList = new ObservableCollection<string>();
+            ChosedOperatorsList.CollectionChanged += ChosedOperatorsListOnCollectionChanged;
+
             Show = new Command(() =>
             {
                 ListHeight = _showed ? "0" : "auto";
                 _showed =! _showed;
             });
+
             SetCatalog = new Command(ChooseCatalog);
       
             OperatorsList = new[] {
@@ -219,6 +223,14 @@ namespace ViewModel
 		   
             _initializeViewModel?.Invoke(this);
 		}
+
+	    private void ChosedOperatorsListOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+	    {
+	        if (Equals(OperatorsList.Count, ChosedOperatorsList.Count))
+	        {
+	            SelectAllOperator = true;
+	        }	        
+	    }
 
 	    #region Methods for Selecting/Choosing
 

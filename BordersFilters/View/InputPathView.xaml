@@ -10,41 +10,36 @@
     <UserControl.DataContext>
         <viewModel:InputPathViewModel />
     </UserControl.DataContext>
-    <Grid>
-        <StackPanel>
-            <TextBlock
-                FontWeight="Bold"
-                Style="{StaticResource MaterialDesignSubheadingTextBlock}"
-                TextAlignment="Center">
-                Выбор изображения
-            </TextBlock>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBox
-                    x:Name="textBox"
-                    Grid.Column="0"
-                    Margin="{StaticResource 'Margin All'}"
-                    Text="{Binding PathValue, UpdateSourceTrigger=PropertyChanged}" />
-                <Button
-                    x:Name="btnBrowse"
-                    Grid.Column="1"
-                    Width="{StaticResource ButtomWidth}"
-                    Height="{StaticResource ButtomHeight}"
-                    MinWidth="{StaticResource ButtomWidth}"
-                    MinHeight="{StaticResource ButtomHeight}"
-                    Margin="{StaticResource 'Margin All'}"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                    Background="{DynamicResource PrimaryHueMidBrush}"
-                    Click="btnBrowse_OnClick"
-                    FontSize="12"
-                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                    Style="{DynamicResource MaterialDesignRaisedButton}">
-                    Browse
-                </Button>
-            </Grid>
-        </StackPanel>
-    </Grid>
+    <StackPanel>
+        <TextBlock
+            FontWeight="Bold"
+            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+            Text="Выбор изображения"
+            TextAlignment="Center" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                x:Name="InputFilePath"
+                Grid.Column="0"
+                Margin="{StaticResource 'Margin All'}"
+                Text="{Binding PathValue, UpdateSourceTrigger=PropertyChanged}" />
+            <Button
+                Grid.Column="1"
+                Width="{StaticResource ButtomWidth}"
+                Height="{StaticResource ButtomHeight}"
+                MinWidth="{StaticResource ButtomWidth}"
+                MinHeight="{StaticResource ButtomHeight}"
+                Margin="{StaticResource 'Margin All'}"
+                materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                Background="{DynamicResource PrimaryHueMidBrush}"
+                Click="OnPathChoose"
+                Content="Browse"
+                FontSize="12"
+                Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                Style="{DynamicResource MaterialDesignRaisedButton}" />
+        </Grid>
+    </StackPanel>
 </UserControl>

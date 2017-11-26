@@ -7,8 +7,6 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
-    d:DesignHeight="300"
-    d:DesignWidth="300"
     mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:ChoseAlgorithmViewModel />
@@ -30,6 +28,9 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
+            <!--  Основные параметры алгоритмов  -->
+
             <TextBlock
                 Grid.Row="0"
                 Grid.ColumnSpan="4"
@@ -51,7 +52,7 @@
                         Margin="{StaticResource 'Margin All'}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding RGBOperator, Mode=TwoWay}" />
+                        IsChecked="{Binding RGBOperator}" />
                 </StackPanel>
             </materialDesign:Card>
 
@@ -69,10 +70,8 @@
                     materialDesign:HintAssist.Hint="Количество применений"
                     PreviewTextInput="UIElement_OnPreviewTextInput"
                     Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding UsageCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding UsageCount}" />
             </materialDesign:Card>
-
-
             <materialDesign:Card
                 Grid.Row="1"
                 Grid.Column="2"
@@ -87,9 +86,8 @@
                     materialDesign:HintAssist.Hint="Размер матрицы (N*N)"
                     PreviewTextInput="UIElement_OnPreviewTextInput"
                     Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding MatrixSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding MatrixSize}" />
             </materialDesign:Card>
-
             <materialDesign:Card
                 Grid.Row="1"
                 Grid.Column="3"
@@ -103,8 +101,11 @@
                     VerticalContentAlignment="Center"
                     materialDesign:HintAssist.Hint="Параметр сигма"
                     Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding Sigma, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Sigma}"
+                    ToolTip="При некорректном вводе для расчета будет использоваться последнее правильно введенное значение" />
             </materialDesign:Card>
+
+            <!--  2 кнопки отвечающие за "Выбор алгоритмов" и "Выбор директории"  -->
 
             <Grid Grid.Row="2" Grid.ColumnSpan="4">
                 <Grid.ColumnDefinitions>
@@ -136,12 +137,12 @@
                         Grid.Column="1"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding SelectAllOperator, Mode=TwoWay}" />
+                        IsChecked="{Binding SelectAllOperator, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock
                         Grid.Column="2"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Text="{Binding SelectAllText, Mode=TwoWay}" />
+                        Text="{Binding SelectAllText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
                 <Button
                     Grid.Column="1"
@@ -160,6 +161,9 @@
                     Style="{DynamicResource MaterialDesignRaisedButton}" />
             </Grid>
         </Grid>
+
+        <!--  Набор чекбоксов, указывающих на то, какие алгоритмы будут выбраны для рассчета  -->
+
         <ListBox
             Grid.Row="1"
             Height="{Binding ListHeight, Mode=TwoWay}"

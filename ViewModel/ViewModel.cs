@@ -135,13 +135,13 @@ namespace ViewModel
                 };
 
                 // Присвоение операторов и обновление параметров модели
-                OutPictureView.TabControls = new ObservableCollection<TabControl>();
+                OutPictureView.TabControls = new ObservableCollection<TabControlVm>();
                 model.Operators = new Collection<OperatorsEnum>();
 
                 // Работа с таб контролами и наборами операторов
-                TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
-                TabControl.SetInputImage(path);
-                var operatorsDictionary = TabControl.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
+                TabControlVm.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
+                TabControlVm.SetInputImage(path);
+                var operatorsDictionary = TabControlVm.SetOperatorsDictionary(ChoseAlgorithmView.OperatorsList);
                 foreach (var oper in ChoseAlgorithmView.ChosedOperatorsList)
                 {                    
                     if (operatorsDictionary.TryGetValue(oper, out var searchIndex))
@@ -163,7 +163,7 @@ namespace ViewModel
                     {
                         foreach (var func in model.PreDestination)
                         {
-                            OutPictureView.TabControls.Add(new TabControl(func()));
+                            OutPictureView.TabControls.Add(new TabControlVm(func()));
                         }
                         OnCalculationStoped();
                     });                     
@@ -177,7 +177,7 @@ namespace ViewModel
                     OnSomethingHappen("Нет данных для сохранения!");
                     return;
                 }
-                TabControl.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
+                TabControlVm.BaseOfSavingDirectory = ChoseAlgorithmView.OutPathValue;
                 foreach (var tabControl in OutPictureView.TabControls)
                 {
                     tabControl.SaveImage();    

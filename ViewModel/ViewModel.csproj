@@ -57,7 +57,7 @@
     <Compile Include="Command.cs" />
     <Compile Include="InputPathViewModel.cs" />
     <Compile Include="OutPictureViewModel.cs" />
-    <Compile Include="Additional\TabControl.cs" />
+    <Compile Include="Additional\TabControlVm.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

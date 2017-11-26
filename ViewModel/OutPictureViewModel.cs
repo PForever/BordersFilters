@@ -24,12 +24,12 @@ namespace ViewModel
         #region TabControl
 
         public static readonly DependencyProperty TabControlsProperty = DependencyProperty.Register(
-            nameof(TabControls), typeof(ObservableCollection<TabControl>), typeof(OutPictureViewModel),
-            new PropertyMetadata(default(ObservableCollection<TabControl>)));
+            nameof(TabControls), typeof(ObservableCollection<TabControlVm>), typeof(OutPictureViewModel),
+            new PropertyMetadata(default(ObservableCollection<TabControlVm>)));
 
-        public ObservableCollection<TabControl> TabControls
+        public ObservableCollection<TabControlVm> TabControls
         {
-            get => (ObservableCollection<TabControl>)GetValue(TabControlsProperty);
+            get => (ObservableCollection<TabControlVm>)GetValue(TabControlsProperty);
             set => SetValue(TabControlsProperty, value);
         }
 

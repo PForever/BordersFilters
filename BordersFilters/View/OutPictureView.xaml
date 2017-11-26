@@ -13,13 +13,18 @@
         <viewModel:OutPictureViewModel />
     </UserControl.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <dragablz:TabablzControl
+            Grid.Row="0"
             Margin="{StaticResource 'Margin All'}"
             VerticalAlignment="Stretch"
-            Background="#424242"
-            FixedHeaderCount="4"
+            Background="{StaticResource BackgroundBrush}"
             ItemsSource="{Binding TabControls}"
-            SelectedIndex="1">
+            SelectedIndex="0"
+            SelectionChanged="Selector_OnSelectionChanged">
             <dragablz:TabablzControl.HeaderItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding NameOfAlgorithm, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -41,10 +46,21 @@
                             Grid.Column="1"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            MouseEnter="OutputImage_OnMouseEnter"
+                            MouseMove="OutputImage_OnMouseMove"
                             Source="{Binding OutImageSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     </Grid>
                 </DataTemplate>
             </dragablz:TabablzControl.ContentTemplate>
         </dragablz:TabablzControl>
+        <CheckBox
+            Name="LoupActivate"
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Checked="LoupActivate_Changed"
+            Content="Активировать лупу"
+            Unchecked="LoupActivate_Changed" />
     </Grid>
+
 </UserControl>

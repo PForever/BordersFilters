@@ -15,7 +15,7 @@ namespace BordersFilters.View
             InitializeComponent();
         }
 
-        private void btnBrowse_OnClick(object sender, RoutedEventArgs e)
+        private void OnPathChoose(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog
             {
@@ -26,7 +26,7 @@ namespace BordersFilters.View
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                textBox.Text = openFileDialog.FileName;
+                InputFilePath.Text = openFileDialog.FileName;
             }
         }
     }
